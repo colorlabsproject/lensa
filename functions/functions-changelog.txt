@@ -1,0 +1,223 @@
+*** ColorLabs Framework Changelog **
+
+2013.04.17 - Version 1.7.6
+  - Fix: Feed URL not working.
+
+2013.04.11 - Version 1.7.5
+  - Fix: Issue on custom.css when fetch from child themes.
+
+2013.04.04 - Version 1.7.4
+  - Fix: Color picker on custom editor page
+
+2013.03.27 - Version 1.7.3
+  - Fix: Users with role below administrator can't open wp-admin
+
+2013.03.22 - Version 1.7.2
+  - Fix: admin update
+  - Fix: Icon for connection information section
+  - Add: Syntax highlighting for theme editor
+
+2013.03.19 - Version 1.7.1
+  - Fix layout error on layout settings and seo settings page
+
+2013.03.01 - Version 1.7.0
+ * admin-functions.php
+  - Fix deprecated image_resize on thumbnail resize function
+ * admin-interface.php, admin-update.php, admin-custom.php, admin-editor.php
+  - Bug Fixes
+ * admin-style.css
+  - Change the old colorpicker into wordpress colorpicker.
+ * admin-medialibrary-uploader.js, admin-interface.php, admin-medialibrary-uploader.php
+  - Change the media upload script into the new wordpress media upload
+  
+2013.01.30 - Version 1.6.2
+  - Fix image for shortcode
+  
+2013.01.25 - Version 1.6.1
+  - Fix login bugs
+  
+2013.01.22 - Version 1.6.0
+  - Fix bugs with standard WordPress code
+  - Debug check
+  - Update timthumb to 2.8.11
+  
+2012.12.28 - Version 1.5.0
+  * admin-style.css
+  - Fix: vertical browser scrollbar on admin panel
+
+2012.12.17 - Version 1.4.9
+  * admin-dashboard.php, admin-custom.php
+  - Fix: Radio button for metabox
+  - Fix: Twitter api url for dashboard
+  - Fix: Textarea width on shortcodes
+
+2012.12.13 - Version 1.4.8
+  - Fix: Compatibility with WP 3.5
+
+2012.12.10 - Version 1.4.7
+  - Fix Documentation link
+  
+2012.12.04 - Version 1.4.6
+ * admin-custom.php
+  - Fix multicheck custom meta
+  
+2012.11.13 - Version 1.4.5
+ * dialog-js.php, shortcode-generator.css
+  - Fix shortcode preview
+  
+2012.09.10 - Version 1.4.4
+ * admin-update.php, admin-function.php
+  - Fix update framework
+  - Fix feed link custom
+  
+2012.08.27 - Version 1.4.3
+ * admin-update.php, admin-interface.php, admin-function.php, admin-custom.php
+  - Fix update theme function
+  - add backup feature
+  
+2012.07.25 - Version 1.4.2
+ * admin-functions.php
+  - Fix update theme function
+	
+2012.07.23 - Version 1.4.1
+ * admin-functions.php
+  - Fix colabs_image - grab image from attachment return error.
+
+2012.07.23 - Version 1.4.0
+ * admin-update.php, admin-editor.php, admin-dashboard.php, admin-interface.php, admin-backup.php, admin-seo.php,admin-layout.php, admin-customizer.php
+  - Added Auto update feature
+
+2012.07.20 - Version 1.3.9
+ * admin-interface.php, admin-customizer.php, admin-init.php, admin-backup.php, admin-dashboard-style.css, admin-style.css
+	- Move 'manage sidebar' from panel sub menu to the left admin bar panel
+    - Added 'Theme Customizer' Importer, accessible through panel sub menu
+    - Restore notification on 'backup', 'customizer importer' panel
+    - Re-arrange the admin panel style
+    
+2012.07.20 - Version 1.3.8
+ * admin-functions.php, admin-custom.php
+	- Add new custom metabox type (info only with custom value).
+    - Update breadcrumbs_get_term_parent function.
+
+2012.06.29 - Version 1.3.7
+ * admin-interface.php, admin-interface-functions.php, admin-update.php
+	- Fix theme panel header hook.
+    - Fix theme version not showing on theme panel.
+
+2012.06.28 - Version 1.3.6
+ * admin-functions.php
+	- update colabs_remove_page_template functions. Child theme can remove parent page template.
+
+2012.06.18 - Version 1.3.5
+ * admin-custom.php
+	- fix metabox SEO setting
+
+2012.06.06 - Version 1.3.4
+ * Support Multilanguage dashboard
+
+2012.06.01 - Version 1.3.3
+ * dialog-js.php, preview-shortcode-external.php, dialog.php, editor_plugin.js
+	- Fix Shortcode 
+ 
+2012.05.29 - Version 1.3.2
+ * admin-functions.php
+    - Fix Show image in RSS feed
+ * admin-sbm.php
+    - Fix bug sidebar manager
+
+2012.05.15 - Version 1.3.1
+ * admin-custom.php
+    - Fix jquery multicheck option type
+	
+2012.05.08 - Version 1.3.0
+ * admin-interface.php, admin-interface-functions.php, admin-backup.php, admin-custom.php, admin-dashboard.php, admin-init.php, admin-framework-settings.php, admin-functions.php, admin-editor.php, admin-update.php, admin-style.css, admin-seo.php, admin-sbm.php, admin-layout.php, colabs-scripts.js
+    - File Added : js/codemirror.js, css/codemirror.css ( File editor code highlighter )
+    - updated framework codes, fix some issues, several code adjustment, etc. Make the framework compatible between Backbone and ColorLabs Premium Themes.
+ * admin-shortcode.php, admin-shortcode-generator.php, dialog.php, dialog-js.php, preview-shortcode-external.php, editor_plugin.js, shortcodes.js
+    - Fix vulnerability issue in shortcode
+    - Added StumbleUpon Badge and Pinterest "Pin It" Button Shortcode
+    - File Added : stumbleupon.js, pinterest.js
+ * admin-editor.php
+    - Added colabs-customizr support 
+    - Added File upload function
+    - Add file save or file upload notification
+ * admin-init.php, admin-functions.php
+    - Code adjustment for Presstrends
+    - Now PressTrends require only one API key to work.  
+ * admin-update.php
+    - Change framework version compare method
+    - Backbone framework == Any other ColorLabs Premium themes framework. Now it is all taken from the same source. 
+ * admin-custom.php
+    - Add multicheck option type
+
+2012.04.05 - Version 1.2.10
+ * admin-custom.php
+    - Fix jquery radio button bug
+
+2012.04.04 - Version 1.2.9
+ * admin-function.php
+    - first image fixed,custom field image name, and breadcrumbs
+	
+2012.03.27 - Version 1.2.8
+ * timthumb.php
+    - timthumb 2.8.10 update
+
+2012.03.19 - Version 1.2.7
+ * admin-interface.php
+ 	- Fix SEO output functions
+ * admin-style.css
+    - Fix theme panel header bar - overflow issue
+    
+2012.03.19 - Version 1.2.6
+ * admin-interface.php, admin-interface-functions.php, admin-functions.php, admin-editor.php, admin-backup.php, admin-update.php
+ 	- Added new file admin-update.php contains framework updater functions
+ 	- Fix Backup Settings interface and functions
+    - Added ColorLabs panel to all theme sub-menu page.
+
+2012.03.15 - Version 1.2.5
+ * js/colabs-scripts.js 
+ 	- Fix column height when select input, checkbox and radio input changed.
+ 	- Read hash url and show panel corespond to hash on first load
+
+2012.03.07 - Version 1.2.4
+ * admin-init.php - Added option to disable PressTrends
+ * admin-functions.php - Fix PressTrends tracking code
+ 
+2012.03.05 - Version 1.2.3
+ * Added PressTrends tracking code
+
+2012.02.20 - Version 1.2.2
+ * admin-interface.php - fix generate options function
+ * admin-backup.php - fix export query
+
+2012.01.26 - Version 1.2.1
+ * admin-interface.php - Fix reset button
+ * admin-interface-functions.php - Remove reset button at top navigation
+
+2012.01.24 - Version 1.2.0
+ * Change admin panel to new drag and drop layout
+
+2012.01.16 - Version 1.0.6
+ * admin-custom.php - Fix javascript error on metabox
+
+2012.01.16 - Version 1.0.5
+ * admin-custom.php - Fix radio button bug on metabox
+
+2011.12.14 - Version 1.0.4
+ * admin-functions.php, admin-style.css - Admin panel compatibility for WordPress 3.3
+
+2011.12.01 - Version 1.0.3
+ * admin-interface.php - added sidebar manager sub-menu
+ * admin-interface-functions.php - fix default icon for every colabs sub-menu
+ * admin-sbm.php - added sidebar manager functionality
+ * admin-hooks.php, admin-dashboard.php - add dashboard bottom, left and right hook
+
+2011.11.30 - Version 1.0.2
+ * js/colabs-script.js - Detect platform, when on mobile or tablet, drag & drop function will be change to click event
+ * admin-functions.php - change default image option name
+
+2011.11.08 - Version 1.0.1
+ * admin-functions.php - set playicon value to false
+ 
+2011.10.11 - Version 1.0.0
+ * First Logged release

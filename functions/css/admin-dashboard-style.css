@@ -1,0 +1,125 @@
+/*
+ * CoLabs admin CSS
+ *
+ * Copyright (c) 2011 ColorLabs (http://colorlabsproject.com)
+ *
+ * http://www.w3.org/Style/CSS/
+ *
+ * Version 1.0
+ *
+ */
+/* Main Structure */
+.colabs_container #icon-colabs { background: url("../images/theme-info32.png") no-repeat transparent }
+/* HEADER */
+.themever { width:540px }
+.logocolabs{ padding-top:9px }
+/* admin main styles */
+h2 { margin-bottom: 20px; }
+.title { margin: 0px !important; background: #DFDFDF repeat-x scroll left top; padding: 10px; font-family: Georgia, serif; font-weight: normal !important; letter-spacing: 1px; font-size: 18px; }
+.container { background: #EAF3FA; padding: 10px; }
+.maintable { font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif; background: #F9F9F9; margin-bottom: 20px; padding: 10px 0px; border:1px solid #E6E6E6; width: 100%;}
+.mainrow { padding-bottom: 10px !important; border-bottom: 1px solid #E6E6E6 !important; float: left; margin: 0px 10px 10px 10px !important; }
+.titledesc { font-size: 12px; font-weight:bold; width: 220px !important; margin-right: 20px !important; }
+.forminp { width: 700px !important; vertical-align:middle !important; }
+.forminp input, .forminp select { margin-bottom: 9px !important; padding: 5px !important; height:auto !important; }
+.forminp textarea { margin-bottom: 9px !important; padding: 6px; }
+.forminp input[readonly], .forminp select[readonly], .forminp select[disabled], .forminp textarea[readonly] {color:#AAAAAA; background-color:#EEEEEE; }
+.forminp input:focus[readonly], .forminp select:focus[readonly], .forminp select:focus[disabled], .forminp textarea:focus[readonly] {color:#AAAAAA; background-color:#EEEEEE; }
+.forminp input:focus, .forminp textarea:focus {border:1px solid #CCCCCC;background-color: #F9F9F9;}
+
+.info { background: #FFFFCC; border: 1px dotted #D8D2A9; padding: 10px; color: #333; }
+.forminp .checkbox { width:20px }
+.info a { color: #333; text-decoration: none; border-bottom: 1px dotted #333 }
+.info a:hover { color: #666; border-bottom: 1px dotted #666; }
+.warning { background: #FFEBE8; border: 1px dotted #CC0000; padding: 10px; color: #333; font-weight: bold; }
+
+/* images section legacy */
+.one_category {border: 1px #5795C3 solid; margin-bottom: 30px; padding: 10px;}
+.nothing {color: #FF0000; float: right;}
+.one_category_name {background-color: #5795C3; text-align: center; color: #fff; font-size: 13px; padding: 3px 0;}
+.one_cat_img {float: left;margin: 0 0px 5px 5px;padding: 2px;display: block;width: 40px;text-align: center;}
+.one_cat_img:hover {background-color: #fff;}
+input.form-table-radio{cursor: pointer;border: none;}
+.colabs_images {height: 455px;	overflow: scroll;padding-top: 10px;	font-size: 10px;font-family: verdana;}
+.oneimage-box {	padding-bottom: 20px;float: left;padding-left: 10px;width: 120px;}
+.oneimage-box:hover {background-color: #F4F4F4;}
+.oneimage {border: 4px #5795C3 solid;float: left;width: 100px;height: 100px;display: block;}
+.del_image {background-color: #981401;padding: 3px 5px;	color: #fff;font-weight: bold;}
+
+
+/* admin dashboard section */
+.dash-left {float:left;width:50%;}
+.dash-right {float:left;width:30%;margin-left:20px;}
+#boxy {margin: 10px;}
+.rsswidget {text-decoration: none; font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-size:13px; line-height:1.7em;}
+.rss-date {color:#999999;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;margin-left:3px;}
+.rss-widget ul li {line-height:1.5em;}
+
+.postbox p, .postbox ul, .postbox ol, .postbox blockquote {font-size:11px;}
+
+p.btop {padding:0px; margin-bottom:-5px;}
+p.bbot {padding:0 0 30px 0; margin-top:-5px;}
+
+.postbox .statsico{float:left; height:25px; width:28px; background:transparent url(../images/theme-info16.png) no-repeat scroll 6px 4px}
+.postbox .newspaperico{float:left; height:25px; width:27px; background:transparent url(../images/newspaper.png) no-repeat scroll 5px 5px}
+.postbox .twitterico{float:left; height:25px; width:25px; background:transparent url(../images/twitter-bird.png) no-repeat scroll 5px 5px}
+.postbox .forumico{float:left; height:25px; width:27px; background:transparent url(../images/comments.png) no-repeat scroll 6px 6px}
+.postbox .rssico{float:right; height:25px; width:20px; background:transparent url(../images/rss-sm.png) no-repeat scroll 0 8px}
+
+.helpico{float:right; height:16px; width:16px; margin-left:7px; background:transparent url(../images/ico-info.png) no-repeat scroll 0 0}
+.feedburnerico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-feedburner.png) no-repeat scroll 0 0}
+.twitterico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-twitter.png) no-repeat scroll 0 0}
+.facebookico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-facebook.png) no-repeat scroll 0 0}
+.googleico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-google.png) no-repeat scroll 0 0}
+
+#easyTooltip{ -moz-border-radius:8px;  padding:10px;  border:1px solid #ccc;  background:#E3F4F9;  width:400px}
+
+.alt:hover, .even:hover{ background-color:#EAF2FA !important}
+
+/* error styles */
+input.invalid, textarea.invalid, select.invalid{ background-color:#FFEBE8 !important;  border-color:#C00 !important}
+label.invalid{ float:none;  font:bold 12px arial;  color:#C00;  padding-left:20px;  vertical-align:top}
+
+/* round out the category div corners */
+#categorydiv div.tabs-panel{ -moz-border-radius:4px !important}
+.widefat tbody th.check-column{ padding:0 !important; vertical-align:middle !important}
+div.fields-panel{height:250px; overflow:auto; width:400px; -moz-border-radius:4px !important}
+
+#tblspacer{margin:20px 0}
+.widefat td{padding:12px 7px; vertical-align:top}
+
+span#curr{vertical-align:top}
+input.radiobutt{vertical-align:text-top}
+.insider{ background-color:#FFF}
+
+.preloader-container{ width:100%; height:100%; background:#FFF url(../../images/preloader.gif) 50% 50% no-repeat}
+
+.admin-msg{ margin:10px 10px -10px 10px}
+/*-------------------------------------------------------------------------------------------*/
+/* GENERAL STYLES */
+/*-------------------------------------------------------------------------------------------*/
+/* http://sonspring.com/journal/clearing-floats */
+html body * span.clear,
+html body * div.clear,
+html body * li.clear,
+html body * dd.clear
+{
+	background: none;
+	border: 0;
+	clear: both;
+	display: block;
+	float: none;
+	font-size: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+.left{float:left;}
+.right{float:right;}
+
+/* Theme Panel Fixes */
+#wpbody-content{ overflow: auto; }

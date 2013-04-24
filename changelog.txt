@@ -1,0 +1,40 @@
+/*
+    Theme Name: Lensa
+    Theme URI: http://demo.colorlabsproject.com/lensa/
+    Author: ColorLabs & Company
+    Author URI: http://colorlabsproject.com
+    Release Date: 30 November 2012
+    Designer: Andrie Pasca Hendradewa
+    Requirements: WordPress 3.0 or higher, PHP 5
+    Compatibility: WordPress 3.5
+    Tags: photography, instagram, blog, full-screen, slider, responsive
+    Last update date: 19 February 2013
+*/
+
+/**** Changelog ****/
+
+"Please backup your theme pack files at first before you update the theme into the latest version"
+
+2013.02.19 - Version 1.0.4
+- Files affected: style.css, includes/theme-js.php, includes/js/script.js
+  Fix: Slideshow options doesn't work
+
+2012.01.08 - Version 1.0.3
+- Files affected: style.css, includes/js/scripts.js, includes/js/plugins.js
+  Fix: Loading indicator overlap main content on blog page.
+  Fix: Fancybox title block when image have long title.
+  Add: Fancybox cyclic mode, when popup reach end, next arrow will go to first image.
+- Files affected: style.css, single.php, page.php, comments.php
+  Fix some style, add single pagination, and add comment pagination  
+
+2012.12.24 - Version 1.0.2
+- Files affected: index.php, template-gallery.php, template-instagram.php:, includes/theme-instagram.php
+  Fix: instagram.
+
+2012.12.17 - Version 1.0.1
+- Files affected: style.css, includes/js/plugins.js, includes/theme-js.php
+  Fix: Overlay pattern on slider only appear at first slide.
+  Fix: Slider options from theme panel not working.
+
+2012.11.30 - version 1.0
+ * First release!
