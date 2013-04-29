@@ -218,7 +218,7 @@ if( get_option('colabs_excerpt_length') != '' ){
 add_filter('excerpt_length', 'colabs_excerpt_length');
 
 //Custom Excerpt Function
-function colabs_custom_excerpt($limit,$more) {
+function colabs_custom_excerpt($limit = 35, $more = '&hellip;') {
 	global $post;
 	if ($limit=='')$limit=35;
 	$print_excerpt = '<p>';

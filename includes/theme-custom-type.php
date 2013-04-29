@@ -169,7 +169,7 @@ add_filter( 'parse_query','perform_filtering' );
 function perform_filtering( $query )
  {
     $qv = &$query->query_vars;
-    if (( $qv['photograph-categories'] ) && is_numeric( $qv['photograph-categories'] ) ) {
+    if ( isset($qv['photograph-categories']) && is_numeric( $qv['photograph-categories'] ) ) {
       $term = get_term_by( 'id', $qv['photograph-categories'], 'photograph-categories' ); 
 			$qv['photograph-categories'] = $term->slug;
 		}
