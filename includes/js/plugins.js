@@ -1,3 +1,4 @@
+
 /* --- Cookie --- */
 jQuery.cookie = function (key, value, options) {
 
@@ -166,7 +167,7 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
   /* Place Supersized Elements
   ----------------------------*/
   $(document).ready(function() {
-    $('body').append('<div id="supersized-loader"></div><ul id="supersized"></ul>');
+    $('body').append('<ul id="supersized"></ul>');
   });
      
      
@@ -204,6 +205,12 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
         markerContent,
         thumbMarkers = '',
         thumbImage;
+
+        // Check if Slides is exists
+        if( typeof base.options.slides !== 'undefined' ) {
+          // Append loader
+          $('<div id="supersized-loader"></div>').insertBefore( base.$el );
+        }
         
       while(thisSlide <= base.options.slides.length-1){
         //Determine slide link content

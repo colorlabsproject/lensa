@@ -93,7 +93,7 @@ $options[] = array( "name" => __( "Pauses slideshow on last slide", "colabstheme
 					"options" => array( "1" => __( "True", "colabsthemes" ), "0" => __( "False", "colabsthemes" ) ) );			
 									
 $options[] = array( "name" => __( "Length between transitions", "colabsthemes" ),
-					"desc" => __( "", "colabsthemes" ),
+					"desc" => __( "Duration between transition in miliseconds", "colabsthemes" ),
 					"id" => $shortname."_slide_interval",
 					"std" => "6000",
 					"class" => "",
@@ -116,7 +116,7 @@ $options[] = array( "name" => __( "Transition", "colabsthemes" ),
 					);		
 									
 $options[] = array( "name" => __( "Speed of transition", "colabsthemes" ),
-					"desc" => __( "", "colabsthemes" ),
+					"desc" => __( "Speed of transition in miliseconds", "colabsthemes" ),
 					"id" => $shortname."_transition_speed",
 					"std" => "2000",
 					"class" => "",
