@@ -658,7 +658,7 @@
 }
 
 /* Bug fixes */
-.wp-admin #wpbody-content{ overflow: auto; }
+.wp-admin #wpbody{ overflow: auto; }
 
 .colabs_container #template .iris-picker .iris-square {
 	margin-right: 10% !important
@@ -667,4 +667,29 @@
 #icon-colabsthemes {
 	background-image: url(../../../../wp-admin/images/icons32.png);
 	background-position: -370px -5px
+}
+
+
+/* #Twitter Stream
+==============================================================================*/
+.colabs_twitter_stream {
+	color: #666;
+	line-height: 22px;
+}
+.colabs_twitter_stream .stream-label {
+	float: left;
+	font-weight: bold;
+	padding-left: 30px;
+	margin-right: 10px;
+	text-transform: uppercase;
+	background: url(images/twitter.png) no-repeat left center;
+}
+.colabs_twitter_stream ul {
+	margin: 0;
+}
+.colabs_twitter_stream li {
+	display: none;
+}
+.colabs_twitter_stream li:first-child {
+	display: block
 }

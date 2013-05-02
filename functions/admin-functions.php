@@ -3387,4 +3387,26 @@ function colabs_updates_notif() {
 }
 add_action( 'admin_head', 'colabs_updates_notif' );
 
+
+/**
+ * Linkify Twitter Text
+ * 
+ * @param string s Tweet
+ * 
+ * @return string a Tweet with the links, mentions and hashtags wrapped in <a> tags 
+ */
+function linkify_twitter_text($tweet){
+  $url_regex = '/((https?|ftp|gopher|telnet|file|notes|ms-help):((\/\/)|(\\\\))+[\w\d:#@%\/\;$()~_?\+-=\\\.&]*)/';
+  $tweet = preg_replace($url_regex, '<a href="$1" target="_blank">'. "$1" .'</a>', $tweet);
+  $tweet = preg_replace( array(
+    '/\@([a-zA-Z0-9_]+)/',    # Twitter Usernames
+    '/\#([a-zA-Z0-9_]+)/'    # Hash Tags
+  ), array(
+    '<a href="http://twitter.com/$1" target="_blank">@$1</a>',
+    '<a href="http://twitter.com/search?q=%23$1" target="_blank">#$1</a>'
+  ), $tweet );
+  
+  return $tweet;
+}
+
 ?>

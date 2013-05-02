@@ -285,7 +285,35 @@ function colabsthemes_options_page(){
   $pos = strpos($manualurl, 'documentation' );
   $theme_slug = str_replace( "/", "", substr($manualurl, ($pos + 13))); //13 for the word documentation
 ?>
+
 <div class="wrap colabs_container">
+  
+  <?php 
+  $free_themes = array('lensa', 'photogram', 'leatherly', 'tumblepress', 'rpg.cod', 'wellblog');
+  if( in_array( strtolower($themename), $free_themes) ) : ?>
+    <div class="colabs_twitter_stream">
+      <?php $twitter_stream = fetch_feed( 'https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=colorlabs' );
+        if( ! is_wp_error( $twitter_stream ) ) {
+          $maxitems = $twitter_stream->get_item_quantity(5);
+          $rss_items = $twitter_stream->get_items( 0, $maxitems );
+        } ?>
+      
+      <?php if( $maxitems !== 0 ) : ?>
+        <div class="stream-label">News On Twitter</div>
+        <ul>
+          <?php foreach( $rss_items as $item ) : ?>
+            <li>
+                <?php $twitter_text = str_replace('ColorLabs:', '', $item->get_title());
+                echo linkify_twitter_text($twitter_text);?>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+    </div>
+    <!-- .colabs_twitter-stream -->
+  <?php endif; ?>
+  
+
     <form action="" enctype="multipart/form-data" id="colabsform">
     <?php
       // Add nonce for added security.
