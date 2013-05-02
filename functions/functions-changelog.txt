@@ -1,5 +1,10 @@
 *** ColorLabs Framework Changelog **
 
+2013.04.25 - Version 1.7.7
+  - Fix: URL redirection after framework updated
+  - Fix: Undefined underscrorejs
+  - Fix: Navigation image for jquery ui calendar
+
 2013.04.17 - Version 1.7.6
   - Fix: Feed URL not working.
 

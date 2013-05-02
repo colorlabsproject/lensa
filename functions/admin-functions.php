@@ -1104,7 +1104,9 @@ if ( !function_exists( 'colabs_twitter_script') ) {
 	      			<strong><%= user.screen_name %></strong>\
 	      		</a>\
 	      	</span>';
-	      jQuery( _.template( template, { user: twitters[0].user } )).insertAfter('.widget_colabs_twitter ul');
+	      if( typeof _ !== 'undefined' ) {
+	      	jQuery( _.template( template, { user: twitters[0].user } )).insertAfter('.widget_colabs_twitter ul');
+	      }
 	    }
 	    
 	    function relative_time(time_value) {
@@ -3356,4 +3358,33 @@ if ( ! function_exists( 'colabs_custom_comments_rss' ) ) {
 	}
 }
 add_filter('post_comments_feed_link_html','colabs_custom_comments_rss');
+
+/**
+ * Add notification beside the "Updates" text when update is available
+ * 
+ */
+function colabs_updates_notif() {
+	global $menu, $submenu;
+
+	$upd = array();
+
+	// Theme Update
+	$theme_name = get_option( 'colabs_themename' );
+	$storefront_theme = colabs_get_fw_version('http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt');
+	$check_theme_update = version_compare( $storefront_theme, COLABS_THEME_VER, '>' );
+	if( $check_theme_update )
+		$upd[] = true;
+
+	// Framework update
+	$fw_update_check = colabsthemes_framework_update_check();
+	if( isset($fw_update_check['update']) && $fw_update_check['update'] )
+		$upd[] = true;
+
+	if( count($upd) > 0 ) {
+		$update_text = $submenu['colabsthemes'][2][0];
+		$submenu['colabsthemes'][2][0] = $update_text . "<span class='awaiting-mod update-plugins'><span class='processing-count'>". count($upd) ."</span></span>";
+	}
+}
+add_action( 'admin_head', 'colabs_updates_notif' );
+
 ?>

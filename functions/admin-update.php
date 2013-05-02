@@ -20,7 +20,15 @@ function colabsthemes_framework_update_page(){
 <div class="wrap colabs_notice">
 <div id="colabs_options" class="wrap<?php if (is_rtl()) { echo ' rtl'; } ?>">
 	<div class="one_col wrap colabs_container">
-		<?php echo $message;?>
+	
+	<?php 
+	// Message update success
+	if( isset( $_REQUEST['update_success'] ) ) {
+		echo "<div id='framework-upgraded' class='updated fade'><p>". __("New framework successfully downloaded, extracted and updated.","colabsthemes")."</p></div>";
+	} else {
+		echo $message;
+	} ?>
+
 	<div id="main">
 	<div id="panel-header">
         <?php colabsthemes_options_page_header('save_button=false'); ?>
@@ -197,7 +205,7 @@ function colabsthemes_framework_update_check(){
 /*-----------------------------------------------------------------------------------*/
 function colabsthemes_framework_update_head(){
 	global $message;
-  if(isset($_REQUEST['page'])){
+	if(isset($_REQUEST['page']) ){
 	// Sanitize page being requested.
 	$_page = strtolower( strip_tags( trim( $_REQUEST['page'] ) ) );
 	if( 'colabsthemes_framework_update' == $_page){
@@ -249,12 +257,14 @@ function colabsthemes_framework_update_head(){
 		}
 
 		$message = "<div id='framework-upgraded' class='updated fade'><p>". __("New framework successfully downloaded, extracted and updated.","colabsthemes")."</p></div>";
+		wp_redirect( admin_url( 'admin.php?page=colabsthemes_framework_update&update_success=1' ) );
 		}
 	}
 	} //End user input save part of the update
  }
 }
-add_action( 'admin_head','colabsthemes_framework_update_head' );
+add_action( 'admin_init','colabsthemes_framework_update_head' );
+
 //Updater Load Scripts
 if (!function_exists('colabs_load_only_updater')) {
 function colabs_load_only_updater(){

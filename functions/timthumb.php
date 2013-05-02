@@ -121,8 +121,7 @@ if(! isset($ALLOWED_SITES)){
 		'fbcdn.net',
 		'amazonaws.com',
 		's2.dmcdn.net',
-		's3.mcstatic.com',
-		'pinimg.com'
+		's3.mcstatic.com'
 	);
 }
 // -------------------------------------------------------------
