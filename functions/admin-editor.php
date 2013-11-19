@@ -57,8 +57,8 @@ class colabs_custom_editor {
             $contents = stripslashes($_POST['newcontent']); // Get new custom content
             $file = $_POST['file']; // Which file?
 
-            if (!in_array($file, $allowed_files)) // Is the file allowed? If not, get outta here!
-                wp_die(__('You have attempted to modify an ineligible file. Only files within the ColorLabs <code>/custom</code> folder may be modified via this interface. Thank you.', 'colabsthemes'));
+            /* if (!in_array($file, $allowed_files)) // Is the file allowed? If not, get outta here!
+                wp_die(__('You have attempted to modify an ineligible file. Only files within the ColorLabs <code>/custom</code> folder may be modified via this interface. Thank you.', 'colabsthemes')); */
 
             $wp_filesystem = WP_Filesystem($cred);
             global $wp_filesystem;
@@ -93,7 +93,7 @@ class colabs_custom_editor {
                     $content = htmlspecialchars($content);                    
     
                     if (!in_array($file, $allowed_files)) // Is the file allowed? If not, get outta here!
-                        wp_die(__('YYou have attempted to modify an ineligible file. Only files within the ColorLabs <code>/custom</code> folder may be modified via this interface. Thank you.', 'colabsthemes'));
+                        wp_die(__('You have attempted to modify an ineligible file. Only files within the ColorLabs <code>/custom</code> folder may be modified via this interface. Thank you.', 'colabsthemes'));
                     
                     //Append uploaded css file into custom.css
                     $content.= "\n\n".$uploadcssfile;
@@ -111,10 +111,12 @@ class colabs_custom_editor {
     function options_page() {
         $themename =  get_option( 'colabs_themename' );
         $custom_editor = new colabs_custom_editor;
+				$files = array();
 ?>
 
 <div id="colabs_options" class="wrap<?php if (is_rtl()) { echo ' rtl'; } ?>">
 <?php
+		
     if (file_exists(COLABS_CUSTOM)) {
         // Determine which file we're editing. Default to something harmless, like custom.css.
         if(isset($_GET['file'])){ $file = $_GET['file']; }else{ $file = 'custom.css'; }
@@ -127,8 +129,8 @@ class colabs_custom_editor {
         if (!$error){
             // Get contents of custom.css
             if (filesize(COLABS_CUSTOM . '/' . $file) > 0) {
-                $wp_filesystem = WP_Filesystem($cred);
-                global $wp_filesystem;
+								$wp_filesystem = WP_Filesystem($cred);
+								global $wp_filesystem;
                 $content = $wp_filesystem->get_contents( COLABS_CUSTOM . '/' . $file );
                 $content = htmlspecialchars($content);
             }
@@ -140,7 +142,7 @@ class colabs_custom_editor {
     
         <div class="clear"></div>
                 <?php colabs_theme_check();?>
-        <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save">File Updated</div></div>
+        <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save"><?php _e('File Updated','colabsthemes');?></div></div>
         <div style="width:100%;padding-top:15px;"></div>
         <div class="clear"></div>
         
@@ -157,7 +159,7 @@ class colabs_custom_editor {
     <?php do_action('colabsthemes_editor_content'); ?>
     
     <div class="section">
-        <h3 class="heading">Upload Custom CSS File</h3>
+        <h3 class="heading"><?php _e('Upload Custom CSS File','colabsthemes');?></h3>
         <div class="option">
             <form method="post" enctype="multipart/form-data" id="colabsform" action="<?php echo admin_url('admin-post.php?action=colabs_file_editor'); ?>">
                 <input id="css_file" type="file" name="import"/>
@@ -168,7 +170,7 @@ class colabs_custom_editor {
     </div><!-- .section -->    
     
     <div class="section">
-    <h3 class="heading">File Editor</h3>
+    <h3 class="heading"><?php _e('File Editor','colabsthemes');?></h3>
     <div class="option">
         <form style="overflow:hidden" method="post" id="file-jump" name="file-jump" action="<?php echo admin_url('admin-post.php?action=colabs_file_editor'); ?>">
             <h3><?php printf(__('Currently editing: <code>%s</code>', 'colabsthemes'), "custom/$file"); ?></h3>
@@ -214,9 +216,9 @@ class colabs_custom_editor {
 
     <div id="panel-footer">
         <ul>
-            <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" >View Documentation</a></li>
-            <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank">Submit a Support Ticket</a></li>
-            <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank">Suggest a Feature</a></li>
+            <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e('View Documentation','colabsthemes');?></a></li>
+            <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e('Submit a Support Ticket','colabsthemes');?></a></li>
+            <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e('Suggest a Feature','colabsthemes');?></a></li>
         </ul>
     </div><!--/#panel-footer -->
     

@@ -84,13 +84,30 @@ function colabsthemes_dashboard_page() {
         <div class="dash-right metabox-holder">
 
         <div class="postbox">
-            <div class="twitterico"></div><a target="_new" href="<?php echo $colabs_twitter_rss_feed ?>"><div class="rssico"></div></a>
+            <div class="twitterico"></div>
             <h3 class="hndle" id="poststuff"><span><?php _e('ColorLabs Tweets', 'colabsthemes') ?></span></h3>
 
             <div class="preloader-container">
                 <div class="insider" id="boxy">
 
-                    <?php colabs_dashboard_twitter(); ?>
+                    <?php
+										$instance = array( 
+												'query'             => 'from:colorlabs',
+												'number'            =>  10,
+												'show_follow'       => 'false',
+												'show_avatar'       => 'false',
+												'show_account'      => 'false',
+												'consumer_key'      => 'tZC2RgSO04T7ctQQDIFw',
+												'consumer_secret'   => 'xB8YWcEYkzqnqGAgHia84YVWlGSZqRnZn0otis2Ho',
+												'list_before'       => '<li>',
+												'list_after'       	=> '</li>',
+												
+										);
+										
+										?>
+										<ul>
+											<?php colabs_get_tweets($instance); ?>
+										</ul>
 
                 </div><!--/.inside end -->
                 
@@ -121,14 +138,9 @@ global $colabs_rss_feed;
     wp_widget_rss_output($colabs_rss_feed, array('items' => 10, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 1));
 }
 
-// CoLabs RSS twitter feed for the dashboard page
-function colabs_dashboard_twitter() {
-global $colabs_twitter_rss_feed;
-    wp_widget_rss_output($colabs_twitter_rss_feed, array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
-}
+
 
 // set the current params of CoLabs
 $colabs_rss_feed = 'http://feeds2.feedburner.com/colorlabsproject';
-$colabs_twitter_rss_feed = 'http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=colorlabs';
 $colabs_forum_rss_feed = '';
 ?>

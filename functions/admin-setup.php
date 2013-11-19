@@ -129,7 +129,9 @@ if (!function_exists( 'colabs_output_alt_stylesheet')) {
 				$style = strtolower( strip_tags( trim( $style ) ) );
 				echo '<link href="'. get_template_directory_uri() .'/styles/'. $style .'" rel="stylesheet" type="text/css" />'."\n\n";
 			} else {
+				if (file_exists(get_template_directory_uri() .'/styles/default.css')):
 				echo '<link href="'. get_template_directory_uri() .'/styles/default.css" rel="stylesheet" type="text/css" />'."\n\n";
+				endif;
 			}
 		}
 	} // End colabs_output_alt_stylesheet()
@@ -207,7 +209,8 @@ if (!function_exists( 'colabs_output_custom_css')) {
 	function colabs_output_custom_css() {
 		// Custom.css insert
 		echo "<!-- Custom Stylesheet -->\n";
-		echo '<link href="'. get_stylesheet_directory_uri() .'/custom/custom.css" rel="stylesheet" type="text/css" />'."\n";
+		$upload_dir = wp_upload_dir();
+		echo '<link href="'. $upload_dir['baseurl'] .'/'.strtolower(COLABS_THEME_NAME).'-custom/custom.css" rel="stylesheet" type="text/css" />'."\n";
 	} // End colabs_output_custom_css()
 }
 /*-----------------------------------------------------------------------------------*/

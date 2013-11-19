@@ -116,6 +116,42 @@
 #panel-content input.input-text-small, #panel-content .controls .colabs-color { width:20%; margin-left:5px; margin-right:5px }
 #panel-content input.input-text-small { float: none }
 
+/* Input String Builder */
+#panel-content .section-string_builder input[type="text"] {
+	width: 70%;
+	margin-bottom: 15px;
+}
+#panel-content .section-string_builder .controls label {
+	display: block;
+	float: left;
+	width: 20%;
+	clear: left;
+	margin-right: 0;
+}
+.section-string_builder .add_button {
+	clear: both;
+}
+.string_builder_return {
+	margin-top: 10px;
+}
+.metabox-holder .string_builder_return h3 {
+	line-height: 1.5;
+	padding: 0;
+	margin-bottom: 5px;
+}
+.string_option {
+	padding: 5px 0;
+	border-bottom: 1px solid #ccc;
+}
+.string_option .delete {
+	margin-right: 5px;
+	position: relative;
+	top: -1px;
+}
+.string_option .delete img {
+	vertical-align: middle
+}
+
 /* Input Select */
 #panel-content select { margin-bottom:10px }
 #panel-content .select_wrapper {
@@ -185,6 +221,9 @@
 	float:right;
 	line-height:69px;
 	margin-right:10px
+}
+#panel-footer .save-bar {
+	text-transform: capitalize;
 }
 .colabs_container .save-bar .submit-button { float:none; margin-right:0 }
 
@@ -448,6 +487,9 @@
 }
 #panel-content .colabs-typography-preview-button { float: left }
 #panel-content .section-typography .controls { width: 60% }
+#panel-content .section-typography .colabs-typography-preview-button {
+	float: right;
+}
 
 /* Layout Settings */
 #panel-content .controls .colabs-radio-img-img {
@@ -658,7 +700,7 @@
 }
 
 /* Bug fixes */
-.wp-admin #wpbody{ overflow: auto; }
+.wp-admin #wpbody { overflow: auto; }
 
 .colabs_container #template .iris-picker .iris-square {
 	margin-right: 10% !important
@@ -668,7 +710,10 @@
 	background-image: url(../../../../wp-admin/images/icons32.png);
 	background-position: -370px -5px
 }
-
+.colabs-update-form, .colabs-backup-form {
+    display: inline;
+    margin-right: 5px;
+}
 
 /* #Twitter Stream
 ==============================================================================*/
@@ -683,6 +728,9 @@
 	margin-right: 10px;
 	text-transform: uppercase;
 	background: url(images/twitter.png) no-repeat left center;
+}
+.colabs_twitter_stream a {
+	text-decoration: none;
 }
 .colabs_twitter_stream ul {
 	margin: 0;

@@ -88,6 +88,11 @@
     	var fontSize = controls.find( sizeSelector ).val();
     	
     	var fontFace = controls.find( '.colabs-typography-face' ).val();
+
+        if( controls.find( '.colabs-typography-face option:selected' ).hasClass('custom-google-font') ) {
+            fontFace = controls.find( '.colabs-typography-face option:selected' ).text()
+        }
+
     	var fontStyle = controls.find( '.colabs-typography-style' ).val();
     	var fontColor = controls.find( '.colabs-typography-color' ).val();
    		var lineHeight = ( parseInt( fontSize )  / 2 ) + parseInt( fontSize ); // Calculate pleasant line-height for the selected font size.

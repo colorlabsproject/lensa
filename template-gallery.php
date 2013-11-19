@@ -31,7 +31,12 @@ get_header();
 				get_template_part('template','photograph');	
 			endif;
 		}else{
-			query_posts(array('post_type' => 'post', 'paged' => $paged ));
+			$cat_id = get_post_meta($post->ID, "cat",true);
+			if($cat_id != -1):
+				query_posts(array('post_type' => 'post', 'paged' => $paged, 'cat' => $cat_id));
+			else:
+				query_posts(array('post_type' => 'post', 'paged' => $paged ));
+			endif;
 			if(have_posts()):
 				get_template_part('template','post');	
 			endif;		

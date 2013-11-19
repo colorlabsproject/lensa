@@ -2248,7 +2248,7 @@ function colabs_shortcode_google_plusone ( $atts, $content = null ) {
 						'href' => '',
 						'callback' => '',
 						'float' => 'none', 
-						'annotation' => 'none'
+						'annotation' => 'bubble'
 					);
 
 	$atts = shortcode_atts( $defaults, $atts );

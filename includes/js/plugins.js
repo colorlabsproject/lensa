@@ -2365,7 +2365,7 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
           $slideTitle= $('.slide-title a'),
           $slideCaption= $('.slide-caption');
 
-      $slideTitle.text( title ).prop('href', url);
+      $slideTitle.html( title ).prop('href', url);
 
       // Check if caption exists
       if( caption !== '' ) {

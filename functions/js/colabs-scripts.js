@@ -192,7 +192,6 @@ $(document).ready(function(){
 		}, 10);
 	});
 
-
 	/* Twitter Stream ticker
 	----------------------------------------------------------------- */
 	var $t_stream = $('.colabs_twitter_stream'),
@@ -216,6 +215,12 @@ $(document).ready(function(){
 			$item.eq(next_visible).fadeTo(250, 1);
 		}, 5000);
 	}
+
+	/* Reset Options Button */
+	$('#main button.reset-button').click(function(e){
+		e.preventDefault();
+		$('#colabsform-reset :submit').trigger('click');
+	});
 
 });
 

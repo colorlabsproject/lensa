@@ -211,19 +211,19 @@ function colabsthemes_add_admin() {
   // Add framework functionaily to the head individually
     add_action( "admin_print_scripts-$colabsdash", 'colabs_admin_head_dashboard' );
     add_action( "admin_print_styles-$colabsdash", 'colabs_admin_head_dashboard' );
-  add_action( "admin_print_scripts-$colabspage", 'colabs_load_only' );
-  add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );
-  add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only_updater' );        
-  add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
+		add_action( "admin_print_scripts-$colabspage", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only_updater' );        
+		add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
     add_action( "admin_print_scripts-$colabsthemes_readme_menu_pagehook", 'readme_register_admin_head' );
     
-  add_action( "admin_print_scripts-$colabsseo", 'colabs_load_only' );
-  add_action( "admin_print_scripts-$colabssbm", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabsseo", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabssbm", 'colabs_load_only' );
     
   // Add the non-JavaScript "save" to the load of each of the screens.
-  add_action( "load-$colabspage", 'colabs_nonajax_callback' );
-  add_action( "load-$colabslayout", 'colabs_nonajax_callback' );
-  add_action( "load-$colabsseo", 'colabs_nonajax_callback' );
+		add_action( "load-$colabspage", 'colabs_nonajax_callback' );
+		add_action( "load-$colabslayout", 'colabs_nonajax_callback' );
+		add_action( "load-$colabsseo", 'colabs_nonajax_callback' );
 
 }
 }
@@ -285,30 +285,33 @@ function colabsthemes_options_page(){
   $pos = strpos($manualurl, 'documentation' );
   $theme_slug = str_replace( "/", "", substr($manualurl, ($pos + 13))); //13 for the word documentation
 ?>
-
 <div class="wrap colabs_container">
   
   <?php 
   $free_themes = array('lensa', 'photogram', 'leatherly', 'tumblepress', 'rpg.cod', 'wellblog');
   if( in_array( strtolower($themename), $free_themes) ) : ?>
     <div class="colabs_twitter_stream">
-      <?php $twitter_stream = fetch_feed( 'https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=colorlabs' );
-        if( ! is_wp_error( $twitter_stream ) ) {
-          $maxitems = $twitter_stream->get_item_quantity(5);
-          $rss_items = $twitter_stream->get_items( 0, $maxitems );
-        } ?>
-      
-      <?php if( $maxitems !== 0 ) : ?>
-        <div class="stream-label">News On Twitter</div>
+
+        <div class="stream-label"><?php _e('News On Twitter:','colabsthemes');?></div>
+				<?php
+				$instance = array( 
+            'query'             => 'from:colorlabs',
+            'number'            =>  5,
+            'show_follow'       => 'false',
+            'show_avatar'       => 'false',
+            'show_account'      => 'false',
+            'consumer_key'      => 'tZC2RgSO04T7ctQQDIFw',
+            'consumer_secret'   => 'xB8YWcEYkzqnqGAgHia84YVWlGSZqRnZn0otis2Ho',
+						'list_before'       => '<li>',
+            'list_after'       	=> '</li>',
+						
+        );
+				
+				?>
         <ul>
-          <?php foreach( $rss_items as $item ) : ?>
-            <li>
-                <?php $twitter_text = str_replace('ColorLabs:', '', $item->get_title());
-                echo linkify_twitter_text($twitter_text);?>
-            </li>
-          <?php endforeach; ?>
+          <?php colabs_get_tweets($instance); ?>
         </ul>
-      <?php endif; ?>
+
     </div>
     <!-- .colabs_twitter-stream -->
   <?php endif; ?>
@@ -323,80 +326,75 @@ function colabsthemes_options_page(){
       if ( '' == $colabs_nonce ) {} else {
     ?>
       <input type="hidden" name="_ajax_nonce" value="<?php echo $colabs_nonce; ?>" />
-    <?php
-      } // End IF Statement 
-    ?>
-        <div class="clear"></div>
-        <?php colabs_theme_check();?>
-        <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save"><?php _e("Options Updated","colabsthemes"); ?></div></div>
-        <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset"><?php _e("Options Reset","colabsthemes"); ?></div></div>
-        <div style="width:100%;padding-top:15px;"></div>
-        <div class="clear"></div>
-        <?php 
+    <?php } // End IF Statement  ?>
+
+    <div class="clear"></div>
+    <?php colabs_theme_check();?>
+    <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save"><?php _e("Options Updated","colabsthemes"); ?></div></div>
+    <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset"><?php _e("Options Reset","colabsthemes"); ?></div></div>
+    <div style="width:100%;padding-top:15px;"></div>
+    <div class="clear"></div>
+
+    <?php 
     // Rev up the Options Machine
-        $return = colabsthemes_machine($options);
-        ?>
+    $return = colabsthemes_machine($options); ?>
 
-        <div id="main" class="menu-item-settings metabox-holder">
+    <div id="main" class="menu-item-settings metabox-holder">
         
-          <div id="panel-header">
-                <?php colabsthemes_options_page_header( array( 'theme_data'=>$theme_data, 'themename'=>$themename ) ); ?>
-          </div><!-- #panel-header -->
+      <div id="panel-header">
+        <?php colabsthemes_options_page_header( array( 'theme_data'=>$theme_data, 'themename'=>$themename ) ); ?>
+      </div><!-- #panel-header -->
 
-          <div id="sidebar-nav">
-        <ul>
-          <?php echo $return[1] ?>
-        </ul>   
+      <div id="sidebar-nav">
+        <ul><?php echo $return[1] ?></ul>   
       </div>
+
       <div id="panel-content">
-                <div class="group help-block"> <p><?php _e("Drag an icon on the left and drop it here to customize","colabsthemes"); ?></p> </div>
-            <?php echo $return[0]; /* Settings */ ?>
-            <div class="clear"></div>
-          </div>
+        <div class="group help-block"> <p><?php _e("Drag an icon on the left and drop it here to customize","colabsthemes"); ?></p> </div>
+        <?php echo $return[0]; /* Settings */ ?>
+        <div class="clear"></div>
+      </div>
             
-          <div id="panel-footer">
+      <div id="panel-footer">
         <ul>
-                    <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e("View Documentation","colabsthemes"); ?></a></li>
-                    <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e("Submit a Support Ticket","colabsthemes"); ?></a></li>
-                    <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e("Suggest a Feature","colabsthemes"); ?></a></li>
+          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e("View Documentation","colabsthemes"); ?></a></li>
+          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e("Submit a Support Ticket","colabsthemes"); ?></a></li>
+          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e("Suggest a Feature","colabsthemes"); ?></a></li>
         </ul>
         
         <div class="save-bar save_bar_top right">
-                <img style="display:none" src="<?php echo get_template_directory_uri(); ?>/functions/images/ajax-loading.gif" class="ajax-loading-img ajax-loading-img-top" alt="Working..." />
+          <img style="display:none" src="<?php echo get_template_directory_uri(); ?>/functions/images/ajax-loading.gif" class="ajax-loading-img ajax-loading-img-top" alt="Working..." />
           <input type="submit" value="Save Changes" class="button submit-button button-primary" />
-
-          </form>
-          <form action="<?php /*echo wp_specialchars( $_SERVER['REQUEST_URI'] )*/ ?>" method="post" style="display:inline" id="colabsform-reset">
-              <?php
-              // Add nonce for added security.
-              if ( function_exists( 'wp_nonce_field' ) ) { wp_nonce_field( 'colabsframework-theme-options-reset' ); } // End IF Statement
-              $colabs_nonce = '';
-              if ( function_exists( 'wp_create_nonce' ) ) { $colabs_nonce = wp_create_nonce( 'colabsframework-theme-options-reset' ); } // End IF Statement
-              if ( '' == $colabs_nonce ) {} else {
-            ?>
-              <input type="hidden" name="_ajax_nonce" value="<?php echo $colabs_nonce; ?>" />
-            <?php
-              } // End IF Statement
-            ?>
-              <input name="reset" type="submit" value="Reset Options" class="button submit-button reset-button button-highlighted" onclick="return confirm( '<?php _e("Click OK to reset all options. All settings will be lost!","colabsthemes"); ?>' );" />
-                  <input type="hidden" name="colabs_save" value="reset" /> 
-              </form>
+          <button class="button submit-button reset-button button-highlighted"><?php _e('Reset Options', 'colabsthemes'); ?></button>
         </div>
       </div><!-- #panel-footer -->
 
-        </div><!--/#main-->
-        <div class="theme-info">
-          <br>
-      <span class="theme"><?php echo $themename; ?> <?php echo COLABS_THEME_VER; ?></span>
-            <span class="framework"><?php _e( 'Framework', 'colabsthemes' ); ?> <?php echo $colabs_framework_version; ?></span>
-        </div><!--/.theme-info-->
+    </div><!--/#main-->
+  </form>
 
-        <?php  if (!empty($update_message)) echo $update_message; ?>    
-<div style="clear:both;"></div>    
+  <form method="post" style="display:none" id="colabsform-reset">
+    <?php // Add nonce for added security.
+    if ( function_exists( 'wp_nonce_field' ) ) { wp_nonce_field( 'colabsframework-theme-options-reset' ); } // End IF Statement
+    $colabs_nonce = '';
+    if ( function_exists( 'wp_create_nonce' ) ) { $colabs_nonce = wp_create_nonce( 'colabsframework-theme-options-reset' ); } // End IF Statement
+    if ( '' == $colabs_nonce ) {} else { ?>
+      <input type="hidden" name="_ajax_nonce" value="<?php echo $colabs_nonce; ?>" />
+    <?php } // End IF Statement ?>
+    <input name="reset" type="submit" value="Reset Options" class="button submit-button reset-button button-highlighted" onclick="return confirm( '<?php _e("Click OK to reset all options. All settings will be lost!","colabsthemes"); ?>' );" />
+    <input type="hidden" name="colabs_save" value="reset" /> 
+  </form>
+
+  <div class="theme-info"><br>
+    <span class="theme"><?php echo $themename; ?> <?php echo COLABS_THEME_VER; ?></span>
+    <span class="framework"><?php _e( 'Framework', 'colabsthemes' ); ?> <?php echo $colabs_framework_version; ?></span>
+  </div><!--/.theme-info-->
+
+  <?php  if (!empty($update_message)) echo $update_message; ?>    
+  <div style="clear:both;"></div>    
 </div><!--wrap-->
- <?php
+<?php
 }
-}
+} // end if function_exists
 /*-----------------------------------------------------------------------------------*/
 /* colabs_load_only */
 /*-----------------------------------------------------------------------------------*/
@@ -432,9 +430,9 @@ global $_wp_admin_css_colors;
     wp_enqueue_style( 'colabs-admin-style', get_template_directory_uri() . '/functions/admin-style.css' );
     //wp_enqueue_style( 'jquery-ui-datepicker', get_template_directory_uri() . '/functions/css/jquery-ui-datepicker.css' );
 
-if(isset($_wp_admin_css_colors['name'])){
-    wp_enqueue_style( 'colabs-admin-'.$_wp_admin_css_colors['name'], get_template_directory_uri() . '/' . $_wp_admin_css_colors['name'] .'.css' );
-}
+		if(isset($_wp_admin_css_colors['name'])){
+				wp_enqueue_style( 'colabs-admin-'.$_wp_admin_css_colors['name'], get_template_directory_uri() . '/' . $_wp_admin_css_colors['name'] .'.css' );
+		}
     //COLOR Picker 
     $wp_version = get_bloginfo( 'version' );
 
@@ -772,6 +770,13 @@ if(isset($_wp_admin_css_colors['name'])){
           html += '<div class="string_option" id="'+name+'"><span>'+name+':</span> '+value+'</div>';
           jQuery( '#'+id+'_return').find( '.string_builder_empty').hide();
           jQuery( '#'+id+'_return').append(html);
+
+          // For Google Font
+          // ---------------
+          if( id == 'colabs_custom_google_font' ) {
+            jQuery('<option value="'+ value +'">'+ name +'</option>').appendTo('.colabs-typography-face');
+          }
+
         });
         return false; 
       });
@@ -860,8 +865,8 @@ global $wpdb; // this is how you get access to the database
   if( 'upload' == $save_type ) {
     $clickedID = $data; // Acts as the name
     $filename = $_FILES[$clickedID];
-        $filename['name'] = preg_replace( '/[^a-zA-Z0-9._\-]/', '', $filename['name']);
-        //print_r($filename);
+    $filename['name'] = preg_replace( '/[^a-zA-Z0-9._\-]/', '', $filename['name']);
+ 
     $override['test_form'] = false;
     $override['action'] = 'wp_handle_upload';
     $uploaded_file = wp_handle_upload($filename,$override);
@@ -882,11 +887,13 @@ global $wpdb; // this is how you get access to the database
     $name = preg_replace( '/[^a-zA-Z0-9-_ ]/i','',$name);
     $value = stripslashes($output['value']);
     $value = stripslashes($value);
-    $return = "$id|$name|$value";
-    echo $return;
+		$return = "$id|$name|$value";
+		echo $return;
     $option_temp = get_option($id);
     $option_temp[$name] = $value;
+		
     update_option( $id, $option_temp );
+
   }
   elseif('string_builder_delete' == $save_type){
     $data = $data;
@@ -968,7 +975,7 @@ global $wpdb; // this is how you get access to the database
           elseif ('true' == $new_value && 'checkbox' == $type){ // Checkbox Save
             update_option($id,'true' );
           }
-                    elseif('multicheck' == $type || 'multicheck2' == $type){ // Multi Check Save
+          elseif('multicheck' == $type || 'multicheck2' == $type){ // Multi Check Save
             $option_options = $option_array['options'];
             foreach ($option_options as $options_id => $options_value){
               $multicheck_id = $id . "_" . $options_id;
@@ -998,7 +1005,7 @@ global $wpdb; // this is how you get access to the database
             $border_array['color'] = $output[$option_array['id'] . '_color'];
             update_option($id,$border_array);
           }
-          elseif($type != 'upload_min'){
+          elseif(($type != 'upload_min')&&($type != 'string_builder')){
             update_option($id,stripslashes($new_value));
           }
         }
@@ -1392,22 +1399,22 @@ function colabsthemes_machine($options) {
       if (strpos($val, 'Impact') !== false){ $font15 = 'selected="selected"'; }
             if (strpos($val, 'Courier') !== false){ $font16 = 'selected="selected"'; }
       $output .= '<select class="colabs-typography colabs-typography-face" name="'. $value['id'].'_face" id="'. $value['id'].'_face">';
-      $output .= '<option value="Arial, sans-serif" '. $font01 .'>Arial</option>';
-      $output .= '<option value="Verdana, Geneva, sans-serif" '. $font02 .'>Verdana</option>';
-      $output .= '<option value="&quot;Trebuchet MS&quot;, Tahoma, sans-serif"'. $font03 .'>Trebuchet</option>';
-      $output .= '<option value="Georgia, serif" '. $font04 .'>Georgia</option>';
-      $output .= '<option value="&quot;Times New Roman&quot;, serif"'. $font05 .'>Times New Roman</option>';
-      $output .= '<option value="Tahoma, Geneva, Verdana, sans-serif"'. $font06 .'>Tahoma</option>';
-      $output .= '<option value="Palatino, &quot;Palatino Linotype&quot;, serif"'. $font07 .'>Palatino</option>';
-      $output .= '<option value="&quot;Helvetica Neue&quot;, Helvetica, sans-serif" '. $font08 .'>Helvetica*</option>';
-      $output .= '<option value="Calibri, Candara, Segoe, Optima, sans-serif"'. $font09 .'>Calibri*</option>';
-      $output .= '<option value="&quot;Myriad Pro&quot;, Myriad, sans-serif"'. $font10 .'>Myriad Pro*</option>';
-      $output .= '<option value="&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, &quot;Lucida Sans&quot;, sans-serif"'. $font11 .'>Lucida</option>';
-      $output .= '<option value="&quot;Arial Black&quot;, sans-serif" '. $font12 .'>Arial Black</option>';
-      $output .= '<option value="&quot;Gill Sans&quot;, &quot;Gill Sans MT&quot;, Calibri, sans-serif" '. $font13 .'>Gill Sans*</option>';
-      $output .= '<option value="Geneva, Tahoma, Verdana, sans-serif" '. $font14 .'>Geneva*</option>';
-      $output .= '<option value="Impact, Charcoal, sans-serif" '. $font15 .'>Impact</option>';
-            $output .= '<option value="Courier, &quot;Courier New&quot;, monospace" '. $font16 .'>Courier</option>';
+				$output .= '<option value="Arial, sans-serif" '. $font01 .'>Arial</option>';
+				$output .= '<option value="Verdana, Geneva, sans-serif" '. $font02 .'>Verdana</option>';
+				$output .= '<option value="&quot;Trebuchet MS&quot;, Tahoma, sans-serif"'. $font03 .'>Trebuchet</option>';
+				$output .= '<option value="Georgia, serif" '. $font04 .'>Georgia</option>';
+				$output .= '<option value="&quot;Times New Roman&quot;, serif"'. $font05 .'>Times New Roman</option>';
+				$output .= '<option value="Tahoma, Geneva, Verdana, sans-serif"'. $font06 .'>Tahoma</option>';
+				$output .= '<option value="Palatino, &quot;Palatino Linotype&quot;, serif"'. $font07 .'>Palatino</option>';
+				$output .= '<option value="&quot;Helvetica Neue&quot;, Helvetica, sans-serif" '. $font08 .'>Helvetica*</option>';
+				$output .= '<option value="Calibri, Candara, Segoe, Optima, sans-serif"'. $font09 .'>Calibri*</option>';
+				$output .= '<option value="&quot;Myriad Pro&quot;, Myriad, sans-serif"'. $font10 .'>Myriad Pro*</option>';
+				$output .= '<option value="&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, &quot;Lucida Sans&quot;, sans-serif"'. $font11 .'>Lucida</option>';
+				$output .= '<option value="&quot;Arial Black&quot;, sans-serif" '. $font12 .'>Arial Black</option>';
+				$output .= '<option value="&quot;Gill Sans&quot;, &quot;Gill Sans MT&quot;, Calibri, sans-serif" '. $font13 .'>Gill Sans*</option>';
+				$output .= '<option value="Geneva, Tahoma, Verdana, sans-serif" '. $font14 .'>Geneva*</option>';
+				$output .= '<option value="Impact, Charcoal, sans-serif" '. $font15 .'>Impact</option>';
+        $output .= '<option value="Courier, &quot;Courier New&quot;, monospace" '. $font16 .'>Courier</option>';
       // Google webfonts      
       global $google_fonts;
       sort ($google_fonts);
@@ -1419,12 +1426,12 @@ function colabsthemes_machine($options) {
         $output .= '<option value="'.$name.'" '. $font[$key] .'>'.$name.'</option>';
       endforeach;     
       // Custom Font stack
-      $new_stacks = get_option( 'framework_colabs_font_stack' );
+      $new_stacks = get_option( 'colabs_custom_google_font' );
       if(!empty($new_stacks)){
-        $output .= '<option value="">-- Custom Font Stacks --</option>';
+        $output .= '<option value="">-- Custom Google Fonts --</option>';
         foreach($new_stacks as $name => $stack){
           if (strpos($val, $stack) !== false){ $fontstack = 'selected="selected"'; } else { $fontstack = ''; }
-          $output .= '<option value="'. stripslashes(htmlentities($stack)) .'" '.$fontstack.'>'. str_replace( '_',' ',$name).'</option>';
+          $output .= '<option class="custom-google-font" value="'. stripslashes(htmlentities($stack)) .'" '.$fontstack.'>'. str_replace( '_',' ',$name).'</option>';
         }
       }
       $output .= '</select>';
@@ -1507,8 +1514,8 @@ function colabsthemes_machine($options) {
     case "string_builder":
       $desc = $value['std'];
       $output .= '<div id="'.$value['id'].'">';
-      $output .= 'Name<input class="colabs-input colabs-ignore" name="name" id="'. $value['id'] .'_name" type="text" />';
-      $output .= 'Font Stack<input class="colabs-input colabs-ignore" name="value" id="'. $value['id'] .'_value" type="text" />';
+      $output .= '<label for="'. $value['id'] .'_name">Name</label><input class="colabs-input colabs-ignore" name="name" id="'. $value['id'] .'_name" type="text" />';
+      $output .= '<label for="'. $value['id'] .'_value">Value</label><input class="colabs-input colabs-ignore" name="value" id="'. $value['id'] .'_value" type="text" />';
       $output .= '<div class="add_button"><a class="button string_builder_add" href="#" class="string_builder" id="'.$value['id'].'">Add</a></div>';
       $output .= '<div id="'.$value['id'].'_return" class="string_builder_return">';
       $output .= '<h3>'.$desc.'</h3>';

@@ -30,7 +30,9 @@ TABLE OF CONTENTS
 -----------------------------------------------------------------------------------*/
 
 /* add support custom background*/
-add_custom_background();
+add_theme_support( 'custom-background', array(
+		'default-color' => 'e6e6e6',
+	) );
 	  
 /*-----------------------------------------------------------------------------------*/
 /*  Add metabox style page template */
@@ -76,6 +78,11 @@ add_action("admin_init", "themes_admin_init_colabs_page_style");
 					jQuery('#facebook_gallery_block').show();
 				} else {
 					jQuery('#facebook_gallery_block').hide();
+				}
+				if( jQuery('#meta_style_gallery').val() == "post" ) {
+					jQuery('#category_post_block').show();
+				} else {
+					jQuery('#category_post_block').hide();
 				}
 			}
 			
@@ -123,6 +130,14 @@ add_action("admin_init", "themes_admin_init_colabs_page_style");
 				</select>
 			</div>
 			<?php }}?>
+			
+			<div id="category_post_block" style="display:none">
+				<p><strong><?php _e( 'Select Category:', 'colabsthemes' ); ?></strong></p>
+				<?php
+				$cat_id = get_post_meta($post->ID, "cat",true);
+				wp_dropdown_categories( 'show_option_none=All&selected='.$cat_id );
+				?>
+			</div>
 		</div>
 		
 		<?php
@@ -138,6 +153,7 @@ add_action("admin_init", "themes_admin_init_colabs_page_style");
 			if(($session_key!='')&&($session_sec!='')){	
 			update_post_meta($post->ID, "facebook_gallery_id", $_POST['facebook_gallery_id']);
 			}
+			update_post_meta($post->ID, "cat", $_POST['cat']);
 	  }
 
 
@@ -218,7 +234,7 @@ if( get_option('colabs_excerpt_length') != '' ){
 add_filter('excerpt_length', 'colabs_excerpt_length');
 
 //Custom Excerpt Function
-function colabs_custom_excerpt($limit = 35, $more = '&hellip;') {
+function colabs_custom_excerpt($limit,$more) {
 	global $post;
 	if ($limit=='')$limit=35;
 	$print_excerpt = '<p>';
@@ -355,11 +371,12 @@ add_filter( 'get_search_form', 'custom_search' );
 function colabs_credit(){
 global $themename,$colabs_options;
 
-if( $colabs_options['colabs_footer_credit'] != 'true' ) 
-	echo '<p>&copy; 2012 <a href="http://colorlabsproject.com/themes/'.get_option('colabs_themename').'">'.get_option('colabs_themename').'</a>. All Rights Reserved</p>';
-else 
+if( $colabs_options['colabs_footer_credit'] != 'true' ) {
+	echo '<p>&copy; '. date('Y') .' <a href="http://colorlabsproject.com/themes/'.get_option('colabs_themename').'">'.get_option('colabs_themename').'</a>. All Rights Reserved</p>';
+} else {
 	echo stripslashes( $colabs_options['colabs_footer_credit_txt'] ); 
- 
+}
+
 }
 
 
@@ -716,5 +733,27 @@ function create_like( $id, $votes = 0, $total = 0) {
   foreach( $rate_meta as $meta ) {
     add_post_meta( $id, $meta['meta_key'], $meta['meta_value']+1, true ) or update_post_meta( $id, $meta['meta_key'], $meta['meta_value']+1);
   }
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*  Slideshow */
+/*-----------------------------------------------------------------------------------*/
+
+function colabs_background_slideshow(){
+	echo '<script type="text/javascript">';
+ 
+      query_posts(array('post_type' => 'photograph', 'meta_key' => 'colabs_feature_photograph', 'meta_value'=> 'true'));
+      $slide='';          
+      while (have_posts()) : the_post();                                              
+        $slide .= "{                  
+          image   :'".colabs_image('link=url&return=true')."',                
+          title   :'".wptexturize(get_the_title())."',
+          url   :'".get_permalink()."',               
+          caption :'". addslashes( wptexturize(get_the_excerpt()) ). "'
+        },";          
+      endwhile; wp_reset_query();   
+
+      if($slide!='') echo 'slides = ['.rtrim($slide, ",").']'; 
+  echo '</script>';
 }
 ?>

@@ -1,5 +1,7 @@
 <?php
-if (!is_admin()) add_action( 'wp_print_scripts', 'colabsthemes_add_javascript' );
+if ( !is_admin() && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ) {
+	add_action( 'wp_print_scripts', 'colabsthemes_add_javascript' );
+}
 
 if (!function_exists('colabsthemes_add_javascript')) {
 

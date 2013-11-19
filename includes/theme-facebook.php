@@ -89,6 +89,11 @@ class ColabsFacebook
 					catch(Exception $e)
 					{
 							$new_session = 0;
+							
+							update_option( $option_fb_sess_key, '' );
+							update_option( $option_fb_sess_sec, '' );
+							update_option( $option_fb_sess_uid, '' );
+							update_option( $option_fb_sess_uname, '' );
 					}
 					$errorMsg = 0;
 					if( !$new_session )             $errorMsg = "Failed to get an authenticated session.";
@@ -285,10 +290,15 @@ function colabs_facebook_fetch_album_content($aid, $params)
     }
     else
     {
-        $album = $facebook->api_client->photos_getAlbums(null, $aid);
+        
+		try{
+			$album = $facebook->api_client->photos_getAlbums(null, $aid);
+		}catch(Exception $e){
+			$albums = false;
+		}
         if( !$album )
         {
-            $retVal['content'] = "Invalid Album ID ($aid)";
+            $retVal['content'] = "Invalid Album ID ($aid) - Please relogin your facebook";
             return $retVal;
         }
         $album = $album[0];

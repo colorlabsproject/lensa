@@ -1075,7 +1075,7 @@ function colabsthemes_sbm_page(){
     
     				<div id="colabs-sbm-builder-body">
     				    <div id="colabs-sbm-builder-part-assign" class="colabs-sbm-builder-part-inner">
-    				    	<label><span><?php _e("Sidebar to use","colabsthemes"); ?></span>
+    				    	<label><span><?php _e("Sidebar to use","colabsthemes"); ?></span></label>
     				    	<select name="sidebar_to_piggyback" id="sidebar_to_piggyback">
     				    	<?php echo $new_sidebars; ?>
     				    	</select>

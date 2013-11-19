@@ -1,49 +1,65 @@
 <?php
-add_action('init', 'photograph_register');
 
-if ( ! function_exists( 'photograph_register' ) ) {
-	function photograph_register() {
-		$args = array(
-			'description' => 'Photograph Post Type',
-			'show_ui' => true,
-			'menu_position' => 4,
-			'labels' => array(
-				'name'=> __('Photographs',"colabsthemes"),
-				'singular_name' => __('Photograph',"colabsthemes"),
-				'add_new' => __('Add New',"colabsthemes"),
-				'add_new_item' => __('Add New',"colabsthemes"),
-				'edit' => __('Edit Photograph',"colabsthemes"),
-				'edit_item' => __('Edit Photograph',"colabsthemes"),
-				'new-item' => __('New Photograph',"colabsthemes"),
-				'view' => __('View Photograph',"colabsthemes"),
-				'view_item' => __('View Photograph',"colabsthemes"),
-				'search_items' => __('Search Photograph',"colabsthemes"),
-				'not_found' => __('No Photograph Found',"colabsthemes"),
-				'not_found_in_trash' => __('No Photograph Found in Trash',"colabsthemes"),
-				'parent' => __('Parent Photograph',"colabsthemes"),
-				'all_items' => __('All Photographs',"colabsthemes")
-			),
-			'public' => false,
-			'capability_type' => 'post',
-			'hierarchical' => false,
-			'publicly_queryable' => true,
-			'query_var' => true,
-			'rewrite' => array( 'slug' => 'photograph'),
-			'has_archive' => true, 
-			'taxonomies' => array( 'photograph-categories' ), 
-			'supports' => array('title', 'thumbnail', 'author', 'comments', 'excerpt', 'editor'),
-			'menu_icon' => get_template_directory_uri() .'/images/photograph.png'
+// Hook into the 'init' action
+add_action( 'init', 'colabs_custom_post_type', 0 );
+if ( ! function_exists('colabs_custom_post_type') ) {
+	// Register Custom Post Type
+	function colabs_custom_post_type() {
+		$labels = array(
+			'name'                => _x( 'photographs', 'Post Type General Name', 'colabsthemes' ),
+			'singular_name'       => _x( 'photograph', 'Post Type Singular Name', 'colabsthemes' ),
+			'menu_name'           => __( 'Photograph', 'colabsthemes' ),
+			'parent_item_colon'   => __( 'Parent Photograph:', 'colabsthemes' ),
+			'all_items'           => __( 'All Photograph', 'colabsthemes' ),
+			'view_item'           => __( 'View Photograph', 'colabsthemes' ),
+			'add_new_item'        => __( 'Add New Photograph', 'colabsthemes' ),
+			'add_new'             => __( 'New Photograph', 'colabsthemes' ),
+			'edit_item'           => __( 'Edit Photograph', 'colabsthemes' ),
+			'update_item'         => __( 'Update Photograph', 'colabsthemes' ),
+			'search_items'        => __( 'Search photograph', 'colabsthemes' ),
+			'not_found'           => __( 'No photograph found', 'colabsthemes' ),
+			'not_found_in_trash'  => __( 'No photograph found in Trash', 'colabsthemes' ),
 		);
 
-		register_post_type( 'photograph' , $args );
+		$rewrite = array(
+			'slug'                => 'photograph',
+			'with_front'          => true,
+			'pages'               => true,
+			'feeds'               => true,
+		);
+
+		$args = array(
+			'label'               => __( 'photograph', 'colabsthemes' ),
+			'description'         => __( 'Photograph information pages', 'colabsthemes' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'trackbacks', 'revisions', ),
+			'taxonomies'          => array( 'photograph-categories' ),
+			'hierarchical'        => true,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'show_in_nav_menus'   => true,
+			'show_in_admin_bar'   => true,
+			'menu_position'       => 5,
+			'menu_icon'           => 'http://demo.colorlabsproject.com/colabs1/wp-content/themes/lensa/images/photograph.png',
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'query_var'           => 'photograph',
+			'rewrite'             => $rewrite,
+			'capability_type'     => 'post',
+		);
+
+		register_post_type( 'photograph', $args );
 		
-		 
+		
 		register_taxonomy('photograph-categories',
 				array ( 'photograph' ),
 				array (
 				'labels' => array (
 						'name' => __('Categories',"colabsthemes"),
-						'singular_name' => __('Categoriy',"colabsthemes"),
+						'singular_name' => __('Category',"colabsthemes"),
 						'search_items' => __('Search Photograph Categories',"colabsthemes"),
 						'popular_items' => __('Popular Photograph Categories',"colabsthemes"),
 						'all_items' => __('All Photograph Categories',"colabsthemes"),
@@ -61,9 +77,10 @@ if ( ! function_exists( 'photograph_register' ) ) {
 						'rewrite' => array( 'slug' => 'photograph-categories' ),
 				));
 		flush_rewrite_rules();
-		
 	}
+
 }
+
 
 add_filter("manage_edit-photograph_columns", "photograph_edit_columns");   
   
@@ -169,7 +186,7 @@ add_filter( 'parse_query','perform_filtering' );
 function perform_filtering( $query )
  {
     $qv = &$query->query_vars;
-    if ( isset($qv['photograph-categories']) && is_numeric( $qv['photograph-categories'] ) ) {
+    if (( $qv['photograph-categories'] ) && is_numeric( $qv['photograph-categories'] ) ) {
       $term = get_term_by( 'id', $qv['photograph-categories'], 'photograph-categories' ); 
 			$qv['photograph-categories'] = $term->slug;
 		}

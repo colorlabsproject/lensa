@@ -1,5 +1,27 @@
 *** ColorLabs Framework Changelog **
 
+2013.07.12 - Version 1.8.2
+	- File Affected: admin-init.php
+	- Fix Custom functions location
+	
+2013.07.11 - Version 1.8.1
+	- File Affected: admin-init.php, admin-interface.php, admin-functions.php, admin-dashboard.php
+	- Fix twitter info, Copy custom.css old to custom.css in uploads folder
+	
+2013.06.24 - Version 1.8.0
+	- Fix: custom.css move to uploads folder
+	- Fix: upload file
+	
+2013.05.21 - Version 1.7.9
+	- Fix: String Builder
+	- Fix: Reset button on IE
+	
+2013.05.03 - Version 1.7.8
+  - Add: Twitter new feed for free themes
+	- Fix: Backup & Update button
+	- Fix: Set force true on colabs_image function to default
+	- Fix: Set annotation google shortcode bubble to default
+
 2013.04.25 - Version 1.7.7
   - Fix: URL redirection after framework updated
   - Fix: Undefined underscrorejs

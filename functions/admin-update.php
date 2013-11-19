@@ -50,12 +50,19 @@ function colabsthemes_framework_update_page(){
       request_filesystem_credentials ( $url );
     } else {
 		?>
-		<div class="section">
-			<h3 class="heading"><?php _e("Framework Update","colabsthemes"); ?></h3>
-			<div class="option">
-        <?php colabsthemes_framework_update_page_set(); ?>
-			</div><!-- .option -->
-    </div><!-- .section -->
+		<?php 
+		$theme_name = get_option( 'colabs_themename' );
+		$storefront_theme = colabs_get_fw_version('http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt'); 
+		$check_theme_update = version_compare( $storefront_theme, COLABS_THEME_VER, '>' );
+		if ($check_theme_update != 1):
+		?>
+			<div class="section">
+				<h3 class="heading"><?php _e("Framework Update","colabsthemes"); ?></h3>
+				<div class="option">
+					<?php colabsthemes_framework_update_page_set(); ?>
+				</div><!-- .option -->
+			</div><!-- .section -->
+		<?php endif;?>
 		<div class="section">
 			<h3 class="heading"><?php _e("Themes Update","colabsthemes"); ?></h3>
 			<div class="option">
@@ -114,59 +121,46 @@ function colabsthemes_framework_update_page_set(){
 };
 function colabsthemes_themes_update_page_set(){
 	global $wp_filesystem, $message;
-	$context = get_theme_root();
-	$target_dir = $wp_filesystem->find_folder($context);
-	$target_file = trailingslashit($target_dir).'cookie.txt';
-	$cookie_content = $wp_filesystem->get_contents( $target_file );
-	$check_cookie=extractCookies($cookie_content);
 	
-	if ($check_cookie!=true){
-		if( isset($_POST['login_attempt_id']) && $_POST['login_attempt_id']=='1342424497'){
-			_e('<div id="colabs-no-archive-warning" class="updated fade" style="display:block;"><p><strong><i>The user name or password is incorrect</i></strong></p></div>','colabsthemes');
-		}?>
-		<p><?php _e('Please login with your ColorLabs account before updating your theme.','colabsthemes');?></p>
-		<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form">
-			<p>
-				<label class="element-title" for="login"><?php _e('E-Mail Address or Username:','colabsthemes');?></label> 
-				<input id="login" name="amember_login" size="15" value="" type="text">
-			</p>
-			<p>
-				<label class="element-title" for="pass"><?php _e('Password:','colabsthemes');?></label> 
-				<input id="pass" name="amember_pass" size="15" type="password">
-			</p>
-			<p style="margin-top: 25px;">
-			<input type="submit" name="colabs_theme_login" value="Log In" class="button" />
-			<input type="hidden" value="true" name="member_login">	
-			<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" />
-			</p>			
-		</form>
-		<p><?php _e('<a href="http://colorlabsproject.com/member/member/#am-forgot-block" target="_blank">Forgot Password?</a>','colabsthemes');?></p>
-    <?php }else{
-		$theme_name = get_option( 'colabs_themename' );
-		$storefront_theme = colabs_get_fw_version('http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt'); 
-		$check_theme_update = version_compare( $storefront_theme, COLABS_THEME_VER, '>' );
-		$details_url = add_query_arg(array('TB_iframe' => 'true', 'width' => 1024, 'height' => 800), 'http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt');
+	$theme_name = get_option( 'colabs_themename' );
+	$storefront_theme = colabs_get_fw_version('http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt'); 
+	$check_theme_update = version_compare( $storefront_theme, COLABS_THEME_VER, '>' );
+	$details_url = add_query_arg(array('TB_iframe' => 'true', 'width' => 1024, 'height' => 800), 'http://colorlabsproject.com/updates/'.strtolower($theme_name).'/changelog.txt');
 	
-		$backup = esc_url( add_query_arg(array( 'page' => 'colabsthemes_framework_update','theme_backup'=>'true' )) );
-		if($check_theme_update==1){
+	$backup = esc_url( add_query_arg(array( 'page' => 'colabsthemes_framework_update','theme_backup'=>'true' )) );
+	if($check_theme_update==1){
 			printf( __('<h3>An updated version of %1$s is available.</h3>','colabsthemes'), $theme_name );
-			printf( __('<p>You can update to <a href="%3$s" class="thickbox">%1$s %2$s</a> automatically.</p><p> To use the automatic update and backup feature, cURL must be enabled on your hosting. If cURL is disabled, please contact your hosting.</p><p>Updating this theme will lose any customizations you have made. We recommend backing up your theme files before updating.</p><p>Please backup your theme by clicking the Backup button before updating your theme. Backup (.zip) will be stored in <code>wp-content/themes/</code>.</p>'), $theme_name,$storefront_theme, $details_url );
+			printf( __('<p>You can update to <a href="%3$s" title="%1$s" class="thickbox">%1$s %2$s</a> automatically.</p><p> To use the automatic update and backup feature, cURL must be enabled on your hosting. If cURL is disabled, please contact your hosting.</p><p>Updating this theme will lose any customizations you have made. We recommend backing up your theme files before updating.</p><p>Please backup your theme by clicking the Backup button before updating your theme. Backup (.zip) will be stored in <code>wp-content/themes/</code>.</p>'), $theme_name,$storefront_theme, $details_url );
 
 			?>
 			
-			<form method="post"  enctype="multipart/form-data" id="colabsform" name="update" class="colabs-update-form">
-			<input type="submit" name="colabs_theme_update" value="Update" class="button" />
-			<input type="hidden" value="true" name="colabs-upgrade-theme">
-			<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" />
-			</form>
 			<form method="post"  enctype="multipart/form-data" id="colabsform" name="backup" class="colabs-backup-form">
-				<input type="submit" name="colabs_theme_backup" value="Backup" class="button" />
+				<p><input type="submit" name="colabs_theme_backup" value="Backup" class="button" />
 				<input type="hidden" value="true" name="theme_backup">
-				<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" />
+				<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" /></p>
 			</form>
+			
+			<p><?php _e('Please login with your ColorLabs account to updating your theme.','colabsthemes');?></p>
+			<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form">
+				<p>
+					<label class="element-title" for="login"><?php _e('E-Mail Address:','colabsthemes');?></label> 
+					<input id="login" name="amember_login" size="15" value="" type="text">
+				</p>
+				<p>
+					<label class="element-title" for="pass"><?php _e('Password:','colabsthemes');?></label> 
+					<input id="pass" name="amember_pass" size="15" type="password">
+				</p>
+				<p style="margin-top: 25px;">
+				<input type="submit" name="colabs_theme_login" value="Update" class="button" />
+				<input type="hidden" value="true" name="member_login">	
+				<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" />
+				&nbsp;&nbsp;<?php _e('<a href="http://colorlabsproject.com/member/member/#am-forgot-block" target="_blank">Forgot Password?</a>','colabsthemes');?>
+				</p>			
+			</form>
+			
 		
-			<?php
-		}else{
+	<?php
+	}else{
 			printf( __('<h3>You have the latest version of %1$s.</h3><p>&rarr; <a href="%2$s" class="thickbox" title="%1$s">View version %3$s details</a></p>'), $theme_name, $details_url, $storefront_theme );
 			printf( __('<p>Click the Backup button to back up your theme files. Backup (.zip) will be stored in <code>wp-content/themes/</code></p>'), $backup );
 			?>
@@ -178,7 +172,6 @@ function colabsthemes_themes_update_page_set(){
 			</form>
 			</p>
 			<?php
-		}
 	}
 }
 function colabsthemes_framework_update_check(){
@@ -349,7 +342,6 @@ function colabs_theme_update(){
 	$file_url = 'http://colorlabsproject.com/member/downloads/'.strtolower($theme_name).'/'.strtolower($theme_name).'.zip';
 	$context = get_theme_root();
 	$target_dir = $wp_filesystem->find_folder($context);
-	$target_file = trailingslashit($target_dir).'cookie.txt';
 	$tmpfname = wp_tempnam($file_url);
 	
 	// Get Cookie
@@ -368,75 +360,54 @@ function colabs_theme_update(){
 					)
 			    )
 			);
+			
 			//Was there some error connecting to the server?
 			if( is_wp_error( $response ) ) {
 				$errorCode = $response->get_error_code();
 				$message = 'Error: ' . $errorCode;
 				die();
 			}else{
-				$cookies = '';
-				if(isset($response['cookies'])){
-						$cookies = serialize($response['cookies']);
-					if(!$wp_filesystem->put_contents($target_file, $cookies, FS_CHMOD_FILE)){
-						$message = 'Error when writing file'; //return error object
-					} 
-				}
+				if($response['cookies'][2]):
+					$get_zip_file = wp_remote_get(
+						$file_url,
+						array(
+							'timeout' => 30,
+							'cookies' => $response['cookies'],
+							'stream' => true, 
+							'filename' => $tmpfname
+							)
+					);
+					
+					$do_unzip = unzip_file($get_zip_file['filename'], $target_dir);
+					unlink($tmpfname);
+					if ( is_wp_error($do_unzip) ) {
+						$error = $do_unzip->get_error_code();
+						$data = $do_unzip->get_error_data($error);
+						if('incompatible_archive' == $error) {
+						//The source file was not found or is invalid
+							$signin = esc_url( add_query_arg(array( 'page' => 'colabsthemes_framework_update', 'action' => '' )) );
+							$message = "<div id='colabs-no-archive-warning' class='updated fade' ><p>"; 
+							$message .= sprintf(__("This account is ineligible for the update. Please <a href='http://colorlabsproject.com/member/signup' target='_blank'>renew your subscription</a> or <a href='%s'>sign in</a> with a different account.","colabsthemes"),$signin);
+							$message .= "</p></div>";
+						}
+						if('empty_archive' == $error) {
+								$message = "<div id='colabs-empty-archive-warning' class='updated fade' ><p>". __("Failed: Empty Archive","colabsthemes")."</p></div>";
+						}
+						if('mkdir_failed' == $error) {
+								$message = "<div id='colabs-mkdir-warning' class='updated fade' ><p>". __("Failed: mkdir Failure","colabsthemes")."</p></div>";
+						}
+						if('copy_failed' == $error) {
+								$message = "<div id='colabs-copy-fail-warning' class='updated fade'><p>". __("Failed: Copy Failed","colabsthemes")."</p></div>";
+						}
+						return;
+					}else{
+						$message = "<div id='colabs-no-archive-warning' class='updated fade'><p>". __("Update process sucessfully","colabsthemes")."</p></div>";
+					}
+				else:
+					$message = __('<div id="colabs-no-archive-warning" class="updated fade" style="display:block;"><p><strong><i>The user name or password is incorrect</i></strong></p></div>','colabsthemes');
+				endif;
 			}
 	}
-	// Download files
-	// --------------
-	$action = isset($_REQUEST['colabs-upgrade-theme']) ? $_REQUEST['colabs-upgrade-theme'] : 'false';
-	
-	if ( ! current_user_can('update_themes') )
-			wp_die(__('You do not have sufficient permissions to update themes for this site.','colabsthemes'));
-	if ( 'true' == $action ) {
-		$cookie_content = $wp_filesystem->get_contents( $target_file );
-		$check_cookie=extractCookies($cookie_content);
-		if ($check_cookie==true){
-			$cookie_file = unserialize($wp_filesystem->get_contents($target_file));
-			$get_zip_file = wp_remote_get(
-				$file_url,
-				array(
-					'timeout' => 30,
-					'cookies' => $cookie_file,
-					'stream' => true, 
-					'filename' => $tmpfname
-			    )
-			);
-			
-			$do_unzip = unzip_file($get_zip_file['filename'], $target_dir);
-			unlink($tmpfname);
-			if ( is_wp_error($do_unzip) ) {
-				$error = $do_unzip->get_error_code();
-				$data = $do_unzip->get_error_data($error);
-				if('incompatible_archive' == $error) {
-				//The source file was not found or is invalid
-					$signin = esc_url( add_query_arg(array( 'page' => 'colabsthemes_framework_update','relogin'=>'true', 'action' => '' )) );
-					$message = "<div id='colabs-no-archive-warning' class='updated fade' ><p>"; 
-					$message .= sprintf(__("This account is ineligible for the update. Please <a href='http://colorlabsproject.com/member/signup' target='_blank'>renew your subscription</a> or <a href='%s'>sign in</a> with a different account.","colabsthemes"),$signin);
-					$message .= "</p></div>";
-				}
-				if('empty_archive' == $error) {
-						$message = "<div id='colabs-empty-archive-warning' class='updated fade' ><p>". __("Failed: Empty Archive","colabsthemes")."</p></div>";
-				}
-				if('mkdir_failed' == $error) {
-						$message = "<div id='colabs-mkdir-warning' class='updated fade' ><p>". __("Failed: mkdir Failure","colabsthemes")."</p></div>";
-				}
-				if('copy_failed' == $error) {
-						$message = "<div id='colabs-copy-fail-warning' class='updated fade'><p>". __("Failed: Copy Failed","colabsthemes")."</p></div>";
-				}
-				return;
-			}else{
-				$message = "<div id='colabs-no-archive-warning' class='updated fade'><p>". __("Update process sucessfully","colabsthemes")."</p></div>";
-			}
-		}
-	}
-	//Re-Login
-	//---------
-	$relogin = isset($_REQUEST['relogin']) ? $_REQUEST['relogin'] : 'false';
-	if($relogin=='true'){	
-			unlink($target_file); // Delete Cookie File 
-	 }
 	
 	//Backup
 	//---------

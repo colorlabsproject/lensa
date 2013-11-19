@@ -15,6 +15,14 @@ if (!function_exists('the_widgets_init')) {
             'after_widget' => '</aside>',
             'before_title' => '<h4 class="widget-title">',
             'after_title' => '</h4>'));  
+        register_sidebar(array(
+            'name' => 'Sidebar-shop',
+            'id' => 'colabs_shop',
+            'description' => __( 'This widget will appear in shop sidebar area', 'colabsthemes' ),
+            'before_widget' => '<aside id="%1$s" class="%2$s block-background block-inner widget sidebar-right-background">',
+            'after_widget' => '</aside>',
+            'before_title' => '<h4 class="widget-title">',
+            'after_title' => '</h4>'));  
 	}
 }
 

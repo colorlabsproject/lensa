@@ -67,11 +67,17 @@ $options[] = array( "name" => "Disable Responsive",
 					"type" => "checkbox");
 					
 // Posts FrontPage Options						
-$options[] = array( "name" => "FrontPage  Settings",
+$options[] = array( "name" => "Slideshow  Settings",
 					"type" => "heading",
 					"icon" => "home");	
 					
-$options[] = array( "name" => __( "Slideshow on/off", "colabsthemes" ),
+$options[] = array( "name" => __( "Background Slider", "colabsthemes" ),
+					"desc" => __( "Enable Background Slider only on homepage", "colabsthemes" ),
+					"id" => $shortname."_background_slider",
+					"std" => "true",
+					"type" => "checkbox");	
+					
+$options[] = array( "name" => __( "Auto Slideshow on/off", "colabsthemes" ),
 					"desc" => __( "", "colabsthemes" ),
 					"id" => $shortname."_slideshow",
 					"std" => "1",
@@ -93,7 +99,7 @@ $options[] = array( "name" => __( "Pauses slideshow on last slide", "colabstheme
 					"options" => array( "1" => __( "True", "colabsthemes" ), "0" => __( "False", "colabsthemes" ) ) );			
 									
 $options[] = array( "name" => __( "Length between transitions", "colabsthemes" ),
-					"desc" => __( "Duration between transition in miliseconds", "colabsthemes" ),
+					"desc" => __( "", "colabsthemes" ),
 					"id" => $shortname."_slide_interval",
 					"std" => "6000",
 					"class" => "",
@@ -116,7 +122,7 @@ $options[] = array( "name" => __( "Transition", "colabsthemes" ),
 					);		
 									
 $options[] = array( "name" => __( "Speed of transition", "colabsthemes" ),
-					"desc" => __( "Speed of transition in miliseconds", "colabsthemes" ),
+					"desc" => __( "", "colabsthemes" ),
 					"id" => $shortname."_transition_speed",
 					"std" => "2000",
 					"class" => "",

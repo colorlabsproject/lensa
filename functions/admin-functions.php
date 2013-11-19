@@ -116,7 +116,7 @@ function colabs_image($args) {
 	$before = '';
 	$after = '';
 	$single = false;
-	$force = false;
+	$force = true;
 	$return = false;
 	$is_auto_image = false;
 	$src = '';
@@ -2112,10 +2112,21 @@ if (!function_exists( "colabs_google_webfonts")) {
 					foreach ($google_fonts as $font) {
 
 						// Check if the google font name exists in the current "face" option
-						if ( $option['face'] == $font['name'] AND !strstr($fonts, $font['name']))
+						if ( $option['face'] == $font['name'] AND !strstr($fonts, $font['name'])){
 
 							// Add google font to output
 							$fonts .= $font['name'].$font['variant']."|";
+						}	
+					}
+					
+					$new_stacks = get_option( 'colabs_custom_google_font' );
+					
+					if(!empty($new_stacks)){
+						foreach($new_stacks as $name => $stack){	
+							if ( $option['face'] == $stack AND !strstr($fonts, $name)){
+							$fonts .= $name."|";
+							}
+						}
 					}
 				}
 
@@ -3409,4 +3420,159 @@ function linkify_twitter_text($tweet){
   return $tweet;
 }
 
+/*-----------------------------------------------------------------------------------*/
+/* New Twitter Api 1.1 Feed() */
+/*-----------------------------------------------------------------------------------*/ 
+
+function colabs_update_tweet_urls($content) {
+    $maxLen = 16;
+    //split long words
+    $pattern = '/[^\s\t]{'.$maxLen.'}[^\s\.\,\+\-\_]+/';
+    $content = preg_replace($pattern, '$0 ', $content);
+
+    //
+    $pattern = '/\w{2,4}\:\/\/[^\s\"]+/';
+    $content = preg_replace($pattern, '<a href="$0" title="" target="_blank">$0</a>', $content);
+
+    //search
+    $pattern = '/\#([a-zA-Z0-9_-]+)/';
+    $content = preg_replace($pattern, '<a href="https://twitter.com/#%21/search/%23$1" title="" target="_blank">$0</a>', $content);
+
+    //user
+    $pattern = '/\@([a-zA-Z0-9_-]+)/';
+    $content = preg_replace($pattern, '<a href="https://twitter.com/#!/$1" title="" target="_blank">$0</a>', $content);
+
+    return $content;
+}
+
+
+function colabs_get_tweets_bearer_token( $consumer_key, $consumer_secret ){
+    $consumer_key = rawurlencode( $consumer_key );
+    $consumer_secret = rawurlencode( $consumer_secret );
+
+    $token = maybe_unserialize( get_option( 'colabs_twitter_token' ) );
+
+    if( ! is_array($token) || empty($token) || $token['consumer_key'] != $consumer_key || empty($token['access_token']) ) {
+        $authorization = base64_encode( $consumer_key . ':' . $consumer_secret );
+
+        $options = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => 'Authorization: Basic '.$authorization,
+                'content' => 'grant_type=client_credentials'
+            )
+        );
+        $context = stream_context_create($options);
+        $result = json_decode( @file_get_contents('https://api.twitter.com/oauth2/token', false, $context) );
+        $token = serialize( array(
+            'consumer_key'      => $consumer_key,
+            'access_token'      => $result->access_token
+        ) );
+        update_option( 'colabs_twitter_token', $token );
+    }
+}
+
+function colabs_get_tweets( $instance ){
+    extract($instance);
+    $token = maybe_unserialize( get_option( 'colabs_twitter_token' ) );
+		if('' == $token){
+			colabs_get_tweets_bearer_token($consumer_key,$consumer_secret);
+			return colabs_get_tweets();
+		}
+    if( strpos($query, 'from:') === 0  ) {
+        $query_type = 'user_timeline';
+        $query = substr($query, 5);
+        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name='.rawurlencode($query).'&count='.$number;
+    } else {
+        $query_type = 'search';
+        $url =  'https://api.twitter.com/1.1/search/tweets.json?q='.rawurlencode($query).'&count='.$number;
+    }
+
+    $options = array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => 'Authorization: Bearer '.$token['access_token']
+        )
+    );
+    $context = stream_context_create($options);
+    $result = json_decode( @file_get_contents( $url, false, $context) );
+
+    if( isset( $result->errors ) && $result->code == 89 ) {
+        delete_option( 'colabs_twitter_token' );
+        colabs_get_tweets_bearer_token();
+        return colabs_get_tweets();
+    } 
+
+    $tweets = array();
+    if( 'user_timeline' == $query_type ) {
+        if( !empty($result) ) {
+            $tweets = $result;
+        }
+    } else {
+        if( !empty($result->statuses) ) {
+            $tweets = $result->statuses;
+        }
+
+    }
+
+    $follow_button = '<a href="https://twitter.com/__name__" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @__name__</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+		
+		$before_item = '<div class="tweet-item '.$query_type.'">';
+		$after_item = '</div>';
+		
+		if($list_before)$before_item = $list_before;
+		if($list_after)$after_item = $list_after;
+		
+    if( !empty($tweets) ) {
+        foreach ($tweets as $tweet ) {
+            $text = colabs_update_tweet_urls( $tweet->text );
+            $time = human_time_diff( strtotime($tweet->created_at), time() );
+            $url = 'http://twitter.com/'.$tweet->user->id.'/status/'.$tweet->id_str;
+            $screen_name = $tweet->user->screen_name;
+            $name = $tweet->user->name;
+            $profile_image_url = $tweet->user->profile_image_url;
+
+            echo $before_item;
+            if( 'search' == $query_type ) {
+                echo '<div class="twitter-user">';
+                if( $show_account == 'true' ) {
+                    echo '<a href="https://twitter.com/'.$screen_name.'" class="user">';
+                    if( $show_avatar && $profile_image_url ) {
+                        echo '<img src="'.$profile_image_url.'" width="16px" height="16px" >';
+                    }
+                    echo '&nbsp;<strong class="name">'.$name.'</strong>&nbsp;<span class="screen_name">@'.$screen_name.'</span></a>';
+                }
+                echo '</div>';
+            }
+
+            echo    '<div class="tweet-content">'.$text.' <span class="time"><a target="_blank" title="" href="'.$url.'"> about '.$time.' ago</a></span></div>';
+            
+            if( 'search' == $query_type ) {
+                if( $show_follow == 'true' ) {
+                    echo str_replace('__name__', $screen_name, $follow_button);
+                }
+            }
+            echo $after_item;
+        }
+
+        if( 'user_timeline' == $query_type ) {
+					if(( $show_account == 'true' )||( $show_follow == 'true')) {
+            echo    '<div class="twitter-user">';
+            if( $show_account == 'true' ) {
+                echo '<a href="https://twitter.com/'.$screen_name.'" class="user">';
+                if( $show_avatar && $profile_image_url ) {
+                    echo '<img src="'.$profile_image_url.'" width="16px" height="16px" >';
+                }
+                echo '&nbsp;<strong class="name">'.$name.'</strong>&nbsp;<span class="screen_name">@'.$screen_name.'</span></a>';
+            }
+            if( $show_follow == 'true') {
+                echo str_replace('__name__', $screen_name, $follow_button);
+            }
+            echo    '</div>';
+					}	
+        }
+
+        
+    }
+}
 ?>

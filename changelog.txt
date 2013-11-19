@@ -8,12 +8,36 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last update date: 19 February 2013
+    Last Update Date: 7 November 2013
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2013.11.07 - Version 1.0.9.1
+- Fix: Slider Title not placed correctly on Windows Phone
+  File Affected: style.css
+- Fix: Footer on Homepage not placed correctly on Windows Phone
+  File Affected: style.css
+
+2013.07.17 - Version 1.0.9
+- Integrating with WPML and Buddypress
+  Files Added: css/buddypress.css
+  Files Affected: style.css
+
+2013.07.12 - Version 1.0.8
+- Add option to disable background slideshow and using custom background
+  Files Affected: header.php, theme-options.php, theme-functions.php
+
+2013.06.14 - Version 1.0.7
+- Fix: Twitter widget API
+
+2013.05.25 - Version 1.0.6
+- Fix some style
+
+2013.05.10 - Version 1.0.5
+- Support Woocommerce and Jigoshop
 
 2013.02.19 - Version 1.0.4
 - Files affected: style.css, includes/theme-js.php, includes/js/script.js
