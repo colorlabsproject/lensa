@@ -76,7 +76,13 @@ $options[] = array( "name" => __( "Background Slider", "colabsthemes" ),
 					"id" => $shortname."_background_slider",
 					"std" => "true",
 					"type" => "checkbox");	
-					
+
+$options[] = array( "name" => __( "Slides Number", "colabsthemes" ),
+					"desc" => __( "Enter how many slides will be shown on the frontpage slider. Enter -1 if you want unlimited number of slides", "colabsthemes" ),
+					"id" => $shortname."_slides_number",
+					"std" => "8",
+					"type" => "text" );
+
 $options[] = array( "name" => __( "Auto Slideshow on/off", "colabsthemes" ),
 					"desc" => __( "", "colabsthemes" ),
 					"id" => $shortname."_slideshow",
