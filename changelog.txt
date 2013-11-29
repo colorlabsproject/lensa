@@ -8,12 +8,16 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 7 November 2013
+    Last Update Date: 22 November 2013
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2013.11.22 - Version 1.0.9.2
+- Add: Option to set number of slides to show on Frontpage Slideshow
+  Files Affected: includes/theme-options.php, includes/theme-functions.php
 
 2013.11.07 - Version 1.0.9.1
 - Fix: Slider Title not placed correctly on Windows Phone
