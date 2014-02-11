@@ -4,7 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 function colabs_version_init() {
 
-    $colabs_framework_version = '1.8.2';
+    $colabs_framework_version = '1.8.6.4';
 
     if ( get_option( 'colabs_framework_version' ) != $colabs_framework_version ) {
     	update_option( 'colabs_framework_version', $colabs_framework_version );
@@ -81,29 +81,29 @@ require_once ($functions_path . 'admin-theme-editor.php' );			// Add syntax high
 /* Move Custom CSS */
 /*-----------------------------------------------------------------------------------*/
 function colabs_move_old_custom(){
-	if ( get_option( 'colabs_custom_old_'.strtolower(COLABS_THEME_NAME) ) != true ) {
-		$wp_filesystem = WP_Filesystem();
-		global $wp_filesystem;
-		$context = get_template_directory().'/custom/';
-		$target_dir = $wp_filesystem->find_folder($context);
-		$target_file = trailingslashit($target_dir).'custom.css';
-		$old_custom = $wp_filesystem->get_contents($target_file);
-		if ( $wp_filesystem->put_contents( COLABS_CUSTOM . '/custom.css' , $old_custom, FS_CHMOD_FILE) ){
-			update_option( 'colabs_custom_old_'.strtolower(COLABS_THEME_NAME), true );
+	$wp_filesystem = WP_Filesystem();
+	global $wp_filesystem;
+	if (is_object($wp_filesystem)){
+		if ( get_option( 'colabs_custom_old_'.strtolower(COLABS_THEME_NAME) ) != true ) {
+			
+			$context = get_template_directory().'/custom/';
+			$target_dir = $wp_filesystem->find_folder($context);
+			$target_file = trailingslashit($target_dir).'custom.css';
+			$old_custom = $wp_filesystem->get_contents($target_file);
+			if ( $wp_filesystem->put_contents( COLABS_CUSTOM . '/custom.css' , $old_custom, FS_CHMOD_FILE) ){
+				update_option( 'colabs_custom_old_'.strtolower(COLABS_THEME_NAME), true );
+			}
+		}
+		if ( get_option( 'colabs_custom_func_old_'.strtolower(COLABS_THEME_NAME) ) != true ) {
+			$context = get_template_directory().'/custom/';
+			$target_dir = $wp_filesystem->find_folder($context);
+			$target_file = trailingslashit($target_dir).'custom_functions.php';
+			$old_custom = $wp_filesystem->get_contents($target_file);
+			if ( $wp_filesystem->put_contents( COLABS_CUSTOM . '/custom_functions.php' , $old_custom, FS_CHMOD_FILE) ){
+				update_option( 'colabs_custom_func_old_'.strtolower(COLABS_THEME_NAME), true );
+			}
 		}
 	}
-	if ( get_option( 'colabs_custom_func_old_'.strtolower(COLABS_THEME_NAME) ) != true ) {
-		$wp_filesystem = WP_Filesystem();
-		global $wp_filesystem;
-		$context = get_template_directory().'/custom/';
-		$target_dir = $wp_filesystem->find_folder($context);
-		$target_file = trailingslashit($target_dir).'custom_functions.php';
-		$old_custom = $wp_filesystem->get_contents($target_file);
-		if ( $wp_filesystem->put_contents( COLABS_CUSTOM . '/custom_functions.php' , $old_custom, FS_CHMOD_FILE) ){
-			update_option( 'colabs_custom_func_old_'.strtolower(COLABS_THEME_NAME), true );
-		}
-	}
-
 }
 
 add_action( 'admin_head', 'colabs_move_old_custom', 10 );

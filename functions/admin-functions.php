@@ -1248,6 +1248,8 @@ function colabs_title(){
 	
 	// Setup the variable that will, ultimately, hold the title value.
 	$title = '';
+	$sep = get_option( 'seo_colabs_separator' );	
+	if(empty($sep)) { $sep = " | ";} else { $sep = ' ' . $sep . ' ';}
 	
 	//Taxonomy Details WP 3.0 only
 	if ( function_exists( 'get_taxonomies') ) :
@@ -1278,10 +1280,8 @@ function colabs_title(){
 			class_exists( 'WPSEO_Frontend' )
     	)
 	&& 
-		( $use_third_party_data != true ) ) { wp_title(); return; }
+		( $use_third_party_data == true ) ) { wp_title($sep); return; }
 
-	$sep = get_option( 'seo_colabs_separator' );	
-	if(empty($sep)) { $sep = " | ";} else { $sep = ' ' . $sep . ' ';}
 	$use_wp_title = get_option( 'seo_colabs_wp_title' );
 	$home_layout = get_option( 'seo_colabs_home_layout' );
 	$single_layout = get_option( 'seo_colabs_single_layout' );
@@ -1518,18 +1518,14 @@ function colabs_meta(){
 				break; 
 				case 'c': 
 	
-    				if(is_single()){
-    					 $posts = get_posts( "p=$post_id" );
-    				}
-    				if(is_page()){
-    					 $posts = get_posts( "page_id=$post_id&post_type=page" );
-    				}
-					foreach($posts as $post){
-   						setup_postdata($post);	
-						$post_content =  get_the_excerpt();
-						if(empty($post_content)){
-							$post_content = get_the_content();
-						}
+    			if(is_single()){
+							$posts = get_post( $post_id );
+					}elseif(is_page()){
+							$posts = get_post( $post_id );
+					}
+					$post_content =  $posts->post_excerpt;
+					if(empty($post_content)){
+					$post_content = $posts->post_content;
 					}
 					
 					$post_content = esc_attr( strip_tags( strip_shortcodes( $post_content ) ) );
@@ -3181,7 +3177,7 @@ function colabs_get_dynamic_values ( $settings ) {
  	
  	$query = $query_saved;
  	
- 	wp_reset_query();
+ 	wp_reset_postdata();
  
  	return $posts;
  
@@ -3244,22 +3240,21 @@ function og_meta(){ ?>
 	<?php } ?>
 	
 	<?php if ( ( is_page() || is_single() ) && '' == get_option( 'colabs_og_enable' ) ) { ?>
-	<meta property="og:title" content="<?php the_title(); ?>" />
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content="<?php echo get_permalink(); ?>" />
-	<?php $image = colabs_image('return=true&link=img&width=100&height=100&size=thumbnail'); if( $image ){ 
-    
-    //get img url
-    preg_match('@<img.+src="(.*)".*>@Uims', $image, $matches);
-    $src = $matches[1];
-    ?>
-        <meta property="og:image" content="<?php echo $src; ?>"/>
-    <?php } ?>
-	<meta property="og:site_name" content="<?php echo get_option('colabs_og_sitename'); ?>" />
-	<meta property="fb:admins" content="<?php echo get_option('colabs_og_admins'); ?>" />
+		<meta property="og:title" content="<?php the_title(); ?>" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="<?php echo get_permalink(); ?>" />
+		<meta property="og:description" content="" />
+		<?php $image = colabs_image('return=true&link=img&width=300&height=300&size=thumbnail'); if( $image ){ 
+	    //get img url
+	    preg_match('@<img.+src="(.*)".*>@Uims', $image, $matches);
+	    $src = $matches[1]; ?>
+	    <meta property="og:image" content="<?php echo $src; ?>"/>
+	  <?php } ?>
+		<meta property="og:site_name" content="<?php echo get_option('colabs_og_sitename'); ?>" />
+		<?php if( get_option('colabs_og_admins') ) : ?>
+			<meta property="fb:admins" content="<?php echo get_option('colabs_og_admins'); ?>" />
+		<?php endif; ?>
 	<?php } ?>
-    
-    <meta name="viewport" content="width=1024,maximum-scale=1.0" />
 <?php
 }}
 

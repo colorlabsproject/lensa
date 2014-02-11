@@ -155,13 +155,16 @@ if ( ! function_exists( 'colabs_get_query_context' ) ) {
 	function colabs_get_query_context() {
 		global $wp_query, $query_context;
 		
+		if( !isset($query_context) ) {
+			$query_context = new stdClass();
+		}
+
 		/* If $query_context->context has been set, don't run through the conditionals again. Just return the variable. */
 		if ( isset( $query_context->context ) && is_array( $query_context->context ) ) {
 		
 			return $query_context->context;
 		
 		} // End IF Statement
-		
 		$query_context->context = array();
 	
 		/* Front page of the site. */

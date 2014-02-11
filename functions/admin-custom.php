@@ -224,7 +224,7 @@ function colabsthemes_metabox_create($post,$callback) {
                     if($array){
                     $output .= "\t".'<tr '.$colabs_class.'>';
                     $output .= "\t\t".'<th class="colabs_metabox_names"><label for="'.esc_attr( $colabs_id ).'">'.$colabs_metabox['label'].'</label></th>'."\n";
-                    $output .= "\t\t".'<td class='.$colabs_name.' multicheck>';
+                    $output .= "\t\t".'<td class="'.$colabs_name.' multicheck">';
                     $colabs_metaboxvalue_arr = explode(",", $colabs_metaboxvalue);
 
                     foreach ( $array as $id => $option ) {

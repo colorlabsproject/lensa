@@ -327,7 +327,13 @@ class CoLabsThemes_Customizer {
 			if ( get_option( $key ) != $settings ) {
 				update_option( $key, $settings );
 			}
-			
+			//Theme Mod
+			if(in_array($key,array('background_color','background_repeat','background_position_x','background_attachment','header_textcolor','header_image'))){
+				if ( get_theme_mod( $key )!= $settings ){
+					$settings = str_replace('#','',$settings);
+					set_theme_mod( $key, $settings );
+				}
+			}
 			if ( is_array( $colabs_options ) ) {
 				if ( isset( $colabs_options[$key] ) && $colabs_options[$key] != $settings ) {
 					$colabs_options[$key] = $settings;

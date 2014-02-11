@@ -251,116 +251,123 @@ Optional arguments:
  - image: thumbnail size, 0 = off (default: 0)
 */
 
-function colabs_shortcode_related_posts ( $atts ) {
+function colabs_shortcode_related_posts( $atts ) {
 	global $post, $wp_version;
-	
-		wp_reset_query(); // Make sure we have a fresh query before we start.
-	
-		$defaults = array(
-					'limit' => 5, 
-					'image' => 0, 
-					'float' => 'none'
-				 );
-	
-		$atts = shortcode_atts( $defaults, $atts );
-	
-		// This function requires at least WordPress Version 3.1.
-		if ( $wp_version < 3.1 ) {
-			return _dep_colabs_shortcode_related_posts( $atts );
-		} else {
-	
+
+	// wp_reset_query();
+
+	$defaults = array(
+		'limit' => 5, 
+		'image' => 0, 
+		'float' => 'none'
+	);
+
+	$atts = shortcode_atts( $defaults, $atts );
+
+	// This function requires at least WordPress Version 3.1.
+	if ( $wp_version < 3.1 ) {
+		return _dep_colabs_shortcode_related_posts( $atts );
+	} else {
+		
 		// Sanitize float attribute.
-		if ( isset( $atts['float'] ) && ! in_array( $atts['float'], array( 'none', 'left', 'right' ) ) ) { $atts['float'] = 'none'; }
-	
+		if ( isset( $atts['float'] ) && 
+				 !in_array( $atts['float'], array( 'none', 'left', 'right' ) ) 
+		) { 
+			$atts['float'] = 'none'; 
+		}
+
 		// Float translation array.
-		$floats = array( 'none' => '', 'left' => 'fl', 'right' => 'fr' );
-	
+		$floats = array( 
+			'none' => '', 
+			'left' => 'fl', 
+			'right' => 'fr'
+		);
+
 		$css_class = 'colabs-sc-related-posts';
-	
+
 		extract( $atts );
-		
-		if ( $float != 'none' ) { $css_class .= ' ' . $floats[$float]; }
-		
+
+		if ( $float != 'none' ) { 
+			$css_class .= ' ' . $floats[$float]; 
+		}
+
 		$output = '';
-		
+
 		$post_type = get_post_type( $post->ID );
-		
 		$post_type_obj = get_post_type_object( $post_type );
-		
+
 		$taxonomies_string = 'post_tag, category';
 		$taxonomies = array( 'post_tag', 'category' );
-		
+
 		if ( isset( $post_type_obj->taxonomies ) && count( $post_type_obj->taxonomies ) > 0 ) {
 			$taxonomies_string = join( ', ', $post_type_obj->taxonomies );
 			$taxonomies = $post_type_obj->taxonomies;
 		}
-	 	
-	 	// Clean up our taxonomies for use in the query.
-	 	if ( count( $taxonomies ) ) {
-	 		foreach ( $taxonomies as $k => $v ) {
-	 			$taxonomies[$k] = trim( $v );
-	 		}
-	 	}
-	 	
-	 	// Determine which terms we're going to relate to this entry.
+
+		// Clean up our taxonomies for use in the query.
+		if ( count( $taxonomies ) ) {
+			foreach ( $taxonomies as $k => $v ) {
+				$taxonomies[$k] = trim( $v );
+			}
+		}
+
+		// Determine which terms we're going to relate to this entry.
 	 	$related_terms = array();
-	 	
-	 	foreach ( $taxonomies as $t ) {
-	 		$terms = get_the_terms( $post->ID, $t );
-	 		
-	 		if ( ! empty( $terms ) ) {
-	 			foreach ( $terms as $k => $v ) {
-	 				$related_terms[$t][$v->term_id] = $v->slug;
-	 			}
-	 		}
-	 	}
-		
+
+		foreach ( $taxonomies as $t ) {
+			$terms = get_the_terms( $post->ID, $t );
+
+			if ( ! empty( $terms ) ) {
+				foreach ( $terms as $k => $v ) {
+					$related_terms[$t][$v->term_id] = $v->slug;
+				}
+			}
+		}
+
 		$specific_terms = array();
 		foreach ( $related_terms as $k => $v ) {
 			foreach ( $v as $i => $j ) {
 				$specific_terms[] = $j;
 			}
 		}
-		
+
 		$query_args = array(
- 						'limit' => $atts['limit'], 
- 						'post_type' => $post_type, 
- 						'taxonomies' => $taxonomies_string, 
- 						'specific_terms' => $specific_terms, 
- 						'order' => 'DESC', 
- 						'orderby' => 'date', 
- 						'exclude' => array( $post->ID )
- 					);
-		
+			'limit' => $atts['limit'], 
+			'post_type' => $post_type, 
+			'taxonomies' => $taxonomies_string, 
+			'specific_terms' => $specific_terms, 
+			'order' => 'DESC', 
+			'orderby' => 'date', 
+			'exclude' => array( $post->ID )
+		);
+
 		$posts = colabs_get_posts_by_taxonomy( $query_args );
-		
+
 		if ( count( (array)$posts ) ) {
-			
 			$output .= '<div class="' . $css_class . '">' . "\n";
-		
 			$output .= '<ul>' . "\n";
-			
+
 			foreach ( $posts as $post ) {
 				setup_postdata( $post );
-				
+
 				if ( $image <= 0 ) {
 					$image_html = '';
 				} else {
 					$image_html = '<a href="' . get_permalink( $post->ID ) . '" class="thumbnail">' . colabs_image( 'link=img&width=' . $image . '&height=' . $image . '&return=true&id=' . $post->ID ) . '</a>' . "\n";
 				}
-				
+
 				$output .= '<li class="post-id-' . $post->ID . '">' . "\n" . $image_html . "\n" . '<a href="' . get_permalink( $post->ID ) . '" title="' . the_title_attribute( array( 'echo' => 0 ) ) . '" class="related-title"><span>' . get_the_title( $post->ID )  . '</span></a>' . "\n" . '</li>' . "\n";
 			}
-			
+
 			$output .= '</ul>' . "\n";
 			$output .= '<div class="clear"></div><!--/.clear-->' . "\n";
 			$output .= '</div><!--/.colabs-sc-related-posts-->';
 		}
-		
-		wp_reset_query();
-		
-		return apply_filters( 'colabs_shortcode_related_posts', $output, $atts );
-	
+
+		wp_reset_postdata();
+
+		return apply_filters( 'colabs_shortcode_related_posts', $output, $atts );		
+
 	} // End IF Statement (version check)
 
 } // End colabs_shortcode_related_posts()
@@ -669,7 +676,7 @@ function colabs_shortcode_fblike($atts, $content = null) {
 	if ( $width == 450 && 'false' == $showfaces ) { $widthpx = 'auto'; }
 	
 	// Set the height to 20 if "showfaces" is disabled and the style is either "standard" or "button_count".
-	if ( 'false' == $showfaces && ( $style != 'box_count' ) ) { $height = 25; }
+	if ( 'false' == $showfaces && ( $style != 'box_count' ) ) { $height = 30; }
 
 	switch ( $float ) {
 

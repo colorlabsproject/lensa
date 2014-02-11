@@ -44,10 +44,11 @@
 /* Buttons */
 #main .button, #main .button[disabled], .nav-tabs .nav-tab {
 	color:#333;
-	padding:7px 12px;
+	padding-left: 12px;
+	padding-right: 12px;
 	font-weight:normal;
-	line-height: 1;
-	height: auto;
+	line-height: 13px;
+	height: 30px;
 	border:1px solid #6f6f6f;
 	-webkit-border-radius:6px;
 	   -moz-border-radius:6px;
@@ -226,6 +227,9 @@
 	text-transform: capitalize;
 }
 .colabs_container .save-bar .submit-button { float:none; margin-right:0 }
+.save-bar .button {
+	margin-top: 20px;
+}
 
 /* Logo */
 #panel-logo, #header-nav a, #header-nav .current-page a {
@@ -239,6 +243,7 @@
 	left: 13px;
 	float: left;
 	display: block;
+	margin-top: 5px;
 	position: relative;
 }
 #panel-logo .theme-info {
@@ -720,6 +725,7 @@
 .colabs_twitter_stream {
 	color: #666;
 	line-height: 22px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
 }
 .colabs_twitter_stream .stream-label {
 	float: left;
@@ -734,6 +740,7 @@
 }
 .colabs_twitter_stream ul {
 	margin: 0;
+	overflow: hidden;
 }
 .colabs_twitter_stream li {
 	display: none;

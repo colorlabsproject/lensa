@@ -211,19 +211,25 @@ function colabsthemes_add_admin() {
   // Add framework functionaily to the head individually
     add_action( "admin_print_scripts-$colabsdash", 'colabs_admin_head_dashboard' );
     add_action( "admin_print_styles-$colabsdash", 'colabs_admin_head_dashboard' );
-		add_action( "admin_print_scripts-$colabspage", 'colabs_load_only' );
-		add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );
-		add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only_updater' );        
-		add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
+    
+    add_action( "admin_print_styles-$colabspage", 'colabs_admin_styles' );
+    add_action( "admin_print_styles-$colabslayout", 'colabs_admin_styles' );
+    add_action( "admin_print_styles-$colabsseo", 'colabs_admin_styles' );
+    add_action( "admin_print_styles-$colabssbm", 'colabs_admin_styles' );
+
+    add_action( "admin_print_scripts-$colabspage", 'colabs_load_only' );
+    add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );
+    add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only_updater' );        
+    add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
     add_action( "admin_print_scripts-$colabsthemes_readme_menu_pagehook", 'readme_register_admin_head' );
     
-		add_action( "admin_print_scripts-$colabsseo", 'colabs_load_only' );
-		add_action( "admin_print_scripts-$colabssbm", 'colabs_load_only' );
+    add_action( "admin_print_scripts-$colabsseo", 'colabs_load_only' );
+    add_action( "admin_print_scripts-$colabssbm", 'colabs_load_only' );
     
   // Add the non-JavaScript "save" to the load of each of the screens.
-		add_action( "load-$colabspage", 'colabs_nonajax_callback' );
-		add_action( "load-$colabslayout", 'colabs_nonajax_callback' );
-		add_action( "load-$colabsseo", 'colabs_nonajax_callback' );
+    add_action( "load-$colabspage", 'colabs_nonajax_callback' );
+    add_action( "load-$colabslayout", 'colabs_nonajax_callback' );
+    add_action( "load-$colabsseo", 'colabs_nonajax_callback' );
 
 }
 }
@@ -293,8 +299,8 @@ function colabsthemes_options_page(){
     <div class="colabs_twitter_stream">
 
         <div class="stream-label"><?php _e('News On Twitter:','colabsthemes');?></div>
-				<?php
-				$instance = array( 
+        <?php
+        $instance = array( 
             'query'             => 'from:colorlabs',
             'number'            =>  5,
             'show_follow'       => 'false',
@@ -302,12 +308,12 @@ function colabsthemes_options_page(){
             'show_account'      => 'false',
             'consumer_key'      => 'tZC2RgSO04T7ctQQDIFw',
             'consumer_secret'   => 'xB8YWcEYkzqnqGAgHia84YVWlGSZqRnZn0otis2Ho',
-						'list_before'       => '<li>',
-            'list_after'       	=> '</li>',
-						
+            'list_before'       => '<li>',
+            'list_after'        => '</li>',
+            
         );
-				
-				?>
+        
+        ?>
         <ul>
           <?php colabs_get_tweets($instance); ?>
         </ul>
@@ -425,14 +431,8 @@ function colabs_load_only() {
 --------------------------------------------------------------------------------*/
 function colabs_admin_head() {
 /* To change the CSS stylesheet depending on the chosen color */
-global $_wp_admin_css_colors;
+    global $_wp_admin_css_colors;
 
-    wp_enqueue_style( 'colabs-admin-style', get_template_directory_uri() . '/functions/admin-style.css' );
-    //wp_enqueue_style( 'jquery-ui-datepicker', get_template_directory_uri() . '/functions/css/jquery-ui-datepicker.css' );
-
-		if(isset($_wp_admin_css_colors['name'])){
-				wp_enqueue_style( 'colabs-admin-'.$_wp_admin_css_colors['name'], get_template_directory_uri() . '/' . $_wp_admin_css_colors['name'] .'.css' );
-		}
     //COLOR Picker 
     $wp_version = get_bloginfo( 'version' );
 
@@ -847,6 +847,20 @@ global $_wp_admin_css_colors;
   </script>
 <?php }
 
+/* colabs_admin_styles()
+--------------------------------------------------------------------------------*/
+function colabs_admin_styles() {
+  /* To change the CSS stylesheet depending on the chosen color */
+  global $_wp_admin_css_colors;
+
+  wp_enqueue_style( 'colabs-admin-style', get_template_directory_uri() . '/functions/admin-style.css' );
+  //wp_enqueue_style( 'jquery-ui-datepicker', get_template_directory_uri() . '/functions/css/jquery-ui-datepicker.css' );
+
+  if(isset($_wp_admin_css_colors['name'])){
+    wp_enqueue_style( 'colabs-admin-'.$_wp_admin_css_colors['name'], get_template_directory_uri() . '/' . $_wp_admin_css_colors['name'] .'.css' );
+  }
+}
+
 /*-----------------------------------------------------------------------------------*/
 /* Default Save Action - colabs_options_save */
 /*-----------------------------------------------------------------------------------*/
@@ -887,11 +901,11 @@ global $wpdb; // this is how you get access to the database
     $name = preg_replace( '/[^a-zA-Z0-9-_ ]/i','',$name);
     $value = stripslashes($output['value']);
     $value = stripslashes($value);
-		$return = "$id|$name|$value";
-		echo $return;
+    $return = "$id|$name|$value";
+    echo $return;
     $option_temp = get_option($id);
     $option_temp[$name] = $value;
-		
+    
     update_option( $id, $option_temp );
 
   }
@@ -1399,21 +1413,21 @@ function colabsthemes_machine($options) {
       if (strpos($val, 'Impact') !== false){ $font15 = 'selected="selected"'; }
             if (strpos($val, 'Courier') !== false){ $font16 = 'selected="selected"'; }
       $output .= '<select class="colabs-typography colabs-typography-face" name="'. $value['id'].'_face" id="'. $value['id'].'_face">';
-				$output .= '<option value="Arial, sans-serif" '. $font01 .'>Arial</option>';
-				$output .= '<option value="Verdana, Geneva, sans-serif" '. $font02 .'>Verdana</option>';
-				$output .= '<option value="&quot;Trebuchet MS&quot;, Tahoma, sans-serif"'. $font03 .'>Trebuchet</option>';
-				$output .= '<option value="Georgia, serif" '. $font04 .'>Georgia</option>';
-				$output .= '<option value="&quot;Times New Roman&quot;, serif"'. $font05 .'>Times New Roman</option>';
-				$output .= '<option value="Tahoma, Geneva, Verdana, sans-serif"'. $font06 .'>Tahoma</option>';
-				$output .= '<option value="Palatino, &quot;Palatino Linotype&quot;, serif"'. $font07 .'>Palatino</option>';
-				$output .= '<option value="&quot;Helvetica Neue&quot;, Helvetica, sans-serif" '. $font08 .'>Helvetica*</option>';
-				$output .= '<option value="Calibri, Candara, Segoe, Optima, sans-serif"'. $font09 .'>Calibri*</option>';
-				$output .= '<option value="&quot;Myriad Pro&quot;, Myriad, sans-serif"'. $font10 .'>Myriad Pro*</option>';
-				$output .= '<option value="&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, &quot;Lucida Sans&quot;, sans-serif"'. $font11 .'>Lucida</option>';
-				$output .= '<option value="&quot;Arial Black&quot;, sans-serif" '. $font12 .'>Arial Black</option>';
-				$output .= '<option value="&quot;Gill Sans&quot;, &quot;Gill Sans MT&quot;, Calibri, sans-serif" '. $font13 .'>Gill Sans*</option>';
-				$output .= '<option value="Geneva, Tahoma, Verdana, sans-serif" '. $font14 .'>Geneva*</option>';
-				$output .= '<option value="Impact, Charcoal, sans-serif" '. $font15 .'>Impact</option>';
+        $output .= '<option value="Arial, sans-serif" '. $font01 .'>Arial</option>';
+        $output .= '<option value="Verdana, Geneva, sans-serif" '. $font02 .'>Verdana</option>';
+        $output .= '<option value="&quot;Trebuchet MS&quot;, Tahoma, sans-serif"'. $font03 .'>Trebuchet</option>';
+        $output .= '<option value="Georgia, serif" '. $font04 .'>Georgia</option>';
+        $output .= '<option value="&quot;Times New Roman&quot;, serif"'. $font05 .'>Times New Roman</option>';
+        $output .= '<option value="Tahoma, Geneva, Verdana, sans-serif"'. $font06 .'>Tahoma</option>';
+        $output .= '<option value="Palatino, &quot;Palatino Linotype&quot;, serif"'. $font07 .'>Palatino</option>';
+        $output .= '<option value="&quot;Helvetica Neue&quot;, Helvetica, sans-serif" '. $font08 .'>Helvetica*</option>';
+        $output .= '<option value="Calibri, Candara, Segoe, Optima, sans-serif"'. $font09 .'>Calibri*</option>';
+        $output .= '<option value="&quot;Myriad Pro&quot;, Myriad, sans-serif"'. $font10 .'>Myriad Pro*</option>';
+        $output .= '<option value="&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, &quot;Lucida Sans&quot;, sans-serif"'. $font11 .'>Lucida</option>';
+        $output .= '<option value="&quot;Arial Black&quot;, sans-serif" '. $font12 .'>Arial Black</option>';
+        $output .= '<option value="&quot;Gill Sans&quot;, &quot;Gill Sans MT&quot;, Calibri, sans-serif" '. $font13 .'>Gill Sans*</option>';
+        $output .= '<option value="Geneva, Tahoma, Verdana, sans-serif" '. $font14 .'>Geneva*</option>';
+        $output .= '<option value="Impact, Charcoal, sans-serif" '. $font15 .'>Impact</option>';
         $output .= '<option value="Courier, &quot;Courier New&quot;, monospace" '. $font16 .'>Courier</option>';
       // Google webfonts      
       global $google_fonts;

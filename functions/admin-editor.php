@@ -111,12 +111,12 @@ class colabs_custom_editor {
     function options_page() {
         $themename =  get_option( 'colabs_themename' );
         $custom_editor = new colabs_custom_editor;
-				$files = array();
+                $files = array();
 ?>
 
 <div id="colabs_options" class="wrap<?php if (is_rtl()) { echo ' rtl'; } ?>">
 <?php
-		
+        
     if (file_exists(COLABS_CUSTOM)) {
         // Determine which file we're editing. Default to something harmless, like custom.css.
         if(isset($_GET['file'])){ $file = $_GET['file']; }else{ $file = 'custom.css'; }
@@ -129,8 +129,8 @@ class colabs_custom_editor {
         if (!$error){
             // Get contents of custom.css
             if (filesize(COLABS_CUSTOM . '/' . $file) > 0) {
-								$wp_filesystem = WP_Filesystem($cred);
-								global $wp_filesystem;
+                                $wp_filesystem = WP_Filesystem($cred);
+                                global $wp_filesystem;
                 $content = $wp_filesystem->get_contents( COLABS_CUSTOM . '/' . $file );
                 $content = htmlspecialchars($content);
             }
@@ -288,8 +288,8 @@ function colabs_load_only_editor(){
         
         wp_enqueue_style( 'colabs-admin-codemirror', get_template_directory_uri() . '/functions/css/codemirror.css', array( 'colabs-admin-style' ) );
         wp_enqueue_script( 'colabs-admin-codemirror-js', get_template_directory_uri() . '/functions/js/codemirror.js' );
-                        
-?>
+        ?>
+
         <style type="text/css">
             .activeline {background: #e8f2ff !important;}
             .colabs_container #template{ position: relative }
@@ -315,18 +315,28 @@ function colabs_load_only_editor(){
             }, 4000);
         <?php }} ?>
 
-      // Codemirror - sytax highlighting
-      // Initiate codemirror for syntax highlighting
-      var cssEditor = CodeMirror.fromTextArea(document.getElementById("newcontent"), {
-        mode: 'text/css',
-        lineWrapping: true,
-        styleActiveLine: true,
-        onChange: function() {
-          $placeholder.html( cssEditor.getValue() );
-          $editor.html( cssEditor.getValue() );
+        <?php 
+        $editor_mode = 'text/css';
+        if( isset($_GET['file']) && $_GET['file'] != '' ) {
+            $extension = substr(strrchr($_GET['file'], '.'), 1);
+            if( $extension == 'php' ) {
+                $editor_mode = 'application/x-httpd-php';
+            }
         }
-      });
-      // var hlLine = cssEditor.setLineClass(0, "activeline");
+        ?>
+
+        // Codemirror - sytax highlighting
+        // Initiate codemirror for syntax highlighting
+        var cssEditor = CodeMirror.fromTextArea(document.getElementById("newcontent"), {
+            mode: '<?php echo $editor_mode; ?>',
+            lineWrapping: true,
+            styleActiveLine: true,
+            onChange: function() {
+                $placeholder.html( cssEditor.getValue() );
+                $editor.html( cssEditor.getValue() );
+            }
+        });
+        // var hlLine = cssEditor.setLineClass(0, "activeline");
 
             //Color Picker
             var bgImage = jQuery("#custom-background-image"),
