@@ -515,7 +515,7 @@ function colabs_social_net($class){
       <?php endif; ?>
     
     <?php if (get_option("colabs_social_youtube") != '' ) : ?>
-      <a class="vimeo" href="<?php echo get_option("colabs_social_youtube");?>"><i class="icon-vimeo"></i></a>
+      <a class="youtube" href="<?php echo get_option("colabs_social_youtube");?>"><i class="icon-youtube"></i></a>
       <?php endif; ?>
       
     <?php if (get_option("colabs_social_flickr") != '' ) : ?>
