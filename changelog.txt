@@ -8,12 +8,20 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 11 February 2013
+    Last Update Date: 4 March 2014
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2014.03.04 - Version 1.1.0
+- Fix: Compatibility with WooCommerce 2.1
+  Folder Affected: woocommerce/
+- Fix: Image with Caption inside Post Content is not Responsive
+  File Affected: style.css
+- Fix: Google Chrome not showing the Custom Fonts
+  File Affected: style.css
 
 2014.02.11 - Version 1.0.10
 - Update: Framework
