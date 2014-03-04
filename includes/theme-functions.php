@@ -371,7 +371,7 @@ add_filter( 'get_search_form', 'custom_search' );
 function colabs_credit(){
 global $themename,$colabs_options;
 
-if( $colabs_options['colabs_footer_credit'] != 'true' ) {
+if( get_option('colabs_footer_credit') != 'true' ) {
   echo '<p>&copy; '. date('Y') .' <a href="http://colorlabsproject.com/themes/'.get_option('colabs_themename').'">'.get_option('colabs_themename').'</a>. All Rights Reserved</p>';
 } else {
   echo stripslashes( $colabs_options['colabs_footer_credit_txt'] ); 

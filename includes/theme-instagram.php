@@ -693,7 +693,8 @@
 	}
 		
 	if (class_exists('ColabsInstagram')): 
-		$ColabsInstagram = ColabsInstagram::getInstance();
+		$instagram_class = new ColabsInstagram;
+		$ColabsInstagram = $instagram_class->getInstance();
 		if (isset($ColabsInstagram)) 
 		{
 			register_activation_hook(__FILE__, array(&$ColabsInstagram, 'install'));
