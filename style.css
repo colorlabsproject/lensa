@@ -767,6 +767,7 @@ blockquote p:last-child {
   border-top: 1px dashed #c6c6c6;
   padding-top: 15px;
   margin-top: 15px;
+  overflow: hidden;
 }
 .commentlist > li:first-child > .comment-entry {
   margin-top: 0;
@@ -1564,10 +1565,25 @@ img.alignnone {
   margin-right: auto;
 }
 
+.wp-caption:after,
+.wp-caption:before {
+  content: '';
+  display: table;
+}
+.wp-caption:after {
+  clear: both;
+}
 .wp-caption {
-   background: none repeat scroll 0 0 #EEEEEE;
-   margin-bottom: 1.5em;
-   padding: 10px 5px 1px;
+  zoom: 1;
+}
+.wp-caption {
+  background: none repeat scroll 0 0 #EEEEEE;
+  margin-bottom: 1.5em;
+  padding: 10px 10px 0 10px;
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .wp-caption img {
   border: 0 none;

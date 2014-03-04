@@ -4,6 +4,8 @@
 /*-----------------------------------------------------------------------------------*/
 error_reporting(0);
 
+if ( ! isset( $content_width ) ) $content_width = 612;
+
 // Set path to ColorLabs Framework and theme specific functions
 $functions_path = TEMPLATEPATH . '/functions/';
 $includes_path = TEMPLATEPATH . '/includes/';
