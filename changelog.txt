@@ -8,12 +8,16 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 4 March 2014
+    Last Update Date: 5 March 2014
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2014.03.05 - Version 1.1.1
+- Fix: Some of WooCommerce Pages become 404 Not Found when using non default Permalinks Setting
+  Files Affected: style.css, functions.php, includes/theme-custom-type.php, includes/theme-functions.php
 
 2014.03.04 - Version 1.1.0
 - Fix: Compatibility with WooCommerce 2.1
