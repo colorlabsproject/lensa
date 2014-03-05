@@ -76,7 +76,6 @@ if ( ! function_exists('colabs_custom_post_type') ) {
 						'query_var' => true,
 						'rewrite' => array( 'slug' => 'photograph-categories' ),
 				));
-		flush_rewrite_rules();
 	}
 
 }

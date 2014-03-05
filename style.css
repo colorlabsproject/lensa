@@ -2226,10 +2226,6 @@ display:inline;
 background: #fff;
 }
 
-img.attachment-shop_catalog.wp-post-image {
-  width: 150px !important;
-  height: 150px !important;
-}
 
 .woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
   list-style: none;
@@ -2239,115 +2235,11 @@ ul.products {
   margin: 0px;
 }
 
-.woocommerce span.onsale, .woocommerce-page span.onsale {
-min-height: 32px;
-min-width: 32px;
-padding: 4px;
-font-size: 12px;
-font-weight: bold;
-position: absolute;
-text-align: center;
-line-height: 32px;
-top: 6px;
-left: 6px;
-margin: 0;
--webkit-border-radius: 20px;
--moz-border-radius: 20px;
-border-radius: 20px;
-background: #a2c094;
-background: -webkit-gradient(linear,left top,left bottom,from(#a2c094),to(#85ad74));
-background: -webkit-linear-gradient(#a2c094,#85ad74);
-background: -moz-linear-gradient(center top,#a2c094 0,#85ad74 100%);
-background: -moz-gradient(center top,#a2c094 0,#85ad74 100%);
-text-shadow: 0 -1px 0 #85ad74;
-color: #fff;
--webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -1px 0 rgba(0,0,0,0.2),0 1px 2px rgba(0,0,0,0.2);
--moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -1px 0 rgba(0,0,0,0.2),0 1px 2px rgba(0,0,0,0.2);
-box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -1px 0 rgba(0,0,0,0.2),0 1px 2px rgba(0,0,0,0.2);
-}
-
-.woocommerce a.button, .woocommerce-page a.button, .woocommerce button.button, .woocommerce-page button.button, .woocommerce input.button, .woocommerce-page input.button, .woocommerce #respond input#submit, .woocommerce-page #respond input#submit, .woocommerce #content input.button, .woocommerce-page #content input.button {
-font-size: 100%;
-margin: 0;
-line-height: 1em;
-cursor: pointer;
-position: relative;
-font-family: inherit;
-overflow: visible;
-padding: 6px 10px;
-text-decoration: none;
-font-weight: bold;
--webkit-border-radius: 2px;
--moz-border-radius: 2px;
-border-radius: 2px;
-left: auto;
-text-shadow: 0 1px 0 #fff;
-width: 100px;
-white-space: pre-wrap !important;
-color: #5e5e5e;
-text-shadow: 0 1px 0 rgba(255,255,255,0.8);
-border: 1px solid #c8bfc6;
-background: #f7f6f7;
-background: -webkit-gradient(linear,left top,left bottom,from(#f7f6f7),to(#e0dadf));
-background: -webkit-linear-gradient(#f7f6f7,#e0dadf);
-background: -moz-linear-gradient(center top,#f7f6f7 0,#e0dadf 100%);
-background: -moz-gradient(center top,#f7f6f7 0,#e0dadf 100%);
-white-space: nowrap;
-display: inline-block;
--webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
--moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
-}
-demo.colorlabsproject.com/media="all"
-.woocommerce a.button, .woocommerce-page a.button, .woocommerce button.button, .woocommerce-page button.button, .woocommerce input.button, .woocommerce-page input.button, .woocommerce #respond input#submit, .woocommerce-page #respond input#submit, .woocommerce #content input.button, .woocommerce-page #content input.button {
-font-size: 100%;
-margin: 0;
-line-height: 1em;
-cursor: pointer;
-position: relative;
-font-family: inherit;
-overflow: visible;
-padding: 6px 10px;
-text-decoration: none;
-font-weight: bold;
--webkit-border-radius: 2px;
--moz-border-radius: 2px;
-border-radius: 2px;
-left: auto;
-text-shadow: 0 1px 0 #fff;
-color: #5e5e5e;
-text-shadow: 0 1px 0 rgba(255,255,255,0.8);
-border: 1px solid #c8bfc6;
-background: #f7f6f7;
-background: -webkit-gradient(linear,left top,left bottom,from(#f7f6f7),to(#e0dadf));
-background: -webkit-linear-gradient(#f7f6f7,#e0dadf);
-background: -moz-linear-gradient(center top,#f7f6f7 0,#e0dadf 100%);
-background: -moz-gradient(center top,#f7f6f7 0,#e0dadf 100%);
-white-space: nowrap;
-display: inline-block;
--webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
--moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.075),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.1);
-}
-
 /* added jigoshop support */
 .summary {
 float: right;
 width: 270px !important;
 padding-top: 12px !important;
-}
-
-.products li {
-float: left;
-margin: 0 10px 20px 0;
-padding: 0!important;
-position: relative;
-width: 200px !important;
-}
-
-.products li:nth-child(4n+1) {
-    clear: left;
-  margin-left: 0;  
 }
 
 products li.jigo-product{margin: 0 37px 20px 0;}

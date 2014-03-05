@@ -763,4 +763,3 @@ function colabs_background_slideshow(){
       if($slide!='') echo 'slides = ['.rtrim($slide, ",").']'; 
   echo '</script>';
 }
-?>

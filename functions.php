@@ -113,4 +113,3 @@ if(is_admin()){
 		update_option('jigoshop_shop_small_h','200');
 	}
 }
-?>
