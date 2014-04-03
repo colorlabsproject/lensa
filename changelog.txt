@@ -8,12 +8,24 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 5 March 2014
+    Last Update Date: 3 April 2014
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2014.04.03 - Version 1.1.2
+- Update: Framework
+  Folder Affected: functions/
+- Fix: Gallery Page Template layout on mobile
+  File Affected: style.css
+- Fix: WooCommerce Shop layout
+  File Affected: style.css
+- Fix: Duplicate Instagram Settings menu on WP Admin
+  Files Affected: includes/theme-instagram.php, includes/theme-instagram-options.php
+- Fix: Error and success Message on Instagram Settings page
+  Files Affected: includes/theme-instagram.php, includes/theme-instagram-options.php
 
 2014.03.05 - Version 1.1.1
 - Fix: Some of WooCommerce Pages become 404 Not Found when using non default Permalinks Setting
