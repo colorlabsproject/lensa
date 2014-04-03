@@ -52,7 +52,7 @@ class ColabsFacebook
 			
 			?>
 			<div id="colabs_options" class="wrap <?php if (get_bloginfo('text_direction') == 'rtl') { echo 'rtl'; } ?> colabs_facebook">
-			<div class="one_col wrap colabs_container">
+			<div class="one_col colabs_container">
 			<div class="clear"></div>
 			<?php
 			//Show a warning if they're using a naughty other plugin
@@ -122,11 +122,11 @@ class ColabsFacebook
 			
 			if( isset($_POST[ 'reset-facebook-session']) ) 
 			{
-							update_option( $option_fb_sess_key, '' );
-							update_option( $option_fb_sess_sec, '' );
-							update_option( $option_fb_sess_uid, '' );
-							update_option( $option_fb_sess_uname, '' );
-							?><div class="updated"><p><strong><?php echo 'Reset Facebook account successfully'; ?></strong></p></div><?php
+				update_option( $option_fb_sess_key, '' );
+				update_option( $option_fb_sess_sec, '' );
+				update_option( $option_fb_sess_uid, '' );
+				update_option( $option_fb_sess_uname, '' );
+				?><div class="updated"><p><strong><?php echo 'Reset Facebook account successfully'; ?></strong></p></div><?php
 			}
 			//Get all the options from the database
 
