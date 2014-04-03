@@ -163,11 +163,11 @@ function colabsthemes_add_admin() {
 
     if(function_exists( 'add_object_page'))
     {
-        add_object_page ( 'Page Title', $themename, 'manage_options','colabsthemes','colabsthemes_options_page', $icon);
+        add_object_page ( __('Theme Options'), $themename, 'manage_options','colabsthemes','colabsthemes_options_page', $icon);
     }
     else
     {
-        add_menu_page ( 'Page Title', $themename, 'manage_options','colabsthemes','colabsthemes_options_page', $icon);
+        add_theme_page ( __('Theme Options'), $themename, 'manage_options','colabsthemes','colabsthemes_options_page', $icon);
     }
     
     // Add Theme Option Menu Item
@@ -216,15 +216,17 @@ function colabsthemes_add_admin() {
     add_action( "admin_print_styles-$colabslayout", 'colabs_admin_styles' );
     add_action( "admin_print_styles-$colabsseo", 'colabs_admin_styles' );
     add_action( "admin_print_styles-$colabssbm", 'colabs_admin_styles' );
+		add_action( "admin_print_styles-$colabsthemepage", 'colabs_admin_styles' );
+		add_action( "admin_print_styles-$colabseditor", 'colabs_admin_styles' );
+		add_action( "admin_print_styles-$colabsthemes_readme_menu_pagehook", 'colabs_admin_styles' );
 
     add_action( "admin_print_scripts-$colabspage", 'colabs_load_only' );
-    add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );
-    add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only_updater' );        
-    add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
-    add_action( "admin_print_scripts-$colabsthemes_readme_menu_pagehook", 'readme_register_admin_head' );
-    
+    add_action( "admin_print_scripts-$colabslayout", 'colabs_load_only' );    
     add_action( "admin_print_scripts-$colabsseo", 'colabs_load_only' );
     add_action( "admin_print_scripts-$colabssbm", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabsthemepage", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabsthemes_readme_menu_pagehook", 'colabs_load_only' );
+		add_action( "admin_print_scripts-$colabseditor", 'colabs_load_only_editor' );
     
   // Add the non-JavaScript "save" to the load of each of the screens.
     add_action( "load-$colabspage", 'colabs_nonajax_callback' );
@@ -292,11 +294,11 @@ function colabsthemes_options_page(){
   $theme_slug = str_replace( "/", "", substr($manualurl, ($pos + 13))); //13 for the word documentation
 ?>
 <div class="wrap colabs_container">
-  
+  <h2 class="colabs_admin_page_title"></h2>
   <?php 
   $free_themes = array('lensa', 'photogram', 'leatherly', 'tumblepress', 'rpg.cod', 'wellblog');
   if( in_array( strtolower($themename), $free_themes) ) : ?>
-    <div class="colabs_twitter_stream">
+    <div class="colabs_twitter_stream updated">
 
         <div class="stream-label"><?php _e('News On Twitter:','colabsthemes');?></div>
         <?php
@@ -338,7 +340,6 @@ function colabsthemes_options_page(){
     <?php colabs_theme_check();?>
     <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save"><?php _e("Options Updated","colabsthemes"); ?></div></div>
     <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset"><?php _e("Options Reset","colabsthemes"); ?></div></div>
-    <div style="width:100%;padding-top:15px;"></div>
     <div class="clear"></div>
 
     <?php 
@@ -421,7 +422,7 @@ function colabs_load_only() {
     
   wp_enqueue_script( 'colabs-scripts' );
     
-    // Register the typography preview JavaScript.
+  // Register the typography preview JavaScript.
   wp_register_script( 'colabs-typography-preview', get_template_directory_uri() . '/functions/js/colabs-typography-preview.js', array( 'jquery' ), '1.0.0', true );
   wp_enqueue_script( 'colabs-typography-preview' );
 }
@@ -431,18 +432,19 @@ function colabs_load_only() {
 --------------------------------------------------------------------------------*/
 function colabs_admin_head() {
 /* To change the CSS stylesheet depending on the chosen color */
-    global $_wp_admin_css_colors;
+  global $_wp_admin_css_colors;
 
-    //COLOR Picker 
-    $wp_version = get_bloginfo( 'version' );
+  //COLOR Picker 
+  $wp_version = get_bloginfo( 'version' );
 
-    if (version_compare($wp_version, '3.4.0', '<')) {
-        wp_enqueue_style( 'colabs-admin-colorpicker', get_template_directory_uri() . '/functions/css/colorpicker.css', array( 'colabs-admin-style' ) );
-        wp_enqueue_script( 'colabs-admin-colorpicker-js', get_template_directory_uri() . '/functions/js/colorpicker.js' );
-    }else{
-        wp_enqueue_script('wp-color-picker');
-        wp_enqueue_style('wp-color-picker');
-    }
+  if (version_compare($wp_version, '3.4.0', '<')) {
+      wp_enqueue_style( 'colabs-admin-colorpicker', get_template_directory_uri() . '/functions/css/colorpicker.css', array( 'colabs-admin-style' ) );
+      wp_enqueue_script( 'colabs-admin-colorpicker-js', get_template_directory_uri() . '/functions/js/colorpicker.js' );
+  }else{
+      wp_enqueue_script('wp-color-picker');
+      wp_enqueue_style('wp-color-picker');
+  }
+		
 ?>
   <script type="text/javascript" language="javascript">
   jQuery(document).ready(function(){
@@ -668,10 +670,7 @@ function colabs_admin_head() {
       this.css( "left", 250 );
       return this;
     }
-    jQuery(window).scroll(function() { 
-      jQuery( '#colabs-popup-save').center();
-      jQuery( '#colabs-popup-reset').center();
-    });
+    
     //String Builder Details
     jQuery( '.string_builder_return').each(function(){
       var top_object = jQuery(this);
@@ -800,14 +799,14 @@ function colabs_admin_head() {
         return false; 
       }); 
     //Save everything else
-    jQuery( '#colabsform').submit(function(){
+    jQuery( '#colabsform:not(".not-ajax")').submit(function(){
         function newValues() {
           var serializedValues = jQuery( "#colabsform *").not( '.colabs-ignore').serialize();
           return serializedValues;
         }
         jQuery( ":checkbox, :radio").click(newValues);
         jQuery( "select").change(newValues);
-        jQuery( '.ajax-loading-img').fadeIn().css('display','inline');
+        // jQuery( '.ajax-loading-img').fadeIn().css('display','inline');
         var serializedReturn = newValues();
         var ajax_url = '<?php echo admin_url( "admin-ajax.php" ); ?>';
         var data = {
@@ -823,24 +822,35 @@ function colabs_admin_head() {
           <?php if(isset($_REQUEST['page']) && 'colabsthemes_seo' == $_REQUEST['page']){ ?>
           type: 'seo',
           <?php } ?>
-          <?php if(isset($_REQUEST['page']) && 'colabsthemes_tumblog' == $_REQUEST['page']){ ?>
-          type: 'tumblog',
-          <?php } ?>
           action: 'colabs_ajax_post_action',
           data: serializedReturn, 
           <?php // Nonce Security ?>
           <?php if ( function_exists( 'wp_create_nonce' ) ) { $colabs_nonce = wp_create_nonce( 'colabsframework-theme-options-update' ); } // End IF Statement ?>
           _ajax_nonce: '<?php echo $colabs_nonce; ?>'
         };
-        jQuery.post(ajax_url, data, function(response) {
-          var success = jQuery( '#colabs-popup-save' );
-          var loading = jQuery( '.ajax-loading-img' );
-          loading.fadeOut();  
-          success.fadeIn();
-          window.setTimeout(function(){
-             success.fadeOut(); 
-          }, 2000);
-        });
+
+        var loading = jQuery( '.ajax-loading-img' ),
+            message = Messenger().post({
+              type: 'info',
+              message: '<?php _e("Saving Options please wait &hellip;", "colabsthemes"); ?>',
+              hideAfter: 5
+            });
+
+        // Submit the form
+        jQuery.ajax({
+          url: ajax_url,
+          type: 'POST',
+          data: data,
+          beforeSend: function() {
+              
+          },
+          success: function() {
+            message.update({
+              type: 'success',
+              message: '<?php _e("Saved", "colabsthemes"); ?>'
+            })
+          }
+        })
         return false; 
       });       
     });
@@ -854,11 +864,12 @@ function colabs_admin_styles() {
   global $_wp_admin_css_colors;
 
   wp_enqueue_style( 'colabs-admin-style', get_template_directory_uri() . '/functions/admin-style.css' );
-  //wp_enqueue_style( 'jquery-ui-datepicker', get_template_directory_uri() . '/functions/css/jquery-ui-datepicker.css' );
-
+	
   if(isset($_wp_admin_css_colors['name'])){
     wp_enqueue_style( 'colabs-admin-'.$_wp_admin_css_colors['name'], get_template_directory_uri() . '/' . $_wp_admin_css_colors['name'] .'.css' );
   }
+	
+	add_action('admin_head','colabs_theme_panel_css');
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -919,7 +930,7 @@ global $wpdb; // this is how you get access to the database
     unset($option_temp[$name]);
     update_option($id,$option_temp);
   }
-  elseif ('options' == $save_type OR 'seo' == $save_type OR 'tumblog' == $save_type OR 'framework' == $save_type OR 'layout' == $save_type) {
+  elseif ('options' == $save_type OR 'seo' == $save_type OR 'framework' == $save_type OR 'layout' == $save_type) {
     // Make sure to flush the rewrite rules.
     colabs_flush_rewriterules();
     if ( is_array( $data ) ) {
@@ -933,8 +944,6 @@ global $wpdb; // this is how you get access to the database
           $options = get_option( 'colabs_template' );
     if('seo' == $save_type){
       $options = get_option( 'colabs_seo_template' ); } // Use SEO template on SEO page
-    if('tumblog' == $save_type){
-      $options = get_option( 'colabs_tumblog_template' ); } // Use Tumblog template on Tumblog page
     if('framework' == $save_type){
       $options = get_option( 'colabs_framework_template' ); } // Use Framework template on Framework Settings page
     if('layout' == $save_type){
@@ -1109,9 +1118,6 @@ if ( ! function_exists( 'colabs_nonajax_callback' ) ) {
           $type = 'seo';
           $nonce_key = 'colabsframework-seo-options-update';
         break;
-        case 'colabsthemes_tumblog':
-          $type = 'tumblog';
-        break;
         default:
           $type = '';
       }
@@ -1161,8 +1167,13 @@ function colabsthemes_machine($options) {
     //Start Heading
      if ( $value['type'] != "heading" )
      {
-      $class = ''; if(isset( $value['class'] )) { $class = $value['class']; }
-      $output .= '<div class="section section-'.$value['type'].' '. $class .'">'."\n";
+      $class = isset($value['class']) ? $value['class'] : '';
+      $type = '';
+      if( !is_array($value['type']) ) {
+        $type = $value['type'];
+      }
+
+      $output .= '<div class="section section-'. $type .' '. $class .'">'."\n";
       $output .= '<h3 class="heading">'. $value['name'] .'</h3>'."\n";
       $output .= '<div class="option">'."\n" . '<div class="controls">'."\n";
      } 
@@ -1548,16 +1559,19 @@ function colabsthemes_machine($options) {
       if($counter >= 2){
          $output .= '</div>'."\n";
       }
-      $jquery_click_hook = ereg_replace( "[^A-Za-z0-9]", "", strtolower($value['name']) );
-            $jquery_click_hook = str_replace(' ', '', $jquery_click_hook);
+			$icon = 'generals';
+			if($value['icon'])$icon = $value['icon'];
+			if('photoblog'==$value['icon'])$icon = 'images';
+      $jquery_click_hook = sanitize_title( strtolower($value['name']) );
       $jquery_click_hook = "colabs-option-" . $jquery_click_hook;
-            $class = ''; if(isset( $value['class'] )) { $class = $value['class']; }
+      
+      $class = isset($value['class']) ? $value['class'] : '';
       $menu .= '<li class="'.$value['icon'].'">
         <a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'">
-          <img src="'.get_template_directory_uri().'/functions/images/icon/menu/'.$value['icon'].'-settings.png">
+					<i class="icon icon-'.$icon.'"></i>
           <span>'.  $value['name'] .'</span></a>
       </li>';
-      $output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
+      $output .= '<div class="group" id="'. $jquery_click_hook  .'">'."\n";
     break;                                  
     } 
     // if TYPE is an array, formatted into smaller inputs... ie smaller values
@@ -1765,4 +1779,88 @@ if ( ! function_exists( 'colabs_theme_update_notice' ) ) {
       if ( $html != '' ) { echo $html; }
   } // End colabs_theme_update_notice()
 } // End IF Statement
+
+/*-----------------------------------------------------------------------------------*/
+/* Theme Panel CSS */
+/*-----------------------------------------------------------------------------------*/
+function colabs_theme_panel_css(){
+  $functions_path = get_template_directory() . '/functions/';
+	require_once ($functions_path . 'scss.inc.php');	
+
+	global $_wp_admin_css_colors;
+	$color_scheme = get_user_option( 'admin_color', get_current_user_id() );
+			
+	$scss = new scssc();
+	$base_color = $_wp_admin_css_colors[ $color_scheme ]->colors[1];
+	if('midnight'==$color_scheme){
+		$highlight_color = $_wp_admin_css_colors[ $color_scheme ]->colors[3];
+		$notification_color = $_wp_admin_css_colors[ $color_scheme ]->colors[2];
+	}else{
+		$highlight_color = $_wp_admin_css_colors[ $color_scheme ]->colors[2];
+		$notification_color = $_wp_admin_css_colors[ $color_scheme ]->colors[3];
+	}
+	$text_color = $_wp_admin_css_colors[ $color_scheme ]->icon_colors['base'];
+	$text_current = $_wp_admin_css_colors[ $color_scheme ]->icon_colors['current'];
+	
+	if('fresh'==$color_scheme){
+		$base_color = '#0099CC';
+		$text_color = '#FFFFFF';
+		$highlight_color = 'none repeat scroll 0 0 rgba(0, 0, 0, 0.2)';
+	}
+
+	if('light'==$color_scheme){
+		$base_color = $_wp_admin_css_colors[ $color_scheme ]->colors[0];
+		$highlight_color = $_wp_admin_css_colors[ $color_scheme ]->colors[1];
+		$notification_color = $_wp_admin_css_colors[ $color_scheme ]->colors[2];
+		$text_color = '#333';
+		$text_current = '#FFF';
+	}elseif('blue'==$color_scheme){
+		$base_color = $_wp_admin_css_colors[ $color_scheme ]->colors[2];
+		$highlight_color = $_wp_admin_css_colors[ $color_scheme ]->colors[0];
+		$notification_color = '#E1A948';
+	}
+	
+	$panel_style = '<style>';
+			
+	if('light'==$color_scheme){
+		$panel_style .= ".colabs_container #main, #sidebar-nav.colabs-sbm-menu ul ul, #sidebar-nav {background: #FFF;}";
+		$panel_style .= "#sidebar-nav a {color: #686868}";
+		$panel_style .= "#sidebar-nav .current a {color: #333; font-weight: 600;}";
+		$panel_style .= "#sidebar-nav i.icon, #header-nav li i.icon {color: ".$highlight_color.";}";
+		$panel_style .= "#sidebar-nav .current i.icon {color: #FFF;}";
+	}else{
+		$panel_style .= $scss->compile(".colabs_container #main, #sidebar-nav.colabs-sbm-menu ul ul, #sidebar-nav {background: darken( ".$base_color.", 7%)}");
+		$panel_style .= "#sidebar-nav a {color: ".$text_color."}";
+		$panel_style .= "#sidebar-nav .current a {color: ".$text_current."; font-weight: 600;}";
+	}
+	if('blue'==$color_scheme){
+		$panel_style .= ".colabs_container #main, #sidebar-nav.colabs-sbm-menu ul ul, #sidebar-nav {background: ".$_wp_admin_css_colors[ $color_scheme ]->colors[1].";}";
+	}
+	$panel_style .= "#sidebar-nav i.icon {background: ".$base_color."}";
+	
+	
+	if('fresh'!=$color_scheme){
+		$panel_style .= "#header-nav .update-true a:before {background: ".$notification_color."}";
+		$panel_style .= "#sidebar-nav .current i.icon {background: ".$highlight_color.";}";
+	}else{
+		$panel_style .= "#sidebar-nav .current i.icon {color: #fff;background: #FDB022;}";	
+		$panel_style .= ".wp-core-ui .button-primary{background-color:#FFB101;border-color:#DA903B;box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;}";
+		$panel_style .= ".wp-core-ui .button-primary:hover, .wp-core-ui .button-primary:focus{background-color:#FFCA00;border-color:#DA903B;box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;}";
+	}
+	
+	$panel_style .= "#panel-header, #panel-footer, .colabs-sbm-menu {background: ".$base_color."; color:".$text_color."}";
+	$panel_style .= "#header-nav a, #panel-footer li a {color:".$text_color."}";
+	$panel_style .= "#header-nav a:hover, #header-nav .current-page a,#sidebar-nav.colabs-sbm-menu a:hover, #sidebar-nav.colabs-sbm-menu ul ul li:hover, .nav-tabs .nav-tab {background: ".$highlight_color."; color:".$text_current."; font-weight: 600;}";
+	$panel_style .= "#panel-logo .theme-info {color: ".$text_color."; font-weight: 600;}";
+
+  if( 'fresh' == $color_scheme ) {
+    $panel_style .= '#header-nav a:hover, #header-nav .current-page a, #sidebar-nav.colabs-sbm-menu a:hover, #sidebar-nav.colabs-sbm-menu ul ul li:hover, .nav-tabs .nav-tab { background: #FDB022 }';
+  }
+
+	$panel_style .= '</style>';
+	
+	echo $panel_style;
+
+}
+
 ?>

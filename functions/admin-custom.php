@@ -1,5 +1,4 @@
 <?php
-
 /*-----------------------------------------------------------------------------------
 
 TABLE OF CONTENTS
@@ -11,8 +10,6 @@ TABLE OF CONTENTS
 - colabsthemes_metabox_header
 
 -----------------------------------------------------------------------------------*/
-
-
 
 /*-----------------------------------------------------------------------------------*/
 // Custom fields for WP write panel
@@ -334,8 +331,6 @@ function colabsthemes_metabox_create($post,$callback) {
     echo $output;
 }
 
-
-
 /*-----------------------------------------------------------------------------------*/
 // colabsthemes_uploader_custom_fields
 /*-----------------------------------------------------------------------------------*/
@@ -355,8 +350,6 @@ function colabsthemes_uploader_custom_fields($pID,$id,$std,$desc){
 
 return $uploader;
 }
-
-
 
 /*-----------------------------------------------------------------------------------*/
 // colabsthemes_metabox_handle
@@ -721,7 +714,6 @@ function colabsthemes_metabox_header(){
 <?php
  echo '<link rel="stylesheet" type="text/css" href="' . get_template_directory_uri() . '/functions/css/jquery-ui-datepicker.css" />';
 }
-
 
 function colabs_custom_enqueue($hook) {
     if ('post.php' == $hook OR 'post-new.php' == $hook OR 'page-new.php' == $hook OR 'page.php'== $hook) {

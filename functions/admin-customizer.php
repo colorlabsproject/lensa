@@ -72,24 +72,14 @@ class CoLabsThemes_Customizer {
 		
 		// Add contextual help.
 		add_action( 'contextual_help', array( &$this, 'admin_screen_help' ), 10, 3 );
-				
 		add_action( 'admin_notices', array( &$this, 'admin_notices' ), 10 );
         
-        // Register admin head on colabs customizer page
-        add_action( 'admin_print_styles-'.$this->admin_page, array( &$this, 'register_admin_head' ) );
+    // Register admin head on colabs customizer page
+    add_action( 'admin_print_styles-'.$this->admin_page, 'colabs_admin_styles' );
+		add_action( 'admin_print_scripts-'.$this->admin_page, 'colabs_load_only' );
         
 	} // End register_admin_screen()
 	
-    //Updater Load Scripts
-    function register_admin_head(){
-        
-        echo '<link rel="stylesheet" type="text/css" href="' . get_template_directory_uri() . '/functions/admin-style.css" media="screen" />';
-        echo '<style type="text/css">'
-            .'#panel-content .section .description { float:none; width:35% }'
-            .'.updated, .error {display: block;}'
-            .'</style>';
-        
-    }//END function register_admin_head
 
 	/**
 	 * admin_screen()
@@ -107,61 +97,47 @@ class CoLabsThemes_Customizer {
 			$export_type = esc_attr( $_POST['export-type'] );
 		}
 ?>
-<div class="wrap colabs_notice">
-	<h2></h2>
 
-<div id="colabs_options" class="<?php if (is_rtl()) { echo 'rtl'; } ?> colabs_customizer">
-
-	<div class="one_col wrap colabs_container">
-    
-            <div class="clear"></div>
-						<?php colabs_theme_check();?>
-            <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save">Options Updated</div></div>
-            <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset">Options Reset</div></div>
-            <div style="width:100%;padding-top:15px;"></div>
-            <div class="clear"></div>
-        
+<div id="colabs_options" class="one_col wrap colabs_container <?php if (is_rtl()) { echo 'rtl'; } ?> colabs_customizer">
+  <h2></h2>
+	
 	<div id="main">
         
-	<div id="panel-header">
+		<div id="panel-header">
         <?php colabsthemes_options_page_header('save_button=false'); ?>
-	</div><!-- #panel-header -->
+		</div><!-- #panel-header -->
 
     <div id="panel-content">
 
-    <div class="section">
-    
-    	<h3 class="heading"><?php _e( 'Import Customizer Settings', 'colabsthemes' ); ?></h3>
-    	<div class="option">
-    	<p><?php printf( __( 'If you have tried <a href="%s" target="_blank">ColorLabs Customizer Demo</a> and export the settings into your computer, then you can import the exported file (.json) containing customizer settings to your site here. ', 'colabsthemes' ), 'http://demo.colorlabsproject.com' ); ?></p>
-        <p><?php printf( __( 'Or you can customize your theme by using <a href="%s">Wordpress Customizer</a>.', 'colabsthemes' ), wp_customize_url() ); ?></p>
-    	<div class="form-wrap">
-    		<form enctype="multipart/form-data" method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
-    			<?php wp_nonce_field( 'colabsthemes-customizer-import' ); ?>
-    			<label for="colabsthemes-import-file"><?php printf( __( 'Upload File: (Maximum Size: %s)', 'colabsthemes' ), ini_get( 'post_max_size' ) ); ?></label>
-    			<input type="file" id="colabsthemes-import-file" name="colabsthemes-import-file" size="25" />
-    			<input type="hidden" name="colabsthemes-customizer-import" value="1" />
-    			<input type="submit" class="button" value="<?php _e( 'Upload File and Import', 'colabsthemes' ); ?>" />
-    		</form>
-    	</div><!--/.form-wrap-->
-    	</div><!-- .option -->
+			<div class="section">
+			
+				<h3 class="heading"><?php _e( 'Import Customizer Settings', 'colabsthemes' ); ?></h3>
+				<div class="option">
+				<p><?php printf( __( 'If you have tried <a href="%s" target="_blank">ColorLabs Customizer Demo</a> and export the settings into your computer, then you can import the exported file (.json) containing customizer settings to your site here. ', 'colabsthemes' ), 'http://demo.colorlabsproject.com' ); ?></p>
+					<p><?php printf( __( 'Or you can customize your theme by using <a href="%s">Wordpress Customizer</a>.', 'colabsthemes' ), wp_customize_url() ); ?></p>
+				<div class="form-wrap">
+					<form enctype="multipart/form-data" method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
+						<?php wp_nonce_field( 'colabsthemes-customizer-import' ); ?>
+						<label for="colabsthemes-import-file"><?php printf( __( 'Upload File: (Maximum Size: %s)', 'colabsthemes' ), ini_get( 'post_max_size' ) ); ?></label>
+						<input type="file" id="colabsthemes-import-file" name="colabsthemes-import-file" size="25" />
+						<input type="hidden" name="colabsthemes-customizer-import" value="1" />
+						<input type="submit" class="button" value="<?php _e( 'Upload File and Import', 'colabsthemes' ); ?>" />
+					</form>
+				</div><!--/.form-wrap-->
+				</div><!-- .option -->
 
-    </div><!-- .section -->
+			</div><!-- .section -->
 
     </div><!-- #panel-content -->
 
     <div id="panel-footer">
       <ul>
-          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" >View Documentation</a></li>
-          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank">Submit a Support Ticket</a></li>
-          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank">Suggest a Feature</a></li>
+          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e('View Documentation','colabsthemes');?></a></li>
+          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e('Submit a Support Ticket','colabsthemes');?></a></li>
+          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e('Suggest a Feature','colabsthemes');?></a></li>
       </ul>
   	</div><!-- #panel-footer -->
 	</div><!-- #main -->
-
-	</div><!-- .colabs_container -->
-    
-</div><!-- #colabs_options -->
 
 </div><!-- .wrap -->
 <?php
@@ -363,6 +339,4 @@ class CoLabsThemes_Customizer {
 
 $colabs_customizer = new CoLabsThemes_Customizer();
 $colabs_customizer->init();
-
-
 ?>

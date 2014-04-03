@@ -76,24 +76,12 @@ class CoLabsThemes_Backup {
 		
 		// Add contextual help.
 		add_action( 'contextual_help', array( &$this, 'admin_screen_help' ), 10, 3 );
-				
 		add_action( 'admin_notices', array( &$this, 'admin_notices' ), 10 );
         
-        // Register admin head on backup page
-        add_action( 'admin_print_styles-'.$this->admin_page, array( &$this, 'register_admin_head' ) );
-        
+    // Register admin head on backup page
+    add_action( 'admin_print_styles-'.$this->admin_page, 'colabs_admin_styles' );
+    add_action( 'admin_print_scripts-'.$this->admin_page, 'colabs_load_only' );    
 	} // End register_admin_screen()
-	
-    //Updater Load Scripts
-    function register_admin_head(){
-        
-        echo '<link rel="stylesheet" type="text/css" href="' . get_template_directory_uri() . '/functions/admin-style.css" media="screen" />';
-        echo '<style type="text/css">'
-            .'#panel-content .section .description { float:none; width:35% }'
-            .'.updated, .error {display: block;}'
-            .'</style>';
-        
-    }//END function register_admin_head
 
 	/**
 	 * admin_screen()
@@ -111,88 +99,74 @@ class CoLabsThemes_Backup {
 			$export_type = esc_attr( $_POST['export-type'] );
 		}
 ?>
-<div class="wrap colabs_notice">
+
+<div id="colabs_options" class="wrap colabs_container one_col <?php if (is_rtl()) { echo 'rtl'; } ?> colabs_backup">
 	<h2></h2>
-
-<div id="colabs_options" class="wrap <?php if (is_rtl()) { echo 'rtl'; } ?> colabs_backup">
-
-	<div class="one_col wrap colabs_container">
-    
-            <div class="clear"></div>
-						<?php colabs_theme_check();?>
-            <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save">Options Updated</div></div>
-            <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset">Options Reset</div></div>
-            <div style="width:100%;padding-top:15px;"></div>
-            <div class="clear"></div>
         
 	<div id="main">
         
-	<div id="panel-header">
-        <?php colabsthemes_options_page_header('save_button=false'); ?>
-	</div><!-- #panel-header -->
+		<div id="panel-header">
+					<?php colabsthemes_options_page_header('save_button=false'); ?>
+		</div><!-- #panel-header -->
 
     <div id="panel-content">
 
-    <div class="section">
-    
-    	<h3 class="heading"><?php _e( 'Import Settings', 'colabsthemes' ); ?></h3>
-    	<div class="option">
-    	<p><?php _e( 'If you have settings in a backup file on your computer, the ColorLabs Framework can import those into this site. To get started, upload your backup file to import from below.', 'colabsthemes' ); ?></p>
-    
-    	<div class="form-wrap">
-    		<form enctype="multipart/form-data" method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
-    			<?php wp_nonce_field( 'colabsthemes-backup-import' ); ?>
-    			<label for="colabsthemes-import-file"><?php printf( __( 'Upload File: (Maximum Size: %s)', 'colabsthemes' ), ini_get( 'post_max_size' ) ); ?></label>
-    			<input type="file" id="colabsthemes-import-file" name="colabsthemes-import-file" size="25" />
-    			<input type="hidden" name="colabsthemes-backup-import" value="1" />
-    			<input type="submit" class="button" value="<?php _e( 'Upload File and Import', 'colabsthemes' ); ?>" />
-    		</form>
-    	</div><!--/.form-wrap-->
-    	</div><!-- .option -->
+			<div class="section">
+			
+				<h3 class="heading"><?php _e( 'Import Settings', 'colabsthemes' ); ?></h3>
+				<div class="option">
+				<p><?php _e( 'If you have settings in a backup file on your computer, the ColorLabs Framework can import those into this site. To get started, upload your backup file to import from below.', 'colabsthemes' ); ?></p>
+			
+				<div class="form-wrap">
+					<form enctype="multipart/form-data" method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
+						<?php wp_nonce_field( 'colabsthemes-backup-import' ); ?>
+						<label for="colabsthemes-import-file"><?php printf( __( 'Upload File: (Maximum Size: %s)', 'colabsthemes' ), ini_get( 'post_max_size' ) ); ?></label>
+						<input type="file" id="colabsthemes-import-file" name="colabsthemes-import-file" size="25" />
+						<input type="hidden" name="colabsthemes-backup-import" value="1" />
+						<input type="submit" class="button" value="<?php _e( 'Upload File and Import', 'colabsthemes' ); ?>" />
+					</form>
+				</div><!--/.form-wrap-->
+				</div><!-- .option -->
 
-    </div><!-- .section -->
+			</div><!-- .section -->
     
-    <div class="section">
-            
-    	<h3 class="heading"><?php _e( 'Export Settings', 'colabsthemes' ); ?></h3>
-    	<div class="option">
-    	<p><?php _e( 'When you click the button below, the ColorLabs Framework will create a text file for you to save to your computer.', 'colabsthemes' ); ?></p>
-    	<p><?php echo sprintf( __( 'This text file can be used to restore your settings here on "%s", or to easily setup another website with the same settings".', 'colabsthemes' ), get_bloginfo( 'name' ) ); ?></p>
-    		
-    	<form method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
-    		<?php wp_nonce_field( 'colabsthemes-backup-export' ); ?>
-    		<p><label><input type="radio" name="export-type" value="all"<?php checked( 'all', $export_type ); ?>> <?php _e( 'All Settings', 'colabsthemes' ); ?></label>
-            <span class="description"><?php _e( 'This will contain all of the options listed below.', 'colabsthemes' ); ?></span></p>
-    
-    		<p><label for="content"><input type="radio" name="export-type" value="theme"<?php checked( 'theme', $export_type ); ?>/> <?php _e( 'Theme Options', 'colabsthemes' ); ?></label></p>
-    		
-    		<p><label for="content"><input type="radio" name="export-type" value="seo"<?php checked( 'seo', $export_type ); ?>/> <?php _e( 'SEO Settings', 'colabsthemes' ); ?></label></p>
-    		
-    		<?php if(get_option('colabs_themename')=='Backbone'){ ?><p><label for="content"><input type="radio" name="export-type" value="sidebar"<?php checked( 'sidebar', $export_type ); ?>/> <?php _e( 'Sidebar Manager', 'colabsthemes' ); ?> <span class="description"><?php _e( 'This will contain only the custom sidebars themselves and not the widgets within them', 'colabsthemes' ); ?></span></label></p><?php } ?>
-    		
-    		<input type="hidden" name="colabsthemes-backup-export" value="1" />
-    		<input type="submit" class="button" value="<?php _e( 'Download Export File', 'colabsthemes' ); ?>" />
-    	</form>
-    	</div><!-- .option -->
-        
-    </div><!-- .section -->
+			<div class="section">
+							
+				<h3 class="heading"><?php _e( 'Export Settings', 'colabsthemes' ); ?></h3>
+				<div class="option">
+				<p><?php _e( 'When you click the button below, the ColorLabs Framework will create a text file for you to save to your computer.', 'colabsthemes' ); ?></p>
+				<p><?php echo sprintf( __( 'This text file can be used to restore your settings here on "%s", or to easily setup another website with the same settings".', 'colabsthemes' ), get_bloginfo( 'name' ) ); ?></p>
+					
+				<form method="post" action="<?php echo admin_url( 'admin.php?page=' . $this->token ); ?>">
+					<?php wp_nonce_field( 'colabsthemes-backup-export' ); ?>
+					<p><label><input type="radio" name="export-type" value="all"<?php checked( 'all', $export_type ); ?>> <?php _e( 'All Settings', 'colabsthemes' ); ?></label>
+					<span class="description"><?php _e( 'This will contain all of the options listed below.', 'colabsthemes' ); ?></span></p>
+			
+					<p><label for="content"><input type="radio" name="export-type" value="theme"<?php checked( 'theme', $export_type ); ?>/> <?php _e( 'Theme Options', 'colabsthemes' ); ?></label></p>
+					
+					<p><label for="content"><input type="radio" name="export-type" value="seo"<?php checked( 'seo', $export_type ); ?>/> <?php _e( 'SEO Settings', 'colabsthemes' ); ?></label></p>
+					
+					<?php if(get_option('colabs_themename')=='Backbone'){ ?><p><label for="content"><input type="radio" name="export-type" value="sidebar"<?php checked( 'sidebar', $export_type ); ?>/> <?php _e( 'Sidebar Manager', 'colabsthemes' ); ?> <span class="description"><?php _e( 'This will contain only the custom sidebars themselves and not the widgets within them', 'colabsthemes' ); ?></span></label></p><?php } ?>
+					
+					<input type="hidden" name="colabsthemes-backup-export" value="1" />
+					<input type="submit" class="button" value="<?php _e( 'Download Export File', 'colabsthemes' ); ?>" />
+				</form>
+				</div><!-- .option -->
+					
+			</div><!-- .section -->
     
     </div><!-- #panel-content -->
 
     <div id="panel-footer">
       <ul>
-          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" >View Documentation</a></li>
-          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank">Submit a Support Ticket</a></li>
-          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank">Suggest a Feature</a></li>
+        <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e('View Documentation','colabsthemes');?></a></li>
+        <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e('Submit a Support Ticket','colabsthemes');?></a></li>
+        <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e('Suggest a Feature','colabsthemes');?></a></li>
       </ul>
   	</div><!-- #panel-footer -->
-	</div><!-- #main -->
-
-	</div><!-- .colabs_container -->
     
 </div><!-- #colabs_options -->
 
-</div><!-- .wrap -->
 <?php
 	
 	} // End admin_screen()

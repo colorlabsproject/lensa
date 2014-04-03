@@ -44,10 +44,6 @@ function colabs_loop_after() { colabs_do_atomic( 'colabs_loop_after' ); }
 function colabs_comment_before() { colabs_do_atomic( 'colabs_comment_before' ); }
 function colabs_comment_after() { colabs_do_atomic( 'colabs_comment_after' ); }
 
-// Tumblog Functionality
-function colabs_tumblog_content_before() { colabs_do_atomic( 'colabs_tumblog_content_before', 'Before' ); }	
-function colabs_tumblog_content_after() { colabs_do_atomic( 'colabs_tumblog_content_after', 'After' ); }
-
 // Sidebar
 function colabs_sidebar_before() { colabs_do_atomic( 'colabs_sidebar_before' ); }					
 function colabs_sidebar_inside_before() { colabs_do_atomic( 'colabs_sidebar_inside_before' ); }					

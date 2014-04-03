@@ -1,5 +1,4 @@
 <?php
-
 /*-----------------------------------------------------------------------------------
 
 TABLE OF CONTENTS
@@ -741,8 +740,6 @@ function colabs_get_image($key = 'image', $width = null, $height = null, $class 
 
 }
 
-
-
 /*-----------------------------------------------------------------------------------*/
 /* colabs_embed - Get Video embed code from custom field */
 /*-----------------------------------------------------------------------------------*/
@@ -751,11 +748,11 @@ function colabs_get_image($key = 'image', $width = null, $height = null, $class 
 Get Video
 This function gets the embed code from the custom field
 Parameters: 
-        $key = Custom field key eg. "embed"
-        $width = Set width manually without using $type
-        $height = Set height manually without using $type
-		$class = Custom class to apply to wrapping div
-		$id = ID from post to pull custom field from
+$key = Custom field key eg. "embed"
+$width = Set width manually without using $type
+$height = Set height manually without using $type
+$class = Custom class to apply to wrapping div
+$id = ID from post to pull custom field from
 */
 
 function colabs_embed($args) {
@@ -854,8 +851,6 @@ function colabs_get_embed($key = 'colabs_embed', $width, $height, $class = 'vide
 
 }
 
-
-
 /*-----------------------------------------------------------------------------------*/
 /* CoLabs Show Page Menu */
 /*-----------------------------------------------------------------------------------*/
@@ -874,8 +869,6 @@ function colabs_show_pagemenu( $exclude="" ) {
     $pages = str_replace( '</a>','</span></a>', $pages);
     echo $pages;
 }
-
-
 
 /*-----------------------------------------------------------------------------------*/
 /* Get the style path currently selected */
@@ -1037,11 +1030,40 @@ function colabs_gosquared(){
 }
 add_action( 'wp_footer','colabs_gosquared' );
 
-
 /*-----------------------------------------------------------------------------------*/
 /* Browser detection body_class() output */
 /*-----------------------------------------------------------------------------------*/
+add_filter('admin_body_class', 'admin_browser_body_class' );
+function admin_browser_body_class($classes) {
+	global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone;
+
+	if($is_lynx) $classes .= 'lynx';
+	elseif($is_gecko) $classes .= 'gecko';
+	elseif($is_opera) $classes .= 'opera';
+	elseif($is_NS4) $classes .= 'ns4';
+	elseif($is_safari) $classes .= 'safari';
+	elseif($is_chrome) $classes .= 'chrome';
+	elseif($is_IE) {
+		$browser = $_SERVER['HTTP_USER_AGENT']; 
+		$browser = substr( "$browser", 25, 8); 
+		if ($browser == "MSIE 7.0"  )
+			$classes .= 'ie7';
+		elseif ($browser == "MSIE 6.0" )
+			$classes .= 'ie6'; 
+		elseif ($browser == "MSIE 8.0" )
+			$classes .= 'ie8'; 
+		else	
+			$classes .= 'ie';
+	}
+	else $classes .= 'unknown';
+
+	if($is_iphone) $classes .= 'iphone';
+
+	return $classes;
+}
+
 add_filter( 'body_class','browser_body_class' );
+// add_filter( 'admin_body_class','browser_body_class' );
 function browser_body_class($classes) {
 	global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone;
 
@@ -1414,8 +1436,6 @@ function colabs_title(){
 /*-----------------------------------------------------------------------------------*/
 /* colabs_meta() */
 /*-----------------------------------------------------------------------------------*/
-
-
 function colabs_meta(){
 		global $post;
 		global $wpdb;
@@ -1676,7 +1696,6 @@ function colabs_meta(){
 		}
 		
 }
-
 
 //Add Post Custom Settings
 add_action( 'admin_head','seo_add_custom' );
@@ -2075,7 +2094,6 @@ $google_fonts = array(	array( 'name' => "Cantarell", 'variant' => ':r,b,i,bi'),
 						array( 'name' => "Ubuntu Mono", 'variant' => '')
 );
 
-
 /*-----------------------------------------------------------------------------------*/
 /* Google Webfonts Stylesheet Generator */
 /*-----------------------------------------------------------------------------------*/
@@ -2152,56 +2170,6 @@ if ( !function_exists( 'colabs_home_page_menu_args') ) {
 		return $args;
 	}
 	//add_filter( 'wp_page_menu_args', 'colabs_home_page_menu_args' );
-}
-
-/*-----------------------------------------------------------------------------------*/
-/* Buy Themes page
-/*-----------------------------------------------------------------------------------*/
-if ( !function_exists( 'colabsthemes_more_themes_page') ) {
-	function colabsthemes_more_themes_page(){
-        ?>
-        <div class="wrap themes-page">
-	        <h2>More ColorLabs Themes</h2>
-	        
-			<?php // Get RSS Feed(s)
-	        include_once(ABSPATH . WPINC . '/feed.php' );
-	        $rss = fetch_feed( 'http://colorlabsproject.com/?feed=more_themes' );			
-	        // If the RSS is failed somehow.
-	        if ( is_wp_error($rss) ) {
-	            $error = $rss->get_error_code();
-	            if('simplepie-error' == $error) {
-	                //Simplepie Error
-	                echo "<div class='updated fade'><p>An error has occured with the RSS feed. (<code>". $error ."</code>)</p></div>";
-	            }
-	            return;
-	         } 
-	        ?>
-	        <div class="info">
-		        <a href="http://colorlabsproject.com/member/member.php">Member Area</a>
-		        <a href="http://colorlabsproject.com/themes/">Themes Gallery</a>
-		        <a href="http://colorlabsproject.com/showcase/">Theme Showcase</a>
-	        </div>
-	        
-	        <?php
-	        
-	        $maxitems = $rss->get_item_quantity(10); 
-	        $items = $rss->get_items(0, 10);
-	        
-	        ?>
-	        <ul class="themes">
-	        <?php if (empty($items)) echo '<li>No items</li>';
-	        else
-	        foreach ( $items as $item ) : ?>
-	            <li class="theme">
-	                <?php echo $item->get_description();?>
-	            </li>
-	        <?php 
-	        endforeach; ?>
-	        </ul>
-        </div>
-        
-        <?php
-	}
 }
 
 /*---------------------------------------------------------------------------------*/
@@ -2852,7 +2820,6 @@ function get_admin_color(){
     //get current admin color scheme
     echo get_user_option('admin_color'); 
     echo '<br />'; 
-    print_r($_wp_admin_css_colors); 
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -3000,8 +2967,6 @@ if ( ! function_exists( 'colabs_prepare_category_ids_from_option' ) ) {
 			add_action( 'wp_head', 'colabs_analytics', 10 );
 		}
 	} // End colabs_move_tracking_code()
-
-
 
 /*-----------------------------------------------------------------------------------*/
 /* colabs_get_dynamic_value() */
@@ -3386,9 +3351,12 @@ function colabs_updates_notif() {
 	if( isset($fw_update_check['update']) && $fw_update_check['update'] )
 		$upd[] = true;
 
-	if( count($upd) > 0 ) {
-		$update_text = $submenu['colabsthemes'][2][0];
-		$submenu['colabsthemes'][2][0] = $update_text . "<span class='awaiting-mod update-plugins'><span class='processing-count'>". count($upd) ."</span></span>";
+	if( count($upd) > 0 ) {		
+		foreach($submenu['colabsthemes'] as $key=>$value):
+			if('colabsthemes_framework_update'==$value[2]){
+				$submenu['colabsthemes'][$key][0] = $value[0] . "<span class='awaiting-mod update-plugins'><span class='processing-count'>". count($upd) ."</span></span>";
+			}
+		endforeach;
 	}
 }
 add_action( 'admin_head', 'colabs_updates_notif' );
@@ -3565,9 +3533,7 @@ function colabs_get_tweets( $instance ){
             }
             echo    '</div>';
 					}	
-        }
-
-        
+        }   
     }
 }
 ?>

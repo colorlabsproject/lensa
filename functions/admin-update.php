@@ -17,10 +17,8 @@ function colabsthemes_framework_update_page(){
 	$themename =  get_option( 'colabs_themename' );
 	global $message;
 ?>
-<div class="wrap colabs_notice">
-<div id="colabs_options" class="wrap<?php if (is_rtl()) { echo ' rtl'; } ?>">
-	<div class="one_col wrap colabs_container">
-	
+<div id="colabs_options" class="one_col wrap colabs_container<?php if (is_rtl()) { echo ' rtl'; } ?>">
+	<h2 class="colabs_admin_page_title"></h2>
 	<?php 
 	// Message update success
 	if( isset( $_REQUEST['update_success'] ) ) {
@@ -79,8 +77,6 @@ function colabsthemes_framework_update_page(){
       </ul>
   	</div><!-- #panel-footer -->
 	</div><!-- #main -->
-	</div><!-- .colabs_container -->
-</div><!-- #colabs_options -->
 </div><!-- .wrap -->
 <?php
 } //end of colabsthemes_framework_update_page
@@ -100,7 +96,7 @@ function colabsthemes_framework_update_page_set(){
   $upd = colabsthemes_framework_update_check();
   ?>
   <span style="display:none"><?php echo $method; ?></span>
-  <form method="post"  enctype="multipart/form-data" id="colabsform" action="<?php /* echo $url; */ ?>">
+  <form method="post"  enctype="multipart/form-data" id="colabsform" class="not-ajax" action="<?php /* echo $url; */ ?>">
     <?php if( $upd['update'] ) { ?>
       <?php wp_nonce_field( 'update-options' ); ?>
       <h3><?php _e("A new version of ColorLabs Framework is available.","colabsthemes"); ?></h3>
@@ -165,7 +161,7 @@ function colabsthemes_themes_update_page_set(){
 			printf( __('<p>Click the Backup button to back up your theme files. Backup (.zip) will be stored in <code>wp-content/themes/</code></p>'), $backup );
 			?>
 			<p style="margin-top: 30px;">
-			<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form">
+			<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form not-ajax">
 				<input type="submit" name="colabs_theme_backup" value="Backup" class="button" />
 				<input type="hidden" value="true" name="theme_backup">
 				<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" />

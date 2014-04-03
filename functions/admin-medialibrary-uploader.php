@@ -115,8 +115,8 @@ if ( ! function_exists( 'colabsthemes_mlu_js' ) ) {
 
 	function colabsthemes_mlu_js () {
         
-        // Load wordpress media upload script
-        wp_enqueue_media();
+    // Load wordpress media upload script
+    wp_enqueue_media();
         
 		// Register custom scripts for the Media Library AJAX uploader.
 		wp_register_script( 'colabs-medialibrary-uploader', get_template_directory_uri().'/functions/js/colabs-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );

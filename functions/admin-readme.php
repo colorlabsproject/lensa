@@ -31,10 +31,8 @@ function colabsthemes_readme_menu_admin() {
 
 
 ?>
-<div id="colabs_options" class="wrap<?php if (is_rtl()) { echo ' rtl'; } ?>">
-
-	<div class="one_col wrap colabs_container">
-    
+<div id="colabs_options" class="one_col wrap colabs_container<?php if (is_rtl()) { echo ' rtl'; } ?>">
+  <h2 class="colabs_admin_page_title"></h2>  
 	<div id="main">
         
 	<div id="panel-header">
@@ -63,14 +61,12 @@ function colabsthemes_readme_menu_admin() {
 
     <div id="panel-footer">
       <ul>
-          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" >View Documentation</a></li>
-          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank">Submit a Support Ticket</a></li>
-          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank">Suggest a Feature</a></li>
+          <li class="docs"><a title="Theme Documentation" href="http://colorlabsproject.com/documentation/<?php echo strtolower( str_replace( " ","",$themename ) ); ?>" target="_blank" ><?php _e('View Documentation','colabsthemes');?></a></li>
+          <li class="forum"><a href="http://colorlabsproject.com/resolve/" target="_blank"><?php _e('Submit a Support Ticket','colabsthemes');?></a></li>
+          <li class="idea"><a href="http://ideas.colorlabsproject.com/" target="_blank"><?php _e('Suggest a Feature','colabsthemes');?></a></li>
       </ul>
   	</div><!-- #panel-footer -->
 	</div><!-- #main -->
-
-	</div><!-- .colabs_container -->
     
 </div><!-- #colabs_options -->
 

@@ -49,26 +49,21 @@ input.form-table-radio{cursor: pointer;border: none;}
 
 /* admin dashboard section */
 .dash-left {float:left;width:50%;}
-.dash-right {float:left;width:30%;margin-left:20px;}
-#boxy {margin: 10px;}
-.rsswidget {text-decoration: none; font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-size:13px; line-height:1.7em;}
-.rss-date {color:#999999;font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;font-size:11px;margin-left:3px;}
-.rss-widget ul li {line-height:1.5em;}
+.dash-right {float:left;width:49%;margin-left:1%;}
+.rsswidget {text-decoration: none;}
 
 .postbox p, .postbox ul, .postbox ol, .postbox blockquote {font-size:11px;}
 
 p.btop {padding:0px; margin-bottom:-5px;}
 p.bbot {padding:0 0 30px 0; margin-top:-5px;}
 
-.postbox .statsico{float:left; height:25px; width:28px; background:transparent url(../images/theme-info16.png) no-repeat scroll 6px 4px}
-.postbox .newspaperico{float:left; height:25px; width:27px; background:transparent url(../images/newspaper.png) no-repeat scroll 5px 5px}
-.postbox .twitterico{float:left; height:25px; width:25px; background:transparent url(../images/twitter-bird.png) no-repeat scroll 5px 5px}
-.postbox .forumico{float:left; height:25px; width:27px; background:transparent url(../images/comments.png) no-repeat scroll 6px 6px}
+.postbox .statsico{float:left; height:25px; width:25px; background:transparent url(../images/theme-info16.png) no-repeat scroll 5px 10px}
+.postbox .newspaperico{float:left; height:25px; width:25px; background:transparent url(../images/newspaper.png) no-repeat scroll 5px 10px}
+.postbox .twitterico{float:left; height:25px; width:25px; background:transparent url(../images/twitter-bird.png) no-repeat scroll 5px 10px}
 .postbox .rssico{float:right; height:25px; width:20px; background:transparent url(../images/rss-sm.png) no-repeat scroll 0 8px}
 
 .helpico{float:right; height:16px; width:16px; margin-left:7px; background:transparent url(../images/ico-info.png) no-repeat scroll 0 0}
 .feedburnerico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-feedburner.png) no-repeat scroll 0 0}
-.twitterico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-twitter.png) no-repeat scroll 0 0}
 .facebookico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-facebook.png) no-repeat scroll 0 0}
 .googleico{float:left; height:16px; width:16px; padding-right:3px; background:transparent url(../images/ico-social-google.png) no-repeat scroll 0 0}
 
@@ -90,7 +85,6 @@ div.fields-panel{height:250px; overflow:auto; width:400px; -moz-border-radius:4p
 
 span#curr{vertical-align:top}
 input.radiobutt{vertical-align:text-top}
-.insider{ background-color:#FFF}
 
 .preloader-container{ width:100%; height:100%; background:#FFF url(../../images/preloader.gif) 50% 50% no-repeat}
 

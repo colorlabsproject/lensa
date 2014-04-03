@@ -21,10 +21,11 @@ function colabsthemes_seo_page(){
 		//add filter to make the rss read cache clear every 4 hours
 		add_filter( 'wp_feed_cache_transient_lifetime', create_function( '$a', 'return 14400;' ) );
 
-	$inner_pages = array(	'b' => 'Page title;',
-														'a' => 'Page title; Blog title',
+	$inner_pages = array(	
+							'b' => 'Page title;',
+							'a' => 'Page title; Blog title',
 							'd' => 'Page title; Blog description',
-														'f' => 'Page title; Blog title; Blog description',
+							'f' => 'Page title; Blog title; Blog description',
 							'c' => 'Blog title; Page title;',
 							'e' => 'Blog title; Page title; Blog description'
 						);
@@ -65,11 +66,12 @@ function colabsthemes_seo_page(){
 					"id" => $shortname."_home_layout",
 					"std" => "a",
 					"class" => "hidden",
-					"options" => array(	'b' => 'Blog title',
-																				'a' => 'Blog title; Blog description',
+					"options" => array(	
+										'b' => 'Blog title',
+										'a' => 'Blog title; Blog description',
 										'c' => 'Blog description',
-																				'd' => 'Blog description; Blog title'
-																				),
+										'd' => 'Blog description; Blog title'
+										),
 					"type" => "select2" );
 
 	$seo_options[] = array( "name" => __("Single Title Layout","colabsthemes"),
@@ -250,25 +252,24 @@ function colabsthemes_seo_page(){
 
 
 	update_option( 'colabs_seo_template',$seo_options);
-
-
 	?>
-		<?php
-		if(
-			class_exists( 'All_in_One_SEO_Pack') ||
-			class_exists( 'Headspace_Plugin') ||
-			class_exists( 'WPSEO_Admin' ) ||
-			class_exists( 'WPSEO_Frontend' )
-			) {
-			echo "<div id='' class='update-nag'><strong>3rd Party SEO Plugin(s) Detected</strong> - Some ".$themename." SEO functionality has been disabled.</div>";
-		} ?>
-
-		<?php
-		if ( get_option( 'blog_public') == 0 ) {
-			echo "<div id='' class='update-nag'><strong>This site is set to Private</strong> - SEO is disabled, change settings <a href='". admin_url( 'options-privacy.php' ) . "'>here</a>.</div>";
-		} ?>
 
 		<div class="wrap colabs_container">
+			<h2 class="colabs_admin_page_title"></h2>
+			<?php
+			if(
+				class_exists( 'All_in_One_SEO_Pack') ||
+				class_exists( 'Headspace_Plugin') ||
+				class_exists( 'WPSEO_Admin' ) ||
+				class_exists( 'WPSEO_Frontend' )
+				) {
+				echo "<div class='error'><p><strong>3rd Party SEO Plugin(s) Detected</strong> - Some ".$themename." SEO functionality has been disabled.</p></div>";
+			} ?>
+
+			<?php
+			if ( get_option( 'blog_public') == 0 ) {
+				echo "<div class='error'><p><strong>This site is set to Private</strong> - SEO is disabled, change settings <a href='". admin_url( 'options-privacy.php' ) . "'>here</a>.</p></div>";
+			} ?>
 
 			<form action="" enctype="multipart/form-data" id="colabsform">
 				<?php
@@ -284,7 +285,6 @@ function colabsthemes_seo_page(){
 				<?php colabs_theme_check();?>
 				<div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save"><?php _e("Options Updated","colabsthemes"); ?></div></div>
 				<div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset"><?php _e("Options Reset","colabsthemes"); ?></div></div>
-				<div style="width:100%;padding-top:15px;"></div>
 
 				<div class="clear"></div>
 				<?php $return = colabsthemes_machine($seo_options); ?>
@@ -326,7 +326,7 @@ function colabsthemes_seo_page(){
 				if ( function_exists( 'wp_nonce_field' ) ) { wp_nonce_field( 'colabsframework-seo-options-reset' ); } // End IF Statement
 				$colabs_nonce = '';
 				if ( function_exists( 'wp_create_nonce' ) ) { $colabs_nonce = wp_create_nonce( 'colabsframework-seo-options-reset' ); } // End IF Statement
-				if ( '' == $colabs_nonce ) {} else { ?>
+				if ( '' != $colabs_nonce ) { ?>
 					<input type="hidden" name="_ajax_nonce" value="<?php echo $colabs_nonce; ?>" />
 				<?php } // End IF Statement ?>
 				

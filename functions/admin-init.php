@@ -4,7 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 function colabs_version_init() {
 
-    $colabs_framework_version = '1.8.6.4';
+    $colabs_framework_version = '1.8.7.2';
 
     if ( get_option( 'colabs_framework_version' ) != $colabs_framework_version ) {
     	update_option( 'colabs_framework_version', $colabs_framework_version );
@@ -61,7 +61,6 @@ require_once ($functions_path . 'admin-setup.php');					// Options panel variabl
 require_once ($functions_path . 'admin-custom.php');                // Custom fields 
 require_once ($functions_path . 'admin-interface.php');				// Admin Interfaces (options,framework, seo)
 require_once ($functions_path . 'admin-interface-functions.php');	// Admin Interface - Functions
-require_once ($functions_path . 'admin-framework-settings.php' );	// Framework Settings
 require_once ($functions_path . 'admin-dashboard.php' );            // Dashboard Settings
 require_once ($functions_path . 'admin-layout.php' );               // Layout Settings
 require_once ($functions_path . 'admin-update.php' );               // Framework Updater Settings
@@ -107,6 +106,4 @@ function colabs_move_old_custom(){
 }
 
 add_action( 'admin_head', 'colabs_move_old_custom', 10 );
-
-
 ?>

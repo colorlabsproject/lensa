@@ -842,7 +842,8 @@ function colabsthemes_sbm_page(){
 </script>
 
 <div class="wrap colabs_container">
-
+		<h2 class="colabs_admin_page_title"></h2>
+		<div class="updated" id="colabs-sbm-tip-1"><p><?php _e("Start by selecting a template from the menu on the left for your new sidebar. The new sidebar will be available on the ","colabsthemes"); ?><a href="<?php echo admin_url( 'widgets.php' ); ?>"><?php _e("Widgets","colabsthemes"); ?></a> <?php _e("page","colabsthemes"); ?>.</p></div>
     <div id="colabsform">
     <div id="main" class="sbm-content">
     
@@ -1034,8 +1035,6 @@ function colabsthemes_sbm_page(){
     
     	<div id="panel-content">
     
-    			<span class="colabs-sbm-tip" id="colabs-sbm-tip-1"><?php _e("Start by selecting a template from the menu on the left for your new sidebar. The new sidebar will be available on the ","colabsthemes"); ?><a href="<?php echo admin_url( 'widgets.php' ); ?>"><?php _e("Widgets","colabsthemes"); ?></a> <?php _e("page","colabsthemes"); ?>.</span>
-    
     		<div class="colabs-sbm-builder" style="display:none">
     
     			<form action="" id="colabs-sbm-get-links">
@@ -1098,8 +1097,6 @@ function colabsthemes_sbm_page(){
     				</div>
     			</div>
     		</form>
-
-    		<div class="clear"></div>
     	</div><!-- /.colabs-sbm-builder -->
     
     	<div id="colabs-sbm-sidebars" class="js">
@@ -1126,7 +1123,6 @@ function colabsthemes_sbm_page(){
     						}
     					}
     
-    					//print_r($top_array);
     					foreach($top_array as $top_id => $top_sidebar){
     
     						$sidebar_id = $top_id;
@@ -1230,7 +1226,8 @@ function colabsthemes_sbm_page(){
     		}
     		?>
     		</div><!-- /#colabs-sbm-sidebars -->
-    
+    			
+    		<div class="clear"></div>
     	</div><!-- /#panel-content -->
 
         <div id="panel-footer">
@@ -1259,9 +1256,6 @@ function colabsthemes_sbm_page(){
     </div><!-- /#colabsform -->
          
 <div style="clear:both;"></div>
-<pre style="display:none">
-<?php // print_r($colabs_sbm_options); ?>
-</pre>
 </div><!--wrap-->
 
 <?php }
@@ -1488,7 +1482,5 @@ function colabs_sbm_callback() {
   die();
 
 }
-
-
 
 ?>
