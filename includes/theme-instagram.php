@@ -562,31 +562,6 @@
         update_option($this->dbOptionKey, $options);
         
         $instagram = ColabsInstagram::getAPIInstance();
-        
-        if(!$options['app_access_token'])
-        {
-          
-          $errorMessage = "";
-          
-          $token = $instagram->getAccessToken($errorMessage);
-        
-          
-          if($token)
-          {
-            
-            $options['app_access_token'] = $token;
-            
-            update_option($this->dbOptionKey, $options);
-            
-            echo '<div class="updated"><p>'.__('Settings saved.', 'colabsthemes').'</p></div>';
-          }
-          else if($errorMessage) 
-          {
-            echo '<div class="error"><p>'.__('Instagram API reported the following error', 'colabsthemes').': <b>';
-            echo $errorMessage;
-            echo '</b></p></div>';
-          }
-        }
       }
       
       else if(isset($_POST['instagram-reset-settings']))
@@ -609,7 +584,6 @@
         
         update_option($this->dbOptionKey, $options);
       }
-      
       
       $authorizeUrl = $this->getOAuthRedirectUrl();
       

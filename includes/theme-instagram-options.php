@@ -9,14 +9,32 @@
 }
 </style>
 <div id="colabs_options" class="wrap <?php if (get_bloginfo('text_direction') == 'rtl') { echo 'rtl'; } ?> colabs_instagram">
+	
+	<?php
+	if(!$options['app_access_token']) {
+	  $errorMessage = "";
+	  $token = $instagram->getAccessToken($errorMessage);
+	
+	  if($token) {
+	    $options['app_access_token'] = $token;
+	    update_option($this->dbOptionKey, $options);
+	    echo '<div class="updated"><p>'.__('Settings saved.', 'colabsthemes').'</p></div>';
+	  }
+	  
+	  else if($errorMessage) {
+	    echo '<div class="error"><p>'.__('Instagram API reported the following error', 'colabsthemes').': <b>';
+	    echo $errorMessage;
+	    echo '</b></p></div>';
+	  }
+	} ?>
 
-	<div class="one_col wrap colabs_container">
-    
-            <div class="clear"></div>
-            <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save">Options Updated</div></div>
-            <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset">Options Reset</div></div>
-            <div style="width:100%;padding-top:15px;"></div>
-            <div class="clear"></div>
+	<div class="one_col colabs_container">
+
+  <div class="clear"></div>
+  <div id="colabs-popup-save" class="colabs-save-popup"><div class="colabs-save-save">Options Updated</div></div>
+  <div id="colabs-popup-reset" class="colabs-save-popup"><div class="colabs-save-reset">Options Reset</div></div>
+  <div style="width:100%;padding-top:15px;"></div>
+  <div class="clear"></div>
         
 	<div id="main">
         
