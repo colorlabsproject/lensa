@@ -80,7 +80,7 @@
 		
 					<div>
 						<label for="instagram-app-client-id"><?php _e('Username', 'colabsthemes') ?></label>
-						<input class="regular-text" type="text" id="instagram-app-user-username" name="instagram-app-user-username" value="<?php echo esc_attr( $instagramOptions['app_user_username'] ) ?>" />				
+						<input class="regular-text" type="text" id="instagram-app-user-username" name="instagram-app-user-username" value="<?php echo esc_attr( isset($instagramOptions['app_user_username']) ? $instagramOptions['app_user_username'] : '' ) ?>" />				
 					</div>
 					<div>
 						<label for="instagram-app-client-secret"><?php _e('Password', 'colabsthemes') ?></label>
