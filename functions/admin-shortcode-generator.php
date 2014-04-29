@@ -44,7 +44,17 @@ class CoLabsThemes_Shortcode_Generator {
 		// wp_ajax_... is only run for logged users.
 		add_action( 'wp_ajax_colabs_check_url_action', array( &$this, 'ajax_action_check_url' ) );
 		add_action( 'wp_ajax_colabs_shortcodes_nonce', array( &$this, 'ajax_action_generate_nonce' ) );
+
+    add_action( 'admin_head', array( $this, 'shortcode_icon_image' ) );
 	} // End CoLabsThemes_Shortcode_Generator()
+
+  function shortcode_icon_image() { ?>
+    <style>
+      body .mce-ico.icon-colabs-shortcode {
+        background: url(<?php echo get_template_directory_uri(); ?>/functions/images/shortcode-icon.png) no-repeat;
+      }
+    </style>
+  <?php }
 
 /*-----------------------------------------------------------------------------------
   init()
@@ -60,22 +70,21 @@ class CoLabsThemes_Shortcode_Generator {
 			add_filter( 'mce_buttons', array( &$this, 'filter_mce_buttons' ) );
 			add_filter( 'mce_external_plugins', array( &$this, 'filter_mce_external_plugins' ) );
 			
-            $wp_version = get_bloginfo( 'version' );
+      $wp_version = get_bloginfo( 'version' );
         
-            if (version_compare($wp_version, '3.4.0', '<')) {
-    			// Register the colourpicker JavaScript.
-    			wp_register_script( 'colabs-colourpicker', $this->framework_url() . 'js/colorpicker.js', array( 'jquery' ), '3.6', true ); // Loaded into the footer.
-    			wp_enqueue_script( 'colabs-colourpicker' );
-    			
-    			// Register the colourpicker CSS.
-    			wp_register_style( 'colabs-colourpicker', $this->framework_url() . 'css/colorpicker.css' );
-    			wp_enqueue_style( 'colabs-colourpicker' );
-			}
+      if (version_compare($wp_version, '3.4.0', '<')) {
+  			// Register the colourpicker JavaScript.
+  			wp_register_script( 'colabs-colourpicker', $this->framework_url() . 'js/colorpicker.js', array( 'jquery' ), '3.6', true ); // Loaded into the footer.
+  			wp_enqueue_script( 'colabs-colourpicker' );
+  			
+  			// Register the colourpicker CSS.
+  			wp_register_style( 'colabs-colourpicker', $this->framework_url() . 'css/colorpicker.css' );
+  			wp_enqueue_style( 'colabs-colourpicker' );
+  		}
             
-			// Register the custom CSS styles.
-			wp_register_style( 'colabs-shortcode-generator', $this->framework_url() . 'css/shortcode-generator.css' );
-			wp_enqueue_style( 'colabs-shortcode-generator' );
-			
+  		// Register the custom CSS styles.
+  		wp_register_style( 'colabs-shortcode-generator', $this->framework_url() . 'css/shortcode-generator.css' );
+  		wp_enqueue_style( 'colabs-shortcode-generator' );
 		} // End IF Statement
 	
 	} // End init()
@@ -89,7 +98,6 @@ class CoLabsThemes_Shortcode_Generator {
 	function filter_mce_buttons( $buttons ) {
 		
 		array_push( $buttons, '|', 'colabsthemes_shortcodes_button' );
-		
 		return $buttons;
 		
 	} // End filter_mce_buttons()
@@ -101,10 +109,15 @@ class CoLabsThemes_Shortcode_Generator {
 -----------------------------------------------------------------------------------*/
 	
 	function filter_mce_external_plugins( $plugins ) {
-		
-        $plugins['CoLabsThemesShortcodes'] = wp_nonce_url( esc_url( $this->framework_url() . 'js/shortcode-generator/editor_plugin.js' ), 'colabsframework-shortcode-generator' );
-        
-        return $plugins;
+    global $tinymce_version;
+
+    if( isset( $tinymce_version ) && $tinymce_version ) {
+      $plugins['CoLabsThemesShortcodes'] = wp_nonce_url( esc_url( $this->framework_url() . 'js/shortcode-generator/editor_plugin4.js' ), 'colabsframework-shortcode-generator' );
+    } else {
+      $plugins['CoLabsThemesShortcodes'] = wp_nonce_url( esc_url( $this->framework_url() . 'js/shortcode-generator/editor_plugin.js' ), 'colabsframework-shortcode-generator' );
+    }
+
+    return $plugins;
         
 	} // End filter_mce_external_plugins()
 	

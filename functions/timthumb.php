@@ -114,7 +114,7 @@ if(! isset($ALLOWED_SITES)){
 		'tinypic.com',
 		'demo.colorlabsproject.com',
 		'colorlabsproject.com',
-		'b.vimeocdn.com',
+		'vimeocdn.com',
 		'pinterest.com',
 		'googleusercontent.com',
 		'ggpht.com',

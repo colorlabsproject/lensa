@@ -4,7 +4,7 @@
 /*-----------------------------------------------------------------------------------*/
 function colabs_version_init() {
 
-    $colabs_framework_version = '1.8.7.2';
+    $colabs_framework_version = '1.8.8';
 
     if ( get_option( 'colabs_framework_version' ) != $colabs_framework_version ) {
     	update_option( 'colabs_framework_version', $colabs_framework_version );

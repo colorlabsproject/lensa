@@ -1,5 +1,13 @@
 *** ColorLabs Framework Changelog **
 
+2014.04.16 - Version 1.8.8
+  - Fix: Custom meta box function
+    File Affected: admin-custom.php
+  - Fix: Change calendar icon
+    Files Affected: admin-custom.php, admin-interface.php
+  - Fix: Shortcode not working on WordPress 3.9
+    Files Affected: admin-shortcode-generator.php, dialog.php, editor_plugin.js, editor_plugin4.js, preview-shortcode-external.php 
+  
 2014.03.28 - Version 1.8.7.2
   - Fix: Can't update the framework
   - Fix: Shorten timeout of the "saved" message when save changes button clicked

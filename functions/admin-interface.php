@@ -450,7 +450,7 @@ function colabs_admin_head() {
   jQuery(document).ready(function(){
     //JQUERY DATEPICKER
     jQuery( '.colabs-input-calendar').each(function (){
-      jQuery( '#' + jQuery(this).attr( 'id')).datepicker({showOn: 'button', buttonImage: '<?php echo get_template_directory_uri();?>/functions/images/calendar.gif', buttonImageOnly: true});
+      jQuery( '#' + jQuery(this).attr( 'id')).datepicker({showOn: 'button', buttonImage: '<?php echo get_template_directory_uri();?>/functions/images/calendar.png', buttonImageOnly: true});
     });
     //JQUERY TIME INPUT MASK
     jQuery( '.colabs-input-time').each(function (){
@@ -799,7 +799,7 @@ function colabs_admin_head() {
         return false; 
       }); 
     //Save everything else
-    jQuery( '#colabsform:not(".not-ajax")').submit(function(){
+    jQuery( '#colabsform').submit(function(){
         function newValues() {
           var serializedValues = jQuery( "#colabsform *").not( '.colabs-ignore').serialize();
           return serializedValues;
