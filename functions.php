@@ -7,8 +7,8 @@ error_reporting(0);
 if ( ! isset( $content_width ) ) $content_width = 612;
 
 // Set path to ColorLabs Framework and theme specific functions
-$functions_path = TEMPLATEPATH . '/functions/';
-$includes_path = TEMPLATEPATH . '/includes/';
+$functions_path = get_template_directory() . '/functions/';
+$includes_path = get_template_directory() . '/includes/';
 
 // ColorLabs Admin
 require_once ($functions_path . 'admin-init.php');			// Admin Init

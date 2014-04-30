@@ -4,15 +4,15 @@
 /* Loads all the .php files found in /includes/widgets/ directory */
 /*---------------------------------------------------------------------------------*/
 
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-embed.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-flickr.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-twitter.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-tabs.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-fbfriends.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-socialnetwork.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-list-taxonomy.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-latest.php' );
-include( TEMPLATEPATH . '/includes/widgets/widget-colabs-subscribe.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-embed.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-flickr.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-twitter.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-tabs.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-fbfriends.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-socialnetwork.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-list-taxonomy.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-latest.php' );
+include( get_template_directory() . '/includes/widgets/widget-colabs-subscribe.php' );
 
 /*---------------------------------------------------------------------------------*/
 /* Deregister Default Widgets */

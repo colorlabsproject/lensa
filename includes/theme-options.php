@@ -51,13 +51,13 @@ $options[] = array( "name" => __( "Use for blog title/logo", "colabsthemes" ),
 $options[] = array( "name" => __("Custom Favicon","colabsthemes"),
 					"desc" => __("Upload a 16x16px ico image that will represent your website's favicon. Favicon/bookmark icon will be shown at the left of your blog's address in visitor's internet browsers.","colabsthemes"),
 					"id" => $shortname."_custom_favicon",
-					"std" => trailingslashit( get_bloginfo('template_url') ) . "images/favicon.png",
+					"std" => trailingslashit( get_template_directory_uri() ) . "images/favicon.png",
 					"type" => "upload"); 
 
 $options[] = array( "name" => __("Header Custom Logo","colabsthemes"),
 					"desc" => __("Upload a logo for your theme, or specify an image URL directly. Best image size in 219x48 px","colabsthemes"),
 					"id" => $shortname."_logo",
-					"std" => trailingslashit( get_bloginfo('template_url') ) . "images/logo.png",
+					"std" => trailingslashit( get_template_directory_uri() ) . "images/logo.png",
 					"type" => "upload");
 
 $options[] = array( "name" => "Disable Responsive",
