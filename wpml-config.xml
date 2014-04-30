@@ -1,0 +1,48 @@
+<wpml-config>
+
+  <custom-types>
+    <custom-type translate="1">photograph</custom-type>
+  </custom-types>
+
+  <taxonomies>
+    <taxonomy translate="1">photograph-categories</taxonomy>
+  </taxonomies>
+
+  <admin-texts>
+    <key name="colabs_slides_number" />
+    <key name="colabs_slide_interval" />
+    <key name="colabs_transition_speed" />
+    
+    <key name="colabs_piccount_instagram" />
+
+    <key name="colabs_api_flickr" />
+    <key name="colabs_secret_flickr" />
+    <key name="colabs_username_flickr" />
+    <key name="colabs_piccount_flickr" />
+
+    <key name="colabs_username_picasa" />
+    <key name="colabs_piccount_picasa" />
+
+    <key name="colabs_username_pinterest" />
+    <key name="colabs_piccount_pinterest" />
+
+    <key name="colabs_social_facebook" />
+    <key name="colabs_social_twitter" />
+    <key name="colabs_social_delicious" />
+    <key name="colabs_social_flickr" />
+    <key name="colabs_social_lastfm" />
+    <key name="colabs_social_picasa" />
+    <key name="colabs_social_wordpress" />
+    <key name="colabs_social_yahoo" />
+    <key name="colabs_social_google" />
+    <key name="colabs_social_youtube" />
+    <key name="colabs_social_linked" />
+
+    <key name="colabs_og_sitename" />
+    <key name="colabs_og_admins" />
+    <key name="colabs_og_img" />
+    
+    <key name="colabs_contactform_email" />
+  </admin-texts>
+
+</wpml-config>
