@@ -13,6 +13,7 @@
 	<?php
 	if(!$options['app_access_token']) {
 	  $errorMessage = "";
+	  $instagram = ColabsInstagram::getAPIInstance();
 	  $token = $instagram->getAccessToken($errorMessage);
 	
 	  if($token) {

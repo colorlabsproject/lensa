@@ -316,13 +316,15 @@
       
       if($writeToCache && $response->data)
         ColabsInstagram::getInstance()->writeFeedToCache($cacheid, $json);
-        
       
-      if($response->pagination)
-        $nextMaxId = $response->pagination->next_max_id; 
-      else 
+      $nextMaxId = null;
+      if($response->pagination) {
+        if( isset($response->pagination->next_max_id) ) {
+          $nextMaxId = $response->pagination->next_max_id; 
+        }
+      } else {
         $nextMaxId = null;
-        
+      } 
         
       return $response->data;
     }
