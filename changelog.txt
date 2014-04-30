@@ -8,12 +8,24 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 3 April 2014
+    Last Update Date: 30 April 2014
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
+
+2014.04.30 - Version 1.1.3
+- Add: Compatibility with WPML
+  File Added: wpml-config.xml
+- Update: Framework
+  Folder Affected: functions/
+- Fix: Deprecated WordPress functions
+  Files Affected: functions.php, header.php, includes/theme-options.php, includes/theme-widgets.php
+- Fix: Make Theme Screenshot larger for supporting HiDPI displays
+  File Affected: screenshot.png
+- Fix: Instagram Gallery Template
+  Files Affected: template-instagram.php, includes/theme-instagram.php, includes/theme-instagram-options.php
 
 2014.04.03 - Version 1.1.2
 - Update: Framework
