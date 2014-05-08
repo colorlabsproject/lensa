@@ -23,7 +23,7 @@
 /**
  * @see Zend_Http_Client_Exception
  */
-require_once 'Zend/Http/Client/Exception.php';
+require_once ( get_template_directory() . '/includes/instagram-php-api/Zend/Http/Client/Exception.php' );
 
 /**
  * @category   Zend

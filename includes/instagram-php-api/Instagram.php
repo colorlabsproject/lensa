@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-require_once 'Zend/Http/Client.php';
+require_once ( get_template_directory() . '/includes/instagram-php-api/Zend/Http/Client.php' );
 
 class Instagram {
 

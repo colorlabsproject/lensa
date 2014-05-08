@@ -1,6 +1,6 @@
 <?php
 
-require_once 'JSON/JSON.php';
+require_once ( get_template_directory() . '/includes/facebook-platform/jsonwrapper/JSON/JSON.php' );
 
 function json_encode($arg)
 {

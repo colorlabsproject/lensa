@@ -22,7 +22,7 @@
 /**
  * @see Zend_Exception
  */
-require_once 'Zend/Exception.php';
+require_once ( get_template_directory() . '/includes/instagram-php-api/Zend/Exception.php' );
 
 /**
  * Exceptions for Zend_Uri

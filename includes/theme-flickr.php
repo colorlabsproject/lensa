@@ -6,5 +6,5 @@
 		
 	if(!set_include_path($colabsIncludePath)) ini_set('include_path',	$colabsIncludePath);
 
-	require_once 'phpFlickr.php';
+  require_once( get_template_directory() . '/includes/flickr/phpFlickr.php' );
 	

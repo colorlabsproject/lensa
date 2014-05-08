@@ -1,6 +1,6 @@
 <?php
 
-require_once ('Instagram.php');
+require_once ( get_template_directory() . '/includes/instagram-php-api/Instagram.php' );
 
 class Instagram_XAuth extends Instagram 
 {

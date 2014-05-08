@@ -9,7 +9,7 @@
   if(!set_include_path($colabsIncludePath)) 
     ini_set('include_path', $colabsIncludePath);
 
-  require_once 'Instagram_XAuth.php';
+  require_once( get_template_directory() . '/includes/instagram-php-api/Instagram_XAuth.php' );
 
   function getLatLng($address){
         
