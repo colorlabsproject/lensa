@@ -1,5 +1,14 @@
 *** ColorLabs Framework Changelog **
 
+2014.05.08 - Version 1.8.8.2
+  - Fix: Can't update theme
+  - Fix: Can't backup theme
+  - Fix: Function conflict with Laboratory
+
+2014.05.05 - Version 1.8.8.1
+  - Fix: Shortcode not working on WordPress 3.8 and below
+  - Fix: Can't update Framework
+
 2014.04.16 - Version 1.8.8
   - Fix: Custom meta box function
     File Affected: admin-custom.php

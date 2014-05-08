@@ -36,17 +36,17 @@ class CoLabsThemes_Shortcode_Generator {
   * Constructor function. Sets up the class and registers variable action hooks.
 -----------------------------------------------------------------------------------*/
 
-	function CoLabsThemes_Shortcode_Generator () {
-	
-		// Register the necessary actions on `admin_init`.
-		add_action( 'admin_init', array( &$this, 'init' ) );
-		
-		// wp_ajax_... is only run for logged users.
-		add_action( 'wp_ajax_colabs_check_url_action', array( &$this, 'ajax_action_check_url' ) );
-		add_action( 'wp_ajax_colabs_shortcodes_nonce', array( &$this, 'ajax_action_generate_nonce' ) );
+  function CoLabsThemes_Shortcode_Generator () {
+  
+    // Register the necessary actions on `admin_init`.
+    add_action( 'admin_init', array( &$this, 'init' ) );
+    
+    // wp_ajax_... is only run for logged users.
+    add_action( 'wp_ajax_colabs_check_url_action', array( &$this, 'ajax_action_check_url' ) );
+    add_action( 'wp_ajax_colabs_shortcodes_nonce', array( &$this, 'ajax_action_generate_nonce' ) );
 
     add_action( 'admin_head', array( $this, 'shortcode_icon_image' ) );
-	} // End CoLabsThemes_Shortcode_Generator()
+  } // End CoLabsThemes_Shortcode_Generator()
 
   function shortcode_icon_image() { ?>
     <style>
@@ -62,56 +62,56 @@ class CoLabsThemes_Shortcode_Generator {
   * This guy runs the show. Rocket boosters... engage!
 -----------------------------------------------------------------------------------*/
 
-	function init() {
-		global $pagenow;
-		if ( ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_pages' ) ) && 'true' == get_user_option( 'rich_editing') )  {
-		  	
-		  	// Add the tinyMCE buttons and plugins.
-			add_filter( 'mce_buttons', array( &$this, 'filter_mce_buttons' ) );
-			add_filter( 'mce_external_plugins', array( &$this, 'filter_mce_external_plugins' ) );
-			
+  function init() {
+    global $pagenow;
+    if ( ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_pages' ) ) && 'true' == get_user_option( 'rich_editing') )  {
+        
+        // Add the tinyMCE buttons and plugins.
+      add_filter( 'mce_buttons', array( &$this, 'filter_mce_buttons' ) );
+      add_filter( 'mce_external_plugins', array( &$this, 'filter_mce_external_plugins' ) );
+      
       $wp_version = get_bloginfo( 'version' );
         
       if (version_compare($wp_version, '3.4.0', '<')) {
-  			// Register the colourpicker JavaScript.
-  			wp_register_script( 'colabs-colourpicker', $this->framework_url() . 'js/colorpicker.js', array( 'jquery' ), '3.6', true ); // Loaded into the footer.
-  			wp_enqueue_script( 'colabs-colourpicker' );
-  			
-  			// Register the colourpicker CSS.
-  			wp_register_style( 'colabs-colourpicker', $this->framework_url() . 'css/colorpicker.css' );
-  			wp_enqueue_style( 'colabs-colourpicker' );
-  		}
+        // Register the colourpicker JavaScript.
+        wp_register_script( 'colabs-colourpicker', $this->framework_url() . 'js/colorpicker.js', array( 'jquery' ), '3.6', true ); // Loaded into the footer.
+        wp_enqueue_script( 'colabs-colourpicker' );
+        
+        // Register the colourpicker CSS.
+        wp_register_style( 'colabs-colourpicker', $this->framework_url() . 'css/colorpicker.css' );
+        wp_enqueue_style( 'colabs-colourpicker' );
+      }
             
-  		// Register the custom CSS styles.
-  		wp_register_style( 'colabs-shortcode-generator', $this->framework_url() . 'css/shortcode-generator.css' );
-  		wp_enqueue_style( 'colabs-shortcode-generator' );
-		} // End IF Statement
-	
-	} // End init()
+      // Register the custom CSS styles.
+      wp_register_style( 'colabs-shortcode-generator', $this->framework_url() . 'css/shortcode-generator.css' );
+      wp_enqueue_style( 'colabs-shortcode-generator' );
+    } // End IF Statement
+  
+  } // End init()
 
 /*-----------------------------------------------------------------------------------
   filter_mce_buttons()
   
   * Add our new button to the tinyMCE editor.
 -----------------------------------------------------------------------------------*/
-	
-	function filter_mce_buttons( $buttons ) {
-		
-		array_push( $buttons, '|', 'colabsthemes_shortcodes_button' );
-		return $buttons;
-		
-	} // End filter_mce_buttons()
+  
+  function filter_mce_buttons( $buttons ) {
+    
+    array_push( $buttons, '|', 'colabsthemes_shortcodes_button' );
+    return $buttons;
+    
+  } // End filter_mce_buttons()
 
 /*-----------------------------------------------------------------------------------
   filter_mce_external_plugins()
   
   * Add functionality to the tinyMCE editor as an external plugin.
 -----------------------------------------------------------------------------------*/
-	
-	function filter_mce_external_plugins( $plugins ) {
-    global $tinymce_version;
+  
+  function filter_mce_external_plugins( $plugins ) {
+    $wp_version = get_bloginfo( 'version' );
 
-    if( isset( $tinymce_version ) && $tinymce_version ) {
+    if( version_compare($wp_version, '3.8.0', '>') ) {
       $plugins['CoLabsThemesShortcodes'] = wp_nonce_url( esc_url( $this->framework_url() . 'js/shortcode-generator/editor_plugin4.js' ), 'colabsframework-shortcode-generator' );
     } else {
       $plugins['CoLabsThemesShortcodes'] = wp_nonce_url( esc_url( $this->framework_url() . 'js/shortcode-generator/editor_plugin.js' ), 'colabsframework-shortcode-generator' );
@@ -119,8 +119,8 @@ class CoLabsThemes_Shortcode_Generator {
 
     return $plugins;
         
-	} // End filter_mce_external_plugins()
-	
+  } // End filter_mce_external_plugins()
+  
 /*-----------------------------------------------------------------------------------
   Utility Functions
   
@@ -134,7 +134,7 @@ class CoLabsThemes_Shortcode_Generator {
 -----------------------------------------------------------------------------------*/
 
 function framework_url() {
-	return esc_url( trailingslashit( get_template_directory_uri() . '/' . basename( dirname( __FILE__ ) ) ) );
+  return esc_url( trailingslashit( get_template_directory_uri() . '/' . basename( dirname( __FILE__ ) ) ) );
 
 } // End framework_url()
 
@@ -150,21 +150,21 @@ function framework_url() {
 
 function ajax_action_check_url() {
 
-	$hadError = true;
+  $hadError = true;
 
-	$url = isset( $_REQUEST['url'] ) ? $_REQUEST['url'] : '';
+  $url = isset( $_REQUEST['url'] ) ? $_REQUEST['url'] : '';
 
-	if ( strlen( $url ) > 0  && function_exists( 'get_headers' ) ) {
-		$url = esc_url( $url );
-		$file_headers = @get_headers( $url );
-		$exists       = $file_headers && $file_headers[0] != 'HTTP/1.1 404 Not Found';
-		$hadError     = false;
-	}
+  if ( strlen( $url ) > 0  && function_exists( 'get_headers' ) ) {
+    $url = esc_url( $url );
+    $file_headers = @get_headers( $url );
+    $exists       = $file_headers && $file_headers[0] != 'HTTP/1.1 404 Not Found';
+    $hadError     = false;
+  }
 
-	echo '{ "exists": '. ($exists ? '1' : '0') . ($hadError ? ', "error" : 1 ' : '') . ' }';
+  echo '{ "exists": '. ($exists ? '1' : '0') . ($hadError ? ', "error" : 1 ' : '') . ' }';
 
-	die();
-	
+  die();
+  
 } // End ajax_action_check_url()
 
 /*-----------------------------------------------------------------------------------
@@ -177,8 +177,8 @@ function ajax_action_check_url() {
 -----------------------------------------------------------------------------------*/
 
 function ajax_action_generate_nonce() {
-	echo wp_create_nonce( 'colabsframework-shortcode-generator' );
-	die();
+  echo wp_create_nonce( 'colabsframework-shortcode-generator' );
+  die();
 } // End ajax_action_generate_nonce()
 } // End Class
 

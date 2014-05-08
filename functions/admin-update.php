@@ -130,14 +130,14 @@ function colabsthemes_themes_update_page_set(){
 
 			?>
 			
-			<form method="post"  enctype="multipart/form-data" id="colabsform" name="backup" class="colabs-backup-form">
+			<form method="post"  enctype="multipart/form-data" id="colabsform" name="backup" class="colabs-backup-form not-ajax">
 				<p><input type="submit" name="colabs_theme_backup" value="Backup" class="button" />
 				<input type="hidden" value="true" name="theme_backup">
 				<input type="hidden" name="colabs_ftp_cred" value="<?php echo esc_attr(serialize($_POST)); ?>" /></p>
 			</form>
 			
 			<p><?php _e('Please login with your ColorLabs account to updating your theme.','colabsthemes');?></p>
-			<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form">
+			<form method="post"  enctype="multipart/form-data" id="colabsform" name="login" class="colabs-login-form not-ajax">
 				<p>
 					<label class="element-title" for="login"><?php _e('E-Mail Address:','colabsthemes');?></label> 
 					<input id="login" name="amember_login" size="15" value="" type="text">

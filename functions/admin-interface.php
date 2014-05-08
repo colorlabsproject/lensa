@@ -799,7 +799,7 @@ function colabs_admin_head() {
         return false; 
       }); 
     //Save everything else
-    jQuery( '#colabsform').submit(function(){
+    jQuery( '#colabsform:not(.not-ajax)').submit(function(){
         function newValues() {
           var serializedValues = jQuery( "#colabsform *").not( '.colabs-ignore').serialize();
           return serializedValues;
@@ -1785,7 +1785,9 @@ if ( ! function_exists( 'colabs_theme_update_notice' ) ) {
 /*-----------------------------------------------------------------------------------*/
 function colabs_theme_panel_css(){
   $functions_path = get_template_directory() . '/functions/';
-	require_once ($functions_path . 'scss.inc.php');	
+  if( !class_exists('scss_formatter_nested') ) {
+    require_once ($functions_path . 'scss.inc.php');
+  }
 
 	global $_wp_admin_css_colors;
 	$color_scheme = get_user_option( 'admin_color', get_current_user_id() );
