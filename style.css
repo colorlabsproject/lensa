@@ -83,8 +83,8 @@ body {
   background: #333333;
   background: rgba(0, 0, 0, 0.8);
   font-family: "BebasNeueRegular", sans-serif;
-  -webkit-transform: translateZ(0);
   font-weight: normal;
+  -webkit-font-smoothing: antialiased;
 }
 .header-section a {
   color: white;

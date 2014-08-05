@@ -44,21 +44,21 @@ $options[] = array( "name" => __("General Settings","colabsthemes"),
 $options[] = array( "name" => __( "Use for blog title/logo", "colabsthemes" ),
 					"desc" => __( "Select title or logo for your blog.", "colabsthemes" ),
 					"id" => $shortname."_logotitle",
-					"std" => "logo",
+					"std" => "title",
 					"type" => "select2",
 					"options" => array( "logo" => __( "Logo", "colabsthemes" ), "title" => __( "Title", "colabsthemes" ) ) );
-                    
-$options[] = array( "name" => __("Custom Favicon","colabsthemes"),
-					"desc" => __("Upload a 16x16px ico image that will represent your website's favicon. Favicon/bookmark icon will be shown at the left of your blog's address in visitor's internet browsers.","colabsthemes"),
-					"id" => $shortname."_custom_favicon",
-					"std" => trailingslashit( get_template_directory_uri() ) . "images/favicon.png",
-					"type" => "upload"); 
 
 $options[] = array( "name" => __("Header Custom Logo","colabsthemes"),
 					"desc" => __("Upload a logo for your theme, or specify an image URL directly. Best image size in 219x48 px","colabsthemes"),
 					"id" => $shortname."_logo",
-					"std" => trailingslashit( get_template_directory_uri() ) . "images/logo.png",
+					"std" => '',
 					"type" => "upload");
+
+$options[] = array( "name" => __("Custom Favicon","colabsthemes"),
+					"desc" => __("Upload a 16x16px ico image that will represent your website's favicon. Favicon/bookmark icon will be shown at the left of your blog's address in visitor's internet browsers.","colabsthemes"),
+					"id" => $shortname."_custom_favicon",
+					"std" => trailingslashit( get_template_directory_uri() ) . "images/favicon.ico",
+					"type" => "upload"); 
 
 $options[] = array( "name" => "Disable Responsive",
 					"desc" => "You can disable responsive module for your site.",
