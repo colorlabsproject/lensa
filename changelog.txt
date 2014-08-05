@@ -1,6 +1,6 @@
 /*
     Theme Name: Lensa
-    Theme URI: http://demo.colorlabsproject.com/lensa/
+    Theme URI: http://colorlabsproject.com/themes/lensa/
     Author: ColorLabs & Company
     Author URI: http://colorlabsproject.com
     Release Date: 30 November 2012
@@ -8,13 +8,19 @@
     Requirements: WordPress 3.0 or higher, PHP 5
     Compatibility: WordPress 3.5
     Tags: photography, instagram, blog, full-screen, slider, responsive
-    Last Update Date: 08 May 2014
+    Last Update Date: 11 Juni 2014
 */
 
 /**** Changelog ****/
 
 "Please backup your theme pack files at first before you update the theme into the latest version"
 
+2014.06.11 - Version 1.1.4
+- Update: Framework
+  Folder Affected: functions/
+- Add: Dummy Content
+  Folder Added: dummy-content/  
+  
 2014.06.08 - Version 1.1.3.1
 - Update: Framework
   Folder Affected: functions/
