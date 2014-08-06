@@ -161,7 +161,8 @@ function fancyInit( $fancy ) {
       var $el = $fancy.eq(i),
           $like = $el.parent().find('.like'),
           $time = $el.parent().find('.time'),
-          wrapper = '';
+          wrapper = '',
+          url = $el.data('url');
 
       // Create wrapper
       wrapper += '<div class="fancy-wrapper">';
@@ -181,6 +182,11 @@ function fancyInit( $fancy ) {
 
       // Resize Fancybox
       // $('#fancybox-content').height()
+
+      // Add url for modalbox title if exists
+      if( url ) {
+        $('#fancybox-title-inside').wrapInner('<a href="'+ url +'" target="_blank"></a>');
+      }
     },
     onCleanup: function() {
       $('.fancy-wrapper').remove();
