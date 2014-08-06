@@ -62,11 +62,11 @@ get_header();
 					<div class="colabs-pagination">
 
 						<?php if( $paged < $user_photo['total_pages'] ) : ?>
-							<div class="nav-next"><a href="<?php echo add_query_arg( array('paged' => $paged + 1), get_permalink( $post->ID ) ); ?>"><?php echo __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'colabthemes' ); ?></a></div>
+							<div class="nav-next"><a href="<?php echo add_query_arg( array('paged' => $paged + 1), get_permalink( $post->ID ) ); ?>"><?php echo __( 'Older photos <span class="meta-nav">&rarr;</span>', 'colabthemes' ); ?></a></div>
 						<?php endif; ?>
 
 						<?php if( $paged > 1 ) : ?>
-							<div class="nav-previous"><a href="<?php echo add_query_arg( array('paged' => $paged - 1), get_permalink( $post->ID ) ); ?>"><?php echo __( '<span class="meta-nav">&larr;</span> Older posts', 'colabthemes' ); ?></a></div>
+							<div class="nav-previous"><a href="<?php echo add_query_arg( array('paged' => $paged - 1), get_permalink( $post->ID ) ); ?>"><?php echo __( '<span class="meta-nav">&larr;</span> Newer Photos	', 'colabthemes' ); ?></a></div>
 						<?php endif; ?>
 
 					</div>
