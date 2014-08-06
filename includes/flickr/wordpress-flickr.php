@@ -138,6 +138,11 @@ class Colabs_WP_Flickr {
       $size = "medium";
     }
 
+    // If photo doesn't provide original image size
+    if( !isset( $photo->originalsecret ) ) {
+      $size = 'medium';
+    }
+
     if ($size == "original") {
       $url = "https://farm" . $photo->farm . ".static.flickr.com/" . $photo->server . "/" . $photo->id . "_" . $photo->originalsecret . "_o" . "." . $photo->originalformat;
     } else {
